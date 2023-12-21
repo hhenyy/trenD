@@ -7,11 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-<script>
-//	location.href="boardform";
-	location.href="boardlist";
-</script>
-
+ <script>
+     location.href="/"
+ </script>
 </body>
 </html>
