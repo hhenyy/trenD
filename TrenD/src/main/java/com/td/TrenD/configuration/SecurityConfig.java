@@ -18,7 +18,7 @@ public class SecurityConfig {
 				.httpBasic().disable()  // httpBasic 사용 X
 				.csrf().disable()       // csrf 보안 사용 X
 				.headers().frameOptions().disable();
-		return http.build();
+		return http.build(); 
 	}
 
 	@Bean
