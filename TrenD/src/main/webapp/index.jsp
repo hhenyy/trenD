@@ -10,7 +10,7 @@
 
 <script>
 //	location.href="boardform";
-	location.href="boardlist";
+//	location.href="boardlist";
 </script>
 
 </body>
