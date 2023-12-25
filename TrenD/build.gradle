@@ -9,7 +9,7 @@ group = 'com.td'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '11'
+//    sourceCompatibility = '11'
 }
 
 configurations {
@@ -54,6 +54,9 @@ dependencies {
 
     //MySQL
     runtimeOnly 'com.mysql:mysql-connector-j'
+
+    //jackson
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
 
     //Test
     testCompileOnly 'org.projectlombok:lombok'
