@@ -33,7 +33,7 @@
         <td>${list.trNo}</td>
         <td>${list.userId}</td>
         <td>${list.cateCd}</td>
-        <td><a href = "commContent?No=${list.trNo}">${list.trSubject}</a></td>
+        <td><a href = "commContent?trNo=${list.trNo}">${list.trSubject}</a></td>
         <td>${list.trContent}</td>
         <td>${list.trReadCount}</td>
         <td>${list.trDate}</td>

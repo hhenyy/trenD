@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
-<!DOCTYPE html>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>TrenD Community Content</title>
+    <title>커뮤니티 글 수정</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -34,81 +33,67 @@
 
     <%@ include file="../include/header.jsp" %>
 
-
-    <link href="css/post.css" rel="stylesheet">
 </head>
 
 <body>
 
-<c:if test="${Character.toString(post.trDelYn) eq 'y'}">
-    <script>
-        alert('해당 글은 삭제되었습니다.');
-        window.location.href = '/';
-    </script>
-</c:if>
-
-
 <main id="main" class="main">
 
 
-    <div class="pagetitle">
+    <form action="commUpdate?trNo=${post.trNo}" method="post" id="commForm">
+        <input type="hidden" name = "trNo" value = "${post.trNo}">
 
-        <h1>커뮤니티 게시판</h1>
-        <div class="title_left">
-            <nav>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">${post.categoryVO.cateNm}</li>
-                    <li class="breadcrumb-item">${post.userId}</li>
-                    <li class="breadcrumb-item">${post.trDate}</li>
-                </ol>
-            </nav>
+        <div align="center">
+
+
+            <div class="col-sm-10">
+                <select class="form-select" aria-label="Default select example" name="cateCd">
+
+                    <c:forEach var="c" items="${categoryList}">
+                        <c:if test="${post.cateCd.equals(c.cateCd)}">
+                            <option selected value="${post.cateCd}">${post.categoryVO.cateNm}</option>
+                        </c:if>
+                        <c:if test="${!post.cateCd.equals(c.cateCd)}">
+                            <option value="${c.cateCd}">${c.cateNm}</option>
+                        </c:if>
+
+                    </c:forEach>
+                </select>
+            </div>
+
+
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="subject" name="trSubject" placeholder="제목"
+                       value="${post.trSubject}">
+                <label for="subject">제목</label>
+            </div>
+            <div class="form-floating mb-3">
+            <textarea class="form-control" placeholder="내용" id="content" name="trContent"
+                      style="height: 100px;">${post.trContent}</textarea>
+                <label for="content">내용</label>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-success rounded-pill" onclick="submitForm()">수정완료</button>
+                <button type="button" class="btn btn-light rounded-pill" onclick="cancelForm()">취소</button>
+            </div>
+
+            <script>
+                function submitForm() {
+                    alert('글 수정이 완료되었습니다.');
+                }
+
+                function cancelForm() {
+                    var cancel = confirm('글 작성을 취소하시겠습니까?');
+                    if (cancel) {
+                        window.history.back();
+                    }
+                }
+
+            </script>
+
         </div>
 
-        <div class="title_right">
-            <nav>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="javascript:void(0);" onclick="deletePost()">삭제</a></li>
-                    <li class="breadcrumb-item"><a href="javascript:void(0);" onclick="updateForm()">수정</a></li>
-                    <li class="breadcrumb-item"><a href="/">목록</a></li>
-                </ol>
-            </nav>
-        </div>
-    </div><!-- End Page Title -->
-    <!--본문-->
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">${post.trSubject}</h5>
-
-            ${post.trContent}
-        </div>
-    </div>
-    <!--end 본문-->
-
-    <script>
-        function updateForm() {
-            location.href = "commUpdateForm?trNo=${post.trNo}"
-        }
-
-        function deletePost() {
-            var check = confirm('글을 삭제하시겠습니까?');
-
-            if (check) {
-                location.href = "deletePost?trNo=${post.trNo}"
-                alert('글이 삭제되었습니다.');
-            }
-            else {
-
-            }
-        }
-
-    </script>
-
-
-    <div>
-
-        댓글 공간
-
-    </div>
+    </form>
 
 
 </main>

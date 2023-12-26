@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -35,8 +36,6 @@ public class CommunityController {
     public String commForm(Model model) {
 
         List<CategoryVO> categoryList = commService.findAllCategory();
-        System.out.println(categoryList);
-
         model.addAttribute("categoryList", categoryList);
 
         return "community/commForm";
@@ -54,29 +53,95 @@ public class CommunityController {
         comm.setCateCd(request.getParameter("cateCd"));
         comm.setTrSubject(request.getParameter("trSubject"));
         comm.setTrContent(request.getParameter("trContent"));
-
+        comm.setTrDate(new Date());
+        comm.setTrDelYn('n');
+        comm.setTrReadCount(0);
 
         TrendVO result = new TrendVO();
         result = commService.commInsert(comm);
         System.out.println(result);
 
 
-        return "/commTest";
+        return "redirect:/";
     }
 
     @RequestMapping("commContent")
-    public String commContent(HttpServletRequest request, Model model){
+    public String commContent(HttpServletRequest request, Model model) {
 
-        TrendVO content = new TrendVO();
 
-        int trNo = Integer.parseInt(request.getParameter("No"));
 
-        content = commService.commContent(trNo);
+        TrendVO post = new TrendVO();
+        int trNo = Integer.parseInt(request.getParameter("trNo"));
 
-        model.addAttribute("content", content);
+        post = commService.commContent(trNo);
+
+
+//        char trDelYn = post.getTrDelYn();
+//
+//        if(trDelYn == 'y'){
+//            model.addAttribute("trDelYn", 'y');
+//        }
+
+        model.addAttribute("post", post);
 
         return "community/commContent";
     }
 
+
+    @RequestMapping("commUpdateForm")
+    public String commUpdateForm(HttpServletRequest request, Model model) {
+
+        List<CategoryVO> categoryList = commService.findAllCategory();
+        model.addAttribute("categoryList", categoryList);
+
+
+        TrendVO post = new TrendVO();
+        int trNo = Integer.parseInt(request.getParameter("trNo"));
+        post = commService.commContent(trNo);
+        model.addAttribute("post", post);
+
+        return "community/commUpdate";
+    }
+
+    @RequestMapping("commUpdate")
+    public String commUpdate(HttpServletRequest request, Model model) {
+
+
+        int trNo = Integer.parseInt(request.getParameter("trNo"));
+        String cateCd = request.getParameter("cateCd");
+        String trSubject = request.getParameter("trSubject");
+        String trContent = request.getParameter("trContent");
+
+
+//        commService.commUpdate(trNo, cateCd, trSubject, trContent, new Date());
+
+
+
+        TrendVO trendVO = commService.findById(trNo);
+
+        trendVO.setTrNo(trNo);
+        trendVO.setCateCd(cateCd);
+        trendVO.setTrSubject(trSubject);
+        trendVO.setTrContent(trContent);
+        trendVO.setTrUpdate(new Date());
+
+        commService.commInsert(trendVO);
+
+        return "redirect:commContent?trNo=" + trNo;
+    }
+
+    @RequestMapping("deletePost")
+    public String deletePost(HttpServletRequest request, Model model){
+
+        int trNo = Integer.parseInt(request.getParameter("trNo"));
+
+        TrendVO trendVO = commService.findById(trNo);
+        trendVO.setTrUpdate(new Date());
+        trendVO.setTrDelYn('y');
+
+        commService.commInsert(trendVO);
+
+        return "redirect:/";
+    }
 
 }

@@ -27,10 +27,10 @@ public class TrendVO {
 	private String trContent;
 	private int trReadCount;
 
-	@CreationTimestamp
+//	@CreationTimestamp
 	private Date trDate;
 
-	@UpdateTimestamp
+//	@UpdateTimestamp
 	private Date trUpdate;
 	private char trDelYn = '\0';
 	// DB 데이터 null값인 경우 기본값 공백문자로 설정
