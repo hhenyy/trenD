@@ -1,6 +1,7 @@
 package com.td.TrenD.model;
 
 import lombok.Data;
+
 import java.util.Date;
 
 @Data
