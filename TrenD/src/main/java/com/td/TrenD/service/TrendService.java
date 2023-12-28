@@ -17,13 +17,16 @@ public class TrendService {
         this.trendRepository = trendRepository;
     }
 
-    public TrendVO trendSave(TrendVO trendVO) {
+
+    public TrendVO saveTrend(TrendVO trendVO) {
         return trendRepository.save(trendVO);
     }
 
-    public List<TrendVO> trendSearch(String keyword){
+    public List<TrendVO> searchTrend(String keyword){
         return trendRepository.findByTrSubjectContaining(keyword);
     }
+
+
 
 
 

@@ -3,7 +3,6 @@ package com.td.TrenD.controller;
 import com.td.TrenD.model.TrendVO;
 import com.td.TrenD.service.TrendService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +17,9 @@ public class MainController {
     @GetMapping("/search")
     @ResponseBody
     public List<TrendVO> totalSearch(@RequestParam String keyword) {
-        return trendService.trendSearch(keyword);
+
+
+        return trendService.searchTrend(keyword);
     }
 
 }

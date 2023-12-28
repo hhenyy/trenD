@@ -18,40 +18,58 @@
         </tr>
         </thead>
 
-        <tbody id="searchResultTableBody">
+        <tbody id="searchResult">
 
         <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // 여기에서 실제로 검색에 사용될 키워드를 가져오는 로직을 추가해야 합니다.
+                const keyword = ${keyword}; // 예시로 하드코딩된 키워드입니다.
 
-            document.addEventListener('DOMContentLoaded', function() {
-                searchResult();
-                console.log(data);
+                searchResult(keyword);
             });
 
-            // AJAX 요청을 통해 서버에서 데이터를 가져옴
-            function searchResult(){
-            fetch('/main/search?keyword=${keyword}')
-                .then(response => response.json())
-                .then(data => {
-                    // 가져온 데이터로 동적으로 테이블 구성
-                    const tableBody = document.querySelector('#searchResultTable tbody');
+            function searchResult(keyword) {
+                fetch(`/main/search?keyword=${keyword}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const tableBody = document.querySelector('#searchResult');
+                        tableBody.innerHTML = ''; // 테이블 내용 초기화
 
-                    data.forEach((trend, index) => {
-                        const row = tableBody.insertRow();
-                        const cell1 = row.insertCell(0);
-                        const cell2 = row.insertCell(1);
-                        const cell3 = row.insertCell(2);
-                        const cell4 = row.insertCell(3);
+                        var row = '';
 
-                        cell1.innerHTML = trend.trNo;
-                        cell2.innerHTML = trend.trSubject;
-                        cell3.innerHTML = trend.readCount;
-                        cell4.innerHTML = trend.trDate;
-                    });
-                })
-                .catch(error => console.error('Error fetching data:', error));
+
+                        data.forEach((trend) => {
+
+
+
+                            row +=
+
+                                "<tr><td>"
+                                +
+                                trend.trNo
+                                +
+                                "</td><td><a href = 'commContent?trNo="+trend.trNo+"'>"
+                                +
+                                trend.trSubject
+                                +
+                                "</a></td><td>"
+
+                                +
+                                trend.trReadCount
+                                +
+                                "</td><td>"
+                                +
+                                trend.trDate
+                                +
+                                "</td></tr>";
+
+
+                        });
+                        tableBody.innerHTML = row;
+                    })
+                    .catch(error => console.error('Error fetching data:', error));
             }
         </script>
-
 
 
         </tbody>
