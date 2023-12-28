@@ -10,9 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TrendRepository extends JpaRepository<TrendVO, Integer> {
 
-    @Query("SELECT COUNT(t) FROM TrendVO t")
-    long countTrendVO();
-
     @Query("SELECT t FROM TrendVO t " +
             "JOIN CategoryVO c ON t.category.cateCd = c.cateCd " +
             "where c.cateCd = 't'"+

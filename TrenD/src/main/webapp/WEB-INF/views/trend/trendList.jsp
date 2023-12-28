@@ -74,7 +74,7 @@
 
                 row = '<tr>' +
                     '<td>' + no-- + '</td>' +
-                    '<td>' + trend.trSubject + '</td>' +
+                    '<td><a href="#">' + trend.trSubject + '</a></td>' +
                     '<td>' + formatDate(trend.trDate) + '</td>' +
                     '<td>' + trend.trReadCount + '</td>' +
                     '</tr>';

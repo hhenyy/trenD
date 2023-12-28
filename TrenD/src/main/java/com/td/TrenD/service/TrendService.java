@@ -13,10 +13,6 @@ public class TrendService {
     @Autowired
     private TrendRepository trendRepository;
 
-    public long getTrendCount() {
-        return trendRepository.countTrendVO();
-    }
-
     public Page<TrendVO> getTrendList(PageRequest pageable) {
         return trendRepository.findTrendList(pageable);
     }
