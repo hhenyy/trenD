@@ -4,6 +4,7 @@ import com.td.TrenD.model.CategoryVO;
 import com.td.TrenD.model.TrendVO;
 //import com.td.TrenD.commService.CommunityService;
 import com.td.TrenD.service.CommunityService;
+import com.td.TrenD.service.TrendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,9 @@ public class CommunityController {
 
     @Autowired
     private CommunityService commService;
+
+    @Autowired
+    private TrendService trendService;
 
     @RequestMapping("/")
     public String test(Model model) {
@@ -53,12 +57,14 @@ public class CommunityController {
         comm.setCateCd(request.getParameter("cateCd"));
         comm.setTrSubject(request.getParameter("trSubject"));
         comm.setTrContent(request.getParameter("trContent"));
+
         comm.setTrDate(new Date());
+        comm.setTrUpdate(new Date());
         comm.setTrDelYn('n');
         comm.setTrReadCount(0);
 
         TrendVO result = new TrendVO();
-        result = commService.commInsert(comm);
+        result = trendService.trendSave(comm);
         System.out.println(result);
 
 
@@ -74,6 +80,11 @@ public class CommunityController {
         int trNo = Integer.parseInt(request.getParameter("trNo"));
 
         post = commService.commContent(trNo);
+        if(post.getTrDelYn()=='n') {
+            int readCount = post.getTrReadCount() + 1;
+            post.setTrReadCount(readCount);
+            trendService.trendSave(post);
+        }
 
 
 //        char trDelYn = post.getTrDelYn();
@@ -125,7 +136,7 @@ public class CommunityController {
         trendVO.setTrContent(trContent);
         trendVO.setTrUpdate(new Date());
 
-        commService.commInsert(trendVO);
+        trendService.trendSave(trendVO);
 
         return "redirect:commContent?trNo=" + trNo;
     }
@@ -139,9 +150,15 @@ public class CommunityController {
         trendVO.setTrUpdate(new Date());
         trendVO.setTrDelYn('y');
 
-        commService.commInsert(trendVO);
+        trendService.trendSave(trendVO);
 
         return "redirect:/";
+    }
+
+    @RequestMapping("totalSearch")
+    public String searchTest(HttpServletRequest request, Model model){
+
+        return "main/totalSearch";
     }
 
 }

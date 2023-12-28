@@ -1,19 +1,22 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: klzxc
-  Date: 2023-12-22
-  Time: 오후 5:07
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
 <html>
 <head>
     <title>커뮤니티 작성 폼</title>
 </head>
+
+
+
 <body>
+<jsp:include page="../include/header.jsp"/>
+<jsp:include page="../include/sidebar.jsp"/>
+
+
+<main id="main" class="main">
 
 <a href = commForm>글 작성 폼</a>
+    <a href="searchTest">검색 페이지 테스트</a>
 
 <table>
     <tr>
@@ -43,7 +46,15 @@
     </tr>
 
 </c:forEach>
+
+
 </table>
 
+
+</main>
+<jsp:include page="../include/footer.jsp"/>
+
+
 </body>
+
 </html>
