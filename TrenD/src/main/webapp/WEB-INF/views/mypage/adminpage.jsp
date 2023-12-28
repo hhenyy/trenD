@@ -77,7 +77,7 @@
                         var content = "";  // content 변수 선언
 
                         $.each(result.content, function (index, item) {
-                            content += "<tr><td>" + (item.category ? item.category.cateNm : 'N/A') + "</td>"
+                            content += "<tr><td>" + (item.categoryVO ? item.categoryVO.cateNm : 'N/A') + "</td>"
                             content += "<td><a href='javascript:boardcontent(" + item.trNo + "," + page + ")'>" + item.trSubject + "</a></td>"
                             content += "<td>" + item.trDate + "</td>"
                             content += "<td>" + item.trReadCount + "</td></tr>"
@@ -132,10 +132,16 @@
         function updatePagination(totalPages, currentPage, listType) {
             var paginationHtml = '<nav aria-label="Page navigation"><ul class="pagination">';
 
+            // 이전 버튼
+            paginationHtml += '<li class="page-item ' + (currentPage === 1 ? 'disabled' : '') + '"><a class="page-link" href="javascript:' + listType + '(' + (currentPage - 1) + ')">이전</a></li>';
+
             for (var i = 1; i <= totalPages; i++) {
                 var activeClass = i === currentPage ? 'active' : '';
                 paginationHtml += '<li class="page-item ' + activeClass + '"><a class="page-link" href="javascript:' + listType + '(' + i + ')">' + i + '</a></li>';
             }
+
+            // 다음 버튼
+            paginationHtml += '<li class="page-item ' + (currentPage === totalPages ? 'disabled' : '') + '"><a class="page-link" href="javascript:' + listType + '(' + (currentPage + 1) + ')">다음</a></li>';
 
             paginationHtml += '</ul></nav>';
             $("#pagination").html(paginationHtml);

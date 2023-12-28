@@ -6,6 +6,8 @@ import com.td.TrenD.model.TrendVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,10 +25,14 @@ public class MypageService {
     }
 
     public Page<TrendVO> getBoardList(PageRequest pageable) {
-        return mypageRepository.findBoardList(pageable);
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userId = userDetails.getUsername();
+        return mypageRepository.findBoardListByUserId(userId, pageable);
     }
 
     public Page<TrendReVO> getReplyList(PageRequest pageable) {
-        return mypageRepository.findReplyList(pageable);
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userId = userDetails.getUsername();
+        return mypageRepository.findReplyListByUserId(userId, pageable);
     }
 }

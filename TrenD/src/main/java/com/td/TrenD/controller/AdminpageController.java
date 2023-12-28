@@ -15,18 +15,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/mypage")
-public class MypageController {
+public class AdminpageController {
 
     @Autowired
     private MypageService myservice;
 
-    @GetMapping("/user")
+    @GetMapping("/admin")
     public String mypage() {
-        return "mypage/userpage";
+        return "mypage/adminpage";
     }
 
     // 글목록
-    @GetMapping("/mypage/boardlist/{page}")
+    @GetMapping("/admin/boardlist/{page}")
     @ResponseBody
     public Page<TrendVO> boardlist(@PathVariable("page") int page, Model model) {
         int limit = 10;
@@ -54,7 +54,7 @@ public class MypageController {
     }
 
     // 댓글목록
-    @GetMapping("/mypage/replylist/{page}")
+    @GetMapping("/admin/replylist/{page}")
     @ResponseBody
     public Page<TrendReVO> replylist(@PathVariable("page") int page, Model model) {
         int limit = 10;

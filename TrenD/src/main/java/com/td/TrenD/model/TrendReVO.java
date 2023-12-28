@@ -1,31 +1,46 @@
 package com.td.TrenD.model;
 
-import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "trendRe")
 public class TrendReVO {
-	@Id
-	private int trReNo;
-	private int trNo;
-	private String userId;
-	private int trReRef;
-	private int trReLev;
 
-	@CreationTimestamp
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "trReNo", nullable = false)
+	private int trReNo;
+
+	@Column(name = "trNo")
+	private int trNo;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "userId")
+	private UserVO userVO;
+
+	@Column(name = "trReRef")
+	private Integer trReRef;
+
+	@Column(name = "trReLev")
+	private Integer trReLev;
+
+	@Column(name = "trReDate")
 	private Date trReDate;
 
-	@UpdateTimestamp
+	@Column(name = "trReUpdate")
 	private Date trReUpdate;
-	private char trReDelYn;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "trNo", insertable = false, updatable = false)
-	private TrendVO trend;
+	@Column(name = "trReDelYn")
+	private Character trReDelYn;
+
+	@Column(name = "trReContent")
+	private String trReContent;
 }
