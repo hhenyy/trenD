@@ -59,9 +59,6 @@ dependencies {
     //jackson
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
 
-    //Log4JDBC
-    implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
-
     //Test
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'

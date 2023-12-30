@@ -1,20 +1,55 @@
 package com.td.TrenD.model;
 
-import lombok.Data;
+import lombok.*;
+import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "user")
 public class UserVO {
+	@Id
+	@Column(name = "userId", nullable = false)
 	private String userId;
+
+	@Column(name = "userPw")
 	private String userPw;
+
+	@Column(name = "userName")
 	private String userName;
-	private String genCd;
-	private String ageCd;
-	private String locCd;
+
+	@ManyToOne
+	@JoinColumn(name = "genCd")
+	private GenderVO genderVO;
+
+	@ManyToOne
+	@JoinColumn(name = "ageCd")
+	private AgeVO ageVO;
+
+	@ManyToOne
+	@JoinColumn(name = "locCd")
+	private LocationVO locationVO;
+
+	@Column(name = "userEmail")
 	private String userEmail;
-	private char userAuth;
+
+	@Column(name = "userAuth")
+	private Character userAuth;
+
+	@Column(name = "userKey")
 	private String userKey;
-	private Date userDate;
-	private Date userUpdate;
-	private char userDelYn;
+
+	@Column(name = "userDate")
+	private Timestamp userDate;
+
+	@Column(name = "userUpdate")
+	private Timestamp userUpdate;
+
+	@Column(name = "userDelYn")
+	private Character userDelYn;
 }

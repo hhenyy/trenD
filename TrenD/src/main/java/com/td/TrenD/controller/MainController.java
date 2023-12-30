@@ -21,34 +21,4 @@ import org.xml.sax.SAXException;  // Also, add this import
 @Controller
 @RequiredArgsConstructor
 public class MainController {
-
-	@RequestMapping("/")
-	public String start() {
-		System.out.println("MainController.start");
-		try {
-			// XML 데이터를 가져오기 위해 HttpClient 사용
-			HttpClient httpClient = HttpClient.newHttpClient();
-			HttpRequest request = HttpRequest.newBuilder()
-					                      .uri(URI.create("https://trends.google.com/trends/trendingsearches/daily/rss?geo=KR"))
-					                      .build();
-			HttpResponse<InputStream> response = httpClient.send(request, HttpResponse.BodyHandlers.ofInputStream());
-
-			// XML 데이터 파싱
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document document = builder.parse(response.body());
-
-			// 각 항목의 title을 가져와서 출력
-			NodeList itemList = document.getElementsByTagName("item");
-			for (int i = 0; i < itemList.getLength(); i++) {
-				Element item = (Element) itemList.item(i);
-				String title = item.getElementsByTagName("title").item(0).getTextContent();
-				System.out.println("Title: " + title);
-			}
-
-		} catch (IOException | InterruptedException | ParserConfigurationException | SAXException e) {
-			e.printStackTrace();
-		}
-		return "main";
-	}
 }

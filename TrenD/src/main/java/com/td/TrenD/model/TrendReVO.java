@@ -1,32 +1,45 @@
 package com.td.TrenD.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Table(name = "trendre")
 @Entity
+@Table(name = "trendRe")
 public class TrendReVO {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "trReNo", nullable = false)
 	private int trReNo;
 
-	@ManyToOne
-	@JoinColumn(name = "trNo")
-	private TrendVO trNo;
+	@Column(name = "trNo")
+	private int trNo;
 
-	private String userId;
-	private int trReRef;
-	private int trReLev;
-	private Date trReDate;
-	private Date trReUpdate;
-	private char trReDelYn;
+	@ManyToOne
+	@JoinColumn(name = "userId")
+	private UserVO userVO;
+
+	@Column(name = "trReRef")
+	private Integer trReRef;
+
+	@Column(name = "trReLev")
+	private Integer trReLev;
+
+	@Column(name = "trReDate")
+	private Timestamp trReDate;
+
+	@Column(name = "trReUpdate")
+	private Timestamp trReUpdate;
+
+	@Column(name = "trReDelYn")
+	private Character trReDelYn;
+
+	@Column(name = "trReContent")
+	private String trReContent;
 }

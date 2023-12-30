@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
 
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
@@ -15,3 +14,16 @@
         Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
     </div>
 </footer><!-- End Footer -->
+
+<!-- Vendor JS Files -->
+<script src="${pageContext.request.contextPath}/assets/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/vendor/chart.js/chart.umd.js"></script>
+<script src="${pageContext.request.contextPath}/assets/vendor/echarts/echarts.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/vendor/quill/quill.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="${pageContext.request.contextPath}/assets/vendor/tinymce/tinymce.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/vendor/php-email-form/validate.js"></script>
+
+<!-- Template Main JS File -->
+<script src="${pageContext.request.contextPath}/assets/js/main.js"></script>

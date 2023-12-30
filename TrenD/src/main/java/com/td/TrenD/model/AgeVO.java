@@ -1,10 +1,26 @@
 package com.td.TrenD.model;
 
-import lombok.Data;
+import lombok.*;
+import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "age_code")
 public class AgeVO {
+	@Id
+	@Column(name = "ageCd", nullable = false)
 	private String ageCd;
+
+	@Column(name = "ageNm")
 	private String ageNm;
-	private char ageDelYn;
+
+	@Column(name = "ageDelYn")
+	private Character ageDelYn;
+
+	@Column(name = "idx_age")
+	private String idxAge;
 }

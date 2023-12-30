@@ -1,10 +1,26 @@
 package com.td.TrenD.model;
 
-import lombok.Data;
+import lombok.*;
+import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "location_code")
 public class LocationVO {
+	@Id
+	@Column(name = "locCd", nullable = false)
 	private String locCd;
+
+	@Column(name = "locNm")
 	private String locNm;
-	private char locDelYn;
+
+	@Column(name = "locDelYn")
+	private Character locDelYn;
+
+	@Column(name = "idx_location")
+	private String idxLocation;
 }
