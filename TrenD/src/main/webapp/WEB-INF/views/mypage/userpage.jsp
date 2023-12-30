@@ -10,6 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <!DOCTYPE html>
 <html>
@@ -18,30 +19,6 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
     <title>마이페이지</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
-
-    <!-- Favicons -->
-    <link href="${pageContext.request.contextPath}/assets/img/favicon.png" rel="icon">
-    <link href="${pageContext.request.contextPath}/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-          rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
-    <link href="${pageContext.request.contextPath}/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/vendor/quill/quill.snow.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/vendor/simple-datatables/style.css" rel="stylesheet">
-
-    <!-- Template Main CSS File -->
-    <link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet">
-
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script>
         $(document).ready(function () {
@@ -68,7 +45,7 @@
                 url: "${pageContext.request.contextPath}/mypage/boardlist/" + page,
                 success: function (result) {
                     console.log(result);
-                    if (result.content.length === 0) {
+                    if (result.boardlist.length === 0) {
                         // 작성된 내용이 없을 때의 처리
                         $("#boardbody").html("<tr><td colspan='4'>작성된 내용이 없습니다.</td></tr>");
                         $("#pagination").html("");  // 페이지네이션 숨기기
@@ -76,7 +53,7 @@
                         var boardContent = "<tr><th>머릿말</th><th>제목</th><th>날짜</th><th>조회수</th></tr>";
                         var content = "";  // content 변수 선언
 
-                        $.each(result.content, function (index, item) {
+                        $.each(result.boardlist, function (index, item) {
                             content += "<tr><td>" + (item.categoryVO ? item.categoryVO.cateNm : 'N/A') + "</td>"
                             content += "<td><a href='javascript:boardcontent(" + item.trNo + "," + page + ")'>" + item.trSubject + "</a></td>"
                             content += "<td>" + item.trDate + "</td>"
@@ -87,7 +64,7 @@
                         $("#boardbody").html(boardContent + content);  // content를 boardContent에 추가
 
                         // 페이지네이션 업데이트
-                        updatePagination(result.totalPages, page, 'boardlist');
+                        updatePagination(result.pageCount, page, 'boardlist');
                     }
                 },
                 error: function (error) {
@@ -103,14 +80,13 @@
                 url: "${pageContext.request.contextPath}/mypage/replylist/" + page,
                 success: function (result) {
                     console.log(result);
-
-                    if (result.content.length === 0) {
+                    if (result.replylist.length === 0) {
                         // 작성된 내용이 없을 때의 처리
                         $("#replybody").html("<tr><td colspan='2'>작성된 내용이 없습니다.</td></tr>");
                         $("#pagination").html("");  // 페이지네이션 숨기기
                     } else {
                         var replyContent = "<tr><th>내용</th><th>작성일</th></tr>";
-                        $.each(result.content, function (index, item) {
+                        $.each(result.replylist, function (index, item) {
                             replyContent += "<tr><td><a href='javascript:boardcontent(" + item.trNo + "," + page + ")'>" + item.trend.trContent + "</a></td>";
                             replyContent += "<td>" + item.trReDate + "</td></tr>";
                         });
@@ -119,8 +95,7 @@
                         $("#replybody").html(replyContent);  // replybody를 업데이트
 
                         // 페이지네이션 업데이트
-                        updatePagination(result.totalPages, page, 'replylist');
-
+                        updatePagination(result.pageCount, page, 'replylist');
                     }
                 },
                 error: function (error) {
@@ -148,23 +123,17 @@
             $("#pagination").html(paginationHtml);
         }
 
-
-
-        //글삭제
-        function mydelete(no, page) {
-            alert(no);
-            alert(page);
-        }
     </script>
 </head>
 <body>
 <%-- header --%>
 <%@ include file="../include/header.jsp" %>
+<%@ include file="../include/sidebar.jsp" %>
 
 <main id="main" class="main">
     <div>
-        <input type="button" id="board" value="게시글">
-        <input type="button" id="reply" value="댓글">
+        <input type="button" id="board" value="게시글" onclick="boardlist(1);">
+        <input type="button" id="reply" value="댓글" onclick="replylist(1);">
     </div>
     <table align="center" width=800 class="table table-hover">
         <%-- 트랜드 글목록 --%>
@@ -174,8 +143,6 @@
     </table>
     <!-- 페이지네이션 -->
     <div id="pagination"></div>
-
-
 </main>
 
 

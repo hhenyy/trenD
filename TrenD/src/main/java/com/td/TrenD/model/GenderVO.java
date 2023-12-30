@@ -22,5 +22,5 @@ public class GenderVO {
 	private Character genDelYn;
 
 	@Column(name = "idx_gender")
-	private String idxGender;
+	private String idx_gender;
 }

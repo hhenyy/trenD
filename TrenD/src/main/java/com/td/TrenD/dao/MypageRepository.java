@@ -6,8 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MypageRepository extends JpaRepository<TrendVO, Integer> {
@@ -25,4 +25,16 @@ public interface MypageRepository extends JpaRepository<TrendVO, Integer> {
             "WHERE tr.userVO.userId = :userId " +
             "ORDER BY tr.trReNo DESC")
     Page<TrendReVO> findReplyListByUserId(@Param("userId") String userId, Pageable pageable);
+
+    @Query("SELECT t FROM TrendVO t ORDER BY t.trNo DESC")
+    Page<TrendVO> findBoardList(Pageable pageable);
+
+    @Query("SELECT tr FROM TrendReVO tr ORDER BY tr.trReNo DESC")
+    Page<TrendReVO> findReplyList(Pageable pageable);
+
+    @Query("SELECT t FROM TrendVO t ORDER BY t.trNo DESC")
+    Page<TrendVO> findAllBoardForAdmin(Pageable pageable);
+
+    @Query("SELECT tr FROM TrendReVO tr ORDER BY tr.trReNo DESC")
+    Page<TrendReVO> findAllReplyForAdmin(Pageable pageable);
 }

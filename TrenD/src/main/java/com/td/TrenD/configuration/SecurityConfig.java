@@ -14,14 +14,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN") // "/admin/**" 경로는 ADMIN 권한이 필요
-                .antMatchers("/mypage/user").hasAnyRole("USER")
-                .antMatchers("/mypage/admin").hasAnyRole("ADMIN")
-                .antMatchers("/mypage/boardlist/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/mypage/replylist/**").hasAnyRole("USER", "ADMIN")
-                .anyRequest().authenticated()
-                .and()
                 .formLogin().disable()  // FormLogin 사용 X
                 .httpBasic().disable()  // httpBasic 사용 X
                 .csrf().disable()       // csrf 보안 사용 X

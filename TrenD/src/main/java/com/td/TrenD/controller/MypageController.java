@@ -6,12 +6,17 @@ import com.td.TrenD.service.MypageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/mypage")
@@ -20,63 +25,64 @@ public class MypageController {
     @Autowired
     private MypageService myservice;
 
-    @GetMapping("/user")
+    @GetMapping("/userpage")
     public String mypage() {
         return "mypage/userpage";
     }
 
-    // 글목록
-    @GetMapping("/mypage/boardlist/{page}")
-    @ResponseBody
-    public Page<TrendVO> boardlist(@PathVariable("page") int page, Model model) {
+    @GetMapping("/boardlist/{page}")
+    public ResponseEntity<Map<String, Object>> getBoardList(@PathVariable("page") int page) {
         int limit = 10;
         PageRequest pageable = PageRequest.of(page - 1, limit);
 
-        Page<TrendVO> boardPage = myservice.getBoardList(pageable);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
 
-        // 총 페이지
+        Page<TrendVO> boardPage = myservice.getBoardList(pageable, userId);
+
         int pageCount = boardPage.getTotalPages();
-
         int startPage = ((page - 1) / 10) * limit + 1;
         int endPage = startPage + 10 - 1;
 
         if (endPage > pageCount)
             endPage = pageCount;
 
-        model.addAttribute("page", page);
-        model.addAttribute("listcount", boardPage.getTotalElements());
-        model.addAttribute("boardlist", boardPage.getContent());
-        model.addAttribute("pageCount", pageCount);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
+        Map<String, Object> response = new HashMap<>();
+        response.put("page", page);
+        response.put("listcount", boardPage.getTotalElements());
+        response.put("boardlist", boardPage.getContent());
+        response.put("pageCount", pageCount);
+        response.put("startPage", startPage);
+        response.put("endPage", endPage);
 
-        return boardPage;
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    // 댓글목록
-    @GetMapping("/mypage/replylist/{page}")
-    @ResponseBody
-    public Page<TrendReVO> replylist(@PathVariable("page") int page, Model model) {
+    @GetMapping("/replylist/{page}")
+    public ResponseEntity<Map<String, Object>> getReplyList(@PathVariable("page") int page) {
         int limit = 10;
         PageRequest pageable = PageRequest.of(page - 1, limit);
 
-        Page<TrendReVO> replyPage = myservice.getReplyList(pageable);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+
+        Page<TrendReVO> replyPage = myservice.getReplyList(pageable, userId);
 
         int pageCount = replyPage.getTotalPages();
-
         int startPage = ((page - 1) / 10) * limit + 1;
         int endPage = startPage + 10 - 1;
 
         if (endPage > pageCount)
             endPage = pageCount;
 
-        model.addAttribute("page", page);
-        model.addAttribute("listcount", replyPage.getTotalElements());
-        model.addAttribute("replylist", replyPage.getContent());
-        model.addAttribute("pageCount", pageCount);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
+        Map<String, Object> response = new HashMap<>();
+        response.put("page", page);
+        response.put("listcount", replyPage.getTotalElements());
+        response.put("replylist", replyPage.getContent());
+        response.put("pageCount", pageCount);
+        response.put("startPage", startPage);
+        response.put("endPage", endPage);
 
-        return replyPage;
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
