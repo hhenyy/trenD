@@ -47,7 +47,7 @@
         </div>--%>
         <br>
         <h1 class="h4 mb-3" align="center">
-            댓글의 싸움터 ,<br> <b>트렌D</b>에 오신 것을 환영합니다.
+            <b>트렌D</b>에 오신 것을 환영합니다.
         </h1>
         <br>
         <div class="form-floating">
@@ -103,6 +103,6 @@
            style="font-size: 80%">&copy; 2023. 1조</p>
     </form>
 </main>
-
+</main>
 </body>
 </html>

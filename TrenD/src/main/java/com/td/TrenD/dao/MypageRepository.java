@@ -18,7 +18,10 @@ public interface MypageRepository extends JpaRepository<TrendVO, Integer> {
     @Query("SELECT COUNT(tr) FROM TrendReVO tr")
     long countTrendReVO();
 
-    @Query("SELECT t FROM TrendVO t JOIN CategoryVO c ON t.categoryVO.cateCd = c.cateCd WHERE t.userVO.userId = :userId ORDER BY t.trNo DESC")
+    @Query("SELECT t FROM TrendVO t " +
+            "JOIN CategoryVO c ON t.categoryVO.cateCd = c.cateCd " +
+            "WHERE t.userVO.userId = :userId " +
+            "ORDER BY t.trNo DESC")
     Page<TrendVO> findBoardListByUserId(@Param("userId") String userId, Pageable pageable);
 
     @Query("SELECT tr FROM TrendReVO tr " +

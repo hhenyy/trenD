@@ -65,43 +65,47 @@
             </li>
             <!-- End Search Icon-->
 
-            <c:if test="${not empty sessionScope.userName}">
-                <li class="nav-item dropdown pe-3">
-                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">${sessionScope.userName}</span>
-                    </a>
-                    <!-- End Profile Iamge Icon -->
-                    <ul
-                            class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                        <li class="dropdown-header">
-                            <h6>${sessionScope.userName}</h6>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/mypage/userpage">
-                                <i class="bi bi-box-arrow-right"></i>
-                                <span>마이페이지</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/logOut">
-                                <i class="bi bi-box-arrow-right"></i>
-                                <span>로그아웃</span>
-                            </a>
-                        </li>
-                    </ul><!-- End Profile Dropdown Items -->
-                </li>
-                <!-- End Profile Nav -->
-            </c:if>
-            <c:if test="${empty sessionScope.userName}">
-                <li class="nav-item dropdown pe-3">
-                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="/loginform">
-                        로그인
-                    </a>
-                </li>
-            </c:if>
+            <c:choose>
+                <c:when test="${not empty sessionScope.userName}">
+                    <li class="nav-item dropdown pe-3">
+                        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
+                           data-bs-toggle="dropdown">
+                            <span class="d-none d-md-block dropdown-toggle ps-2">${sessionScope.userName}</span>
+                        </a>
+                        <!-- End Profile Iamge Icon -->
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                            <li class="dropdown-header">
+                                <h6>${sessionScope.userName}</h6>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center"
+                                   href="${pageContext.request.contextPath}/mypage/userpage">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <span>마이페이지</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center"
+                                   href="${pageContext.request.contextPath}/logOut">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <span>로그아웃</span>
+                                </a>
+                            </li>
+                        </ul><!-- End Profile Dropdown Items -->
+                    </li>
+                </c:when>
+                <c:otherwise>
+                    <!-- 로그인이 안 된 경우에 대한 처리 -->
+                    <li class="nav-item dropdown pe-3">
+                        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="/loginform">
+                            로그인
+                        </a>
+                    </li>
+                </c:otherwise>
+            </c:choose>
             <!-- End Profile Nav -->
 
 

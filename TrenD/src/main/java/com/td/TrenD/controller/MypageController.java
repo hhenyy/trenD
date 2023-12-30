@@ -8,15 +8,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
+
+// ...
 
 @Controller
 @RequestMapping("/mypage")
@@ -26,17 +27,30 @@ public class MypageController {
     private MypageService myservice;
 
     @GetMapping("/userpage")
-    public String mypage() {
+    public String mypage(HttpSession session) {
+        // 세션에서 userId를 가져옵니다.
+        String userId = (String) session.getAttribute("userId");
+
+        // userId가 null이면 로그인되지 않은 상태이므로 로그인 페이지로 이동.
+        if (userId == null) {
+            return "redirect:/loginform";
+        }
+
+        // userId가 있다면 로그인된 상태이므로 마이페이지로 이동.
         return "mypage/userpage";
     }
 
     @GetMapping("/boardlist/{page}")
-    public ResponseEntity<Map<String, Object>> getBoardList(@PathVariable("page") int page) {
+    public ResponseEntity<Map<String, Object>> getBoardList(@PathVariable("page") int page, HttpSession session) {
         int limit = 10;
         PageRequest pageable = PageRequest.of(page - 1, limit);
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userId = authentication.getName();
+        String userId = (String) session.getAttribute("userId");
+
+        if (userId == null) {
+            // 로그인되지 않은 사용자의 처리
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
 
         Page<TrendVO> boardPage = myservice.getBoardList(pageable, userId);
 
@@ -48,6 +62,7 @@ public class MypageController {
             endPage = pageCount;
 
         Map<String, Object> response = new HashMap<>();
+        response.put("isAdmin", myservice.isAdmin(userId));
         response.put("page", page);
         response.put("listcount", boardPage.getTotalElements());
         response.put("boardlist", boardPage.getContent());
@@ -59,12 +74,16 @@ public class MypageController {
     }
 
     @GetMapping("/replylist/{page}")
-    public ResponseEntity<Map<String, Object>> getReplyList(@PathVariable("page") int page) {
+    public ResponseEntity<Map<String, Object>> getReplyList(@PathVariable("page") int page, HttpSession session) {
         int limit = 10;
         PageRequest pageable = PageRequest.of(page - 1, limit);
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userId = authentication.getName();
+        String userId = (String) session.getAttribute("userId");
+
+        if (userId == null) {
+            // 로그인되지 않은 사용자의 처리
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
 
         Page<TrendReVO> replyPage = myservice.getReplyList(pageable, userId);
 
@@ -76,6 +95,7 @@ public class MypageController {
             endPage = pageCount;
 
         Map<String, Object> response = new HashMap<>();
+        response.put("isAdmin", myservice.isAdmin(userId));
         response.put("page", page);
         response.put("listcount", replyPage.getTotalElements());
         response.put("replylist", replyPage.getContent());

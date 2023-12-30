@@ -16,7 +16,7 @@ public class StatisticsVO {
 	@Column(name = "staNo", nullable = false)
 	private int staNo;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "userId")
 	private UserVO userVO;
 

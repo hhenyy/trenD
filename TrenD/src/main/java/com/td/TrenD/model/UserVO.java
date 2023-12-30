@@ -22,15 +22,15 @@ public class UserVO {
 	@Column(name = "userName")
 	private String userName;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "genCd")
 	private GenderVO genderVO;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "ageCd")
 	private AgeVO ageVO;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "locCd")
 	private LocationVO locationVO;
 

@@ -22,7 +22,7 @@ public class TrendReVO {
 	@Column(name = "trNo")
 	private int trNo;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "userId")
 	private UserVO userVO;
 
