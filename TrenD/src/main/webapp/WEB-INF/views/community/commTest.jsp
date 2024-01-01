@@ -4,10 +4,8 @@
 <html>
 <head>
     <title>커뮤니티 작성 폼</title>
+    <jsp:include page="../include/metalink.jsp"/>
 </head>
-
-
-
 <body>
 <jsp:include page="../include/header.jsp"/>
 <jsp:include page="../include/sidebar.jsp"/>

@@ -31,9 +31,9 @@ public interface CommunityRepository extends JpaRepository<TrendVO, Integer> {
     @Transactional
     @Query("update TrendVO t set t.cateCd = :cateCd, t.trSubject = :trSubject, t.trContent = :trContent, t.trUpdate = :trUpdate where t.trNo = :trNo")
     int commUpdate(@Param("trNo") int trNo,
-                       @Param("cateCd") String cateCd,
-                       @Param("trSubject") String trSubject,
-                       @Param("trContent") String trContent,
-                       @Param("trUpdate") Date trUpdate);
+                   @Param("cateCd") String cateCd,
+                   @Param("trSubject") String trSubject,
+                   @Param("trContent") String trContent,
+                   @Param("trUpdate") Date trUpdate);
 
 }

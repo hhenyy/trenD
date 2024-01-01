@@ -8,10 +8,11 @@
 
 
 
+    <jsp:include page="../include/metalink.jsp"/>
 </head>
 <body>
-<%@ include file="../include/header.jsp" %>
-<%@ include file="../include/sidebar.jsp" %>
+<jsp:include page="../include/header.jsp"/>
+<jsp:include page="../include/sidebar.jsp"/>
 <main id="main" class="main">
 
 
@@ -66,7 +67,7 @@
 </main>
 
 
-<%@ include file="../include/footer.jsp" %>
+<jsp:include page="../include/footer.jsp"/>
 
 </body>
 </html>
