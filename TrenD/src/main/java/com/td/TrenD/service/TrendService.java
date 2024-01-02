@@ -17,4 +17,8 @@ public class TrendService {
         return trendRepository.findTrendList(pageable);
     }
 
+    public Page<TrendVO> searchTrendList(String keyword, PageRequest pageable) {
+        return trendRepository.searchTrendList(keyword, pageable);
+    }
+
 }
