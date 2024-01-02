@@ -81,7 +81,7 @@ public class CommunityController {
         return "redirect:/";
     }
 
-    @RequestMapping("commContent")
+    @RequestMapping("post")
     public String commContent(HttpServletRequest request, Model model) {
 
 
