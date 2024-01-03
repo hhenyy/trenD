@@ -305,7 +305,7 @@
 
   </script>
 </head>
-
+<jsp:include page="../include/metalink.jsp"/>
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
 
 <jsp:include page="../include/header.jsp"/>

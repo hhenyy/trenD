@@ -1,9 +1,7 @@
 package com.td.TrenD.controller;
 
 import com.td.TrenD.model.CategoryVO;
-import com.td.TrenD.model.StatisticsVO;
 import com.td.TrenD.model.TrendVO;
-//import com.td.TrenD.commService.CommunityService;
 import com.td.TrenD.model.UserVO;
 import com.td.TrenD.service.CommunityService;
 import com.td.TrenD.service.StatisticsService;
@@ -14,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -53,13 +52,15 @@ public class CommunityController {
     }
 
     @RequestMapping("commInsert")
-    public String commInsert(HttpServletRequest request) {
+    public String commInsert(HttpServletRequest request, HttpSession session) {
 
-        System.out.println("commInsert");
+        String userId = (String) session.getAttribute("userId");
 
         TrendVO comm = new TrendVO();
+        UserVO user = new UserVO();
+        user.setUserId(userId);
 
-        comm.setUserId("sun");
+        comm.setUserVO(user);
         comm.setCateCd(request.getParameter("cateCd"));
         comm.setTrSubject(request.getParameter("trSubject"));
         comm.setTrContent(request.getParameter("trContent"));
@@ -76,8 +77,6 @@ public class CommunityController {
 
         return "redirect:/";
     }
-
-
 
 
     @RequestMapping("commUpdateForm")
@@ -139,7 +138,6 @@ public class CommunityController {
     public String searchTest(HttpServletRequest request, Model model) {
 
         model.addAttribute("keyword", request.getParameter("keyword"));
-
 
 
         return "main/totalSearch";
