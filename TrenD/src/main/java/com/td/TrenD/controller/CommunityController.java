@@ -9,8 +9,6 @@ import com.td.TrenD.service.CommunityService;
 import com.td.TrenD.service.StatisticsService;
 import com.td.TrenD.service.TrendService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 @Controller
 public class CommunityController {
@@ -62,7 +59,6 @@ public class CommunityController {
 
         TrendVO comm = new TrendVO();
 
-
         comm.setUserId("sun");
         comm.setCateCd(request.getParameter("cateCd"));
         comm.setTrSubject(request.getParameter("trSubject"));
@@ -81,91 +77,7 @@ public class CommunityController {
         return "redirect:/";
     }
 
-    @RequestMapping("post")
-    public String commContent(HttpServletRequest request, Model model) {
 
-
-        // 트렌드 글 처리 별도 조건문 처리
-
-        UserVO user = new UserVO();
-
-        String userId;
-//        userId = request.getParameter("userId");
-        userId = "sun";
-
-        TrendVO post = new TrendVO();
-        int trNo = Integer.parseInt(request.getParameter("trNo"));
-
-        post = commService.commContent(trNo);
-        if (post.getTrDelYn() == 'n') {
-            int readCount = post.getTrReadCount() + 1;
-            post.setTrReadCount(readCount);
-            trendService.saveTrend(post);
-
-
-            StatisticsVO statics = new StatisticsVO();
-            statics = staticsService.checkStatics(userId, trNo);
-            if (statics == null) {
-                statics = new StatisticsVO();
-                statics.setTrNo(trNo);
-                user.setUserId(userId);
-                statics.setUserVO(user);
-                staticsService.saveStatics(statics);
-            }
-        }
-
-
-        model.addAttribute("post", post);
-
-
-        // =============== 통계 DB input
-
-//      String dbin[] =  {"input11",
-//                "input12",
-//            "input21",
-//                    "input22",
-//            "input31",
-//                    "input32",
-//            "input41",
-//                    "input42",
-//            "input51",
-//                    "input52"
-//        };
-//
-//      for(int i = 0; i < 5; i++){
-//
-//          userId = dbin[(int)(Math.random()*10)];
-//
-//
-//        TrendVO post = new TrendVO();
-//        int trNo = Integer.parseInt(request.getParameter("trNo"));
-//
-//        post = commService.commContent(trNo);
-//        if (post.getTrDelYn() == 'n') {
-//            int readCount = post.getTrReadCount() + 1;
-//            post.setTrReadCount(readCount);
-//            trendService.saveTrend(post);
-//        }
-//
-//        StatisticsVO statics = new StatisticsVO();
-//        statics = staticsService.checkStatics(userId, trNo);
-//        if(statics == null){
-//            statics = new StatisticsVO();
-//            statics.setTrNo(trNo);
-//            user.setUserId(userId);
-//            statics.setUserVO(user);
-//            staticsService.saveStatics(statics);
-//        }
-//
-//
-//
-//        model.addAttribute("post", post);
-//
-//      }
-// =============== 통계 DB input
-
-        return "community/commContent";
-    }
 
 
     @RequestMapping("commUpdateForm")
@@ -177,7 +89,7 @@ public class CommunityController {
 
         TrendVO post = new TrendVO();
         int trNo = Integer.parseInt(request.getParameter("trNo"));
-        post = commService.commContent(trNo);
+        post = trendService.trendContent(trNo);
         model.addAttribute("post", post);
 
         return "community/commUpdate";
@@ -206,7 +118,7 @@ public class CommunityController {
 
         trendService.saveTrend(trendVO);
 
-        return "redirect:commContent?trNo=" + trNo;
+        return "redirect:post?trNo=" + trNo;
     }
 
     @RequestMapping("deletePost")

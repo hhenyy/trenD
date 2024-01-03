@@ -20,7 +20,7 @@
 <c:if test="${Character.toString(post.trDelYn) eq 'y'}">
     <script>
         alert('해당 글은 삭제되었습니다.');
-        window.location.href = '/';
+        window.location.href = '../../..';
     </script>
 </c:if>
 

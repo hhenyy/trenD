@@ -20,13 +20,14 @@ public class TrendService {
     }
 
 
+    public TrendVO trendContent(int trNo) {
+        return trendRepository.trendContent(trNo);
+    }
+
+
     public TrendVO saveTrend(TrendVO trendVO) {
         return trendRepository.save(trendVO);
     }
-
-//    public List<TrendVO> searchTrend(String keyword){
-//        return trendRepository.findByTrSubjectContaining(keyword);
-//    }
 
 
     public Page<TrendVO> commSearchResult(String keyword, String cateCd, Pageable pageable){
@@ -36,15 +37,11 @@ public class TrendService {
         return trendRepository.trendSearchResult(keyword, cateCd, pageable);
     }
 
-//    public Page<TrendVO> commSearchResult(String keyword, String cateCd, Pageable pageable){
-//        return trendRepository.findByTrSubjectContainingIgnoreCaseAndCategoryVO_CateCdNot(keyword, cateCd, pageable);
-//    }
-
-public int commSearchResultCount(String cateCd, String keyword){
-        return trendRepository.countTrendVOByCateCdNotContainingIgnoreCaseAndTrSubjectContaining(cateCd, keyword);
+public int commSearchResultCount(String cateCd, String keyword, char trDelYn){
+        return trendRepository.countTrendVOByCateCdNotContainingIgnoreCaseAndTrSubjectContainingAndTrDelYn(cateCd, keyword, trDelYn);
 }
-public int trendSearchResultCount(String cateCd, String keyword){
-        return trendRepository.countTrendVOByCateCdContainingIgnoreCaseAndTrSubjectContaining(cateCd, keyword);
+public int trendSearchResultCount(String cateCd, String keyword, char trDelYn){
+        return trendRepository.countTrendVOByCateCdContainingIgnoreCaseAndTrSubjectContainingAndTrDelYn(cateCd, keyword, trDelYn);
 }
 
 }

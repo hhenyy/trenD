@@ -23,8 +23,7 @@ public interface CommunityRepository extends JpaRepository<TrendVO, Integer> {
     @Query("select t from TrendVO t order by t.trNo desc")
     List<TrendVO> commList();
 
-    @Query("select t from TrendVO t join t.categoryVO c where t.trNo = :trNo")
-    TrendVO commContent(@Param("trNo") int trNo);
+
 
 
     @Modifying

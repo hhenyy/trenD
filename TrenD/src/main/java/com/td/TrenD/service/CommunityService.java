@@ -36,10 +36,6 @@ public class CommunityService {
         return commRepo.commList();
     }
 
-    public TrendVO commContent(int trNo) {
-        return commRepo.commContent(trNo);
-    }
-
     public int commUpdate(int trNo, String cateCd, String trSubject, String trContent, Date trUpdate) {
         return commRepo.commUpdate(trNo, cateCd, trSubject, trContent, trUpdate);
     }

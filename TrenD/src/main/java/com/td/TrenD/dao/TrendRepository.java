@@ -13,15 +13,20 @@ import java.util.List;
 @Repository
 public interface TrendRepository extends JpaRepository<TrendVO, Integer> {
 
-    @Query("SELECT c FROM TrendVO c WHERE c.trSubject LIKE concat( '%' , :keyword, '%') AND (c.categoryVO.cateCd <> :cateCd) ORDER BY c.trNo DESC")
+    @Query("select t from TrendVO t join t.categoryVO c where t.trNo = :trNo")
+    TrendVO trendContent(@Param("trNo") int trNo);
+
+
+    @Query("SELECT c FROM TrendVO c WHERE c.trSubject LIKE concat( '%' , :keyword, '%') AND c.categoryVO.cateCd <> :cateCd AND c.trDelYn = 'n' ORDER BY c.trNo DESC")
     Page<TrendVO> commSearchResult(@Param("keyword") String keyword, @Param("cateCd") String cateCd, Pageable pageable);
 
-    @Query("SELECT c FROM TrendVO c WHERE c.trSubject LIKE concat( '%' , :keyword, '%') AND (c.categoryVO.cateCd = :cateCd) ORDER BY c.trNo DESC")
+    @Query("SELECT c FROM TrendVO c WHERE c.trSubject LIKE concat('%', :keyword, '%') AND c.categoryVO.cateCd = :cateCd AND c.trDelYn = 'n' ORDER BY c.trNo DESC")
     Page<TrendVO> trendSearchResult(@Param("keyword") String keyword, @Param("cateCd") String cateCd, Pageable pageable);
 
-    int countTrendVOByCateCdContainingIgnoreCaseAndTrSubjectContaining(String cateCd, String Keyword);
+    int countTrendVOByCateCdContainingIgnoreCaseAndTrSubjectContainingAndTrDelYn(String cateCd, String keyword, char trDelYn);
 
-    int countTrendVOByCateCdNotContainingIgnoreCaseAndTrSubjectContaining(String cateCd, String keyword);
+
+    int countTrendVOByCateCdNotContainingIgnoreCaseAndTrSubjectContainingAndTrDelYn(String cateCd, String keyword, char trDelYn);
 
 
 

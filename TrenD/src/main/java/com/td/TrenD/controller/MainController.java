@@ -26,9 +26,9 @@ public class MainController {
     public TotalSearchVO commTotalSearch(@RequestParam String keyword, @RequestParam(defaultValue = "1") String page) {
 
         String cateCd = "t";
-        int count = trendService.commSearchResultCount("t", keyword);
+        int count = trendService.commSearchResultCount("t", keyword, 'n');
         int size = 10;
-        int lastPage = 0;
+        int lastPage = 1;
         if (count > 1) {
             lastPage = (count - 1) / size + 1;
         }
@@ -59,9 +59,9 @@ public class MainController {
     public TotalSearchVO trendTotalSearch(@RequestParam String keyword, @RequestParam(defaultValue = "1") String page) {
 
         String cateCd = "t";
-        int count = trendService.trendSearchResultCount("t", keyword);
+        int count = trendService.trendSearchResultCount("t", keyword, 'n');
         int size = 10;
-        int lastPage = 0;
+        int lastPage = 1;
         if (count > 1) {
             lastPage = (count - 1) / size + 1;
         }
