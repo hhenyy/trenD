@@ -1,8 +1,8 @@
 package com.td.TrenD.model;
 
-import lombok.*;
-import javax.persistence.*;
-import java.sql.Timestamp;
+		import lombok.*;
+		import javax.persistence.*;
+		import java.sql.Timestamp;
 
 @Getter
 @Setter

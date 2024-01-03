@@ -10,6 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 
 @RestController
@@ -29,10 +33,34 @@ public class TrendReController {
 
 	// 댓글 리스트 조회
 	@GetMapping("/post/{trNo}/reply")
-	public Page<TrendReVO> findAllReply(@PathVariable final Integer trNo, final RePagingVO params) {
+	public Map<String, Object> findAllReply(@PathVariable final Integer trNo, final RePagingVO params) {
 		System.out.println("TrendReController.findAllReply");
-		Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "trReDate"));
-		return trendReService.findByTrNo(params, pageable);
+		Pageable pageable = PageRequest.of(params.getPage(), params.getItemPerPage(), Sort.by(Sort.Direction.ASC, "trReNo"));
+		Page<TrendReVO> page = trendReService.findByTrNo(params, pageable);
+
+		//예외처리
+		if (page == null) return null;
+
+		Map<String, Object> response = new HashMap<>();
+
+		//페이징
+		List<TrendReVO> content = page.getContent();
+		int totalPages = page.getTotalPages();
+		int currentPage = params.getPage() + 1;
+		int pageListSize = params.getPageListSize();
+		int startPage = (currentPage / pageListSize) * pageListSize + 1;
+		int endPage = startPage + pageListSize - 1;
+
+		if (endPage > totalPages) endPage = totalPages;
+
+		response.put("content", content);
+		response.put("currentPage", currentPage);
+		response.put("totalPages", totalPages);
+		response.put("pageListSize", pageListSize);
+		response.put("startPage", startPage);
+		response.put("endPage", endPage);
+
+		return response;
 	}
 
 	// 댓글 상세정보 조회

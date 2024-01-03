@@ -42,23 +42,6 @@
             findAllComment();
         }
 
-        //date format convert
-        function dateFormat(date) {
-            let month = date.getMonth() + 1;
-            let day = date.getDate();
-            let hour = date.getHours();
-            let minute = date.getMinutes();
-            let second = date.getSeconds();
-
-            month = month >= 10 ? month : '0' + month;
-            day = day >= 10 ? day : '0' + day;
-            hour = hour >= 10 ? hour : '0' + hour;
-            minute = minute >= 10 ? minute : '0' + minute;
-            second = second >= 10 ? second : '0' + second;
-
-            return date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
-        }
-
         // 전체 댓글 조회
         function findAllComment(page) {
             const currentPage = document.querySelector('.paging a.on');
@@ -67,18 +50,84 @@
             const trNo = ${trNo};
             const uri = `/post/${trNo}/reply`;
             const params = {
-                page : page,
-                recordSize : 10,
-                pageSize : 10,
+                page : page - 1,
+                pageListSize : 10,
+	            itemPerPage : 10,
                 trNo : trNo,
             }
 
             const response = getJson(uri, params);
 
-            drawComments(response.content);
-            // drawPage(pagination, page);
+            drawComments(response);
+            if (response.content.length > 0)
+                drawPage(response);
         }
 
+        // 댓글 HTML draw
+        function drawComments(response) {
+
+            if (response === null) {
+                document.querySelector('.cm_list').innerHTML = '<div class="cm_none"><p>등록된 댓글이 없습니다.</p></div>';
+                return false;
+            }
+
+            let commentHtml = '';
+
+            response.content.forEach(row => {
+                let id = row.userVO.userId;
+                let date = new Date(row.trReDate).toLocaleDateString();
+                let content = row.trReContent;
+                let trReNo = row.trReNo;
+
+                commentHtml +=
+                    ' <div> ' +
+                    '<span class="writer_img"><img src="/images/default_profile.png" width="30" height="30" alt="기본 프로필 이미지"/></span> ' +
+                    '<p class="writer"> ' +
+                    '<em>' + id + '</em>' +
+                    '</p>' +
+                    '<span class="date">' + date + '</span>' +
+                    '<div class="cont"><div class="txt_con">' + content + '</div></div>' +
+                    '<p class="func_btns">' +
+                    "<button type='button' onclick='openCommentUpdatePopup(" + trReNo + ");' class='btns'><span class='icons icon_modify'>수정</span></button>" +
+                    "<button type='button' onclick='deleteComment(" + trReNo + ");' class='btns'><span class='icons icon_del'>삭제</span></button>" +
+                    '</p>' +
+                    '</div>';
+            })
+
+            document.querySelector('.cm_list').innerHTML = commentHtml;
+        }
+
+
+        // 페이지네이션 HTML draw
+        function drawPage(response) {
+            let html = '';
+            let totalPages = response.totalPages;
+            let currentPage = response.currentPage;
+            let startPage = response.startPage;
+            let endPage = response.endPage;
+            let prevPage = startPage - response.pageListSize;
+            let nextPage = startPage + response.pageListSize;
+
+            if (startPage > 1)
+                html += '<a href="javascript:void(0);" onclick="findAllComment(' + prevPage + ')" class="page_bt prev">이전 페이지</a>'
+
+            //페이지 버튼
+            for (let idx = startPage; idx <= endPage; idx++) {
+                html += '<a href="javascript:void(0);" onclick="findAllComment(' + idx + ');">' + idx + '</a>'
+            }
+
+			if (endPage !== totalPages)
+                html += '<a href="javascript:void(0);" onclick="findAllComment(' + nextPage + ');" class="page_bt next">다음 페이지</a>'
+
+            //랜더링
+            const paging = document.querySelector('.paging');
+            paging.innerHTML = html;
+
+            // 7. 사용자가 클릭한 페이지 번호(page) 또는 끝 페이지 번호(totalPageCount)에 해당되는 a 태그를 찾아 활성화(active) 처리한 후 클릭 이벤트 제거
+            const selectedPage = Array.from(paging.querySelectorAll('a')).find(a => (Number(a.text) === currentPage || Number(a.text) === totalPages));
+            selectedPage.classList.add('on');
+            selectedPage.removeAttribute('onclick');
+        }
 
         // 댓글 길이 카운팅
         function countingLength(content) {
@@ -207,88 +256,6 @@
                     console.log(error)
                 }
             })
-        }
-
-        // 댓글 HTML draw
-        function drawComments(replyList) {
-            if ( !replyList.length ) {
-                document.querySelector('.cm_list').innerHTML = '<div class="cm_none"><p>등록된 댓글이 없습니다.</p></div>';
-                return false;
-            }
-
-            let commentHtml = '';
-
-            replyList.forEach(row => {
-                let id = row.userVO.userId;
-                let date = new Date(row.trReDate);
-                let content = row.trReContent;
-                let trReNo = row.trReNo;
-                commentHtml +=
-                    ' <div> ' +
-                    '<span class="writer_img"><img src="/images/default_profile.png" width="30" height="30" alt="기본 프로필 이미지"/></span> ' +
-                    '<p class="writer"> ' +
-                    '<em>' + id + '</em>' +
-                    '</p>' +
-                    '<span class="date">' + dateFormat(date) + '</span>' +
-                    '<div class="cont"><div class="txt_con">' + content + '</div></div>' +
-                    '<p class="func_btns">' +
-                    "<button type='button' onclick='openCommentUpdatePopup(" + trReNo + ");' class='btns'><span class='icons icon_modify'>수정</span></button>" +
-                    "<button type='button' onclick='deleteComment(" + trReNo + ");' class='btns'><span class='icons icon_del'>삭제</span></button>" +
-                    '</p>' +
-                    '</div>';
-            })
-
-            document.querySelector('.cm_list').innerHTML = commentHtml;
-        }
-
-
-        // 페이지네이션 HTML draw
-        function drawPage(pagination, page) {
-
-            // 1. 필수 파라미터가 없는 경우, 페이지네이션 HTML을 제거한 후 로직 종료
-            if ( !pagination || !page ) {
-                document.querySelector('.paging').innerHTML = '';
-                throw new Error('Missing required parameters...');
-            }
-
-            // 2. 페이지네이션 HTML을 그릴 변수
-            let html = '';
-
-            // 3. 첫/이전 페이지 버튼 추가
-            if (pagination.existPrevPage) {
-                html += `
-                        <a href="javascript:void(0);" onclick="findAllComment(1)" class="page_bt first">첫 페이지</a>
-                        <a href="javascript:void(0);" onclick="findAllComment(${pagination.startPage - 1})" class="page_bt prev">이전 페이지</a>
-                    `;
-            }
-
-            // 4. 페이지 번호 추가
-            html += '<p>';
-            for (let i = pagination.startPage; i <= pagination.endPage; i++) {
-                html += `<a href="javascript:void(0);" onclick="findAllComment(${i});">${i}</a>`
-            }
-            html += '</p>';
-
-            // 5. 다음/끝 페이지 버튼 추가
-            if (pagination.existNextPage) {
-                html += `
-                        <a href="javascript:void(0);" onclick="findAllComment(${pagination.endPage + 1});" class="page_bt next">다음 페이지</a>
-                        <a href="javascript:void(0);" onclick="findAllComment(${pagination.totalPageCount});" class="page_bt last">마지막 페이지</a>
-                    `;
-            }
-
-            // 6. <div class="paging"></div> 태그에 변수 html에 담긴 내용을 렌더링
-            const paging = document.querySelector('.paging');
-            paging.innerHTML = html;
-
-            // 7. 사용자가 클릭한 페이지 번호(page) 또는 끝 페이지 번호(totalPageCount)에 해당되는 a 태그를 찾아 활성화(active) 처리한 후 클릭 이벤트 제거
-            const currentPage = Array.from(paging.querySelectorAll('a')).find(a => (Number(a.text) === page || Number(a.text) === pagination.totalPageCount));
-            currentPage.classList.add('on');
-            currentPage.removeAttribute('onclick');
-
-            // 8. 페이지 URI 강제 변경
-            const postId = new URLSearchParams(location.search).get('id');
-            history.replaceState({}, '', location.pathname + `?id=${postId}&page=${currentPage.text}`);
         }
 	</script>
 </head>

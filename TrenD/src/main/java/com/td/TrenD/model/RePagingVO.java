@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 public class RePagingVO extends TrendReVO{
 	private int page;
-	private int recordSize;
-	private int pageSize;
+	private int pageListSize;
+	private int itemPerPage;
 }
