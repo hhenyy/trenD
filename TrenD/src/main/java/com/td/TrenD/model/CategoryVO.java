@@ -1,10 +1,7 @@
 package com.td.TrenD.model;
 
-import lombok.Data;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.*;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -16,6 +13,5 @@ public class CategoryVO {
     private String cateNm;
     private char cateDelYn;
     private String idx_category;
-
 
 }

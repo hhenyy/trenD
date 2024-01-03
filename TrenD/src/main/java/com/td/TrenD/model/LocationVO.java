@@ -22,5 +22,6 @@ public class LocationVO {
 	private Character locDelYn;
 
 	@Column(name = "idx_location")
-	private String idxLocation;
+	private String idx_location;
+
 }

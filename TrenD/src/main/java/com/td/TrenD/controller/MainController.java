@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/main")  // 기본 경로 설정
+@RequestMapping("/main")
 @RequiredArgsConstructor
 public class MainController {
 

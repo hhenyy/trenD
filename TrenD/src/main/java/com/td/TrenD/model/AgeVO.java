@@ -22,5 +22,5 @@ public class AgeVO {
 	private Character ageDelYn;
 
 	@Column(name = "idx_age")
-	private String idxAge;
+	private String idx_age;
 }
