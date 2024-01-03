@@ -29,7 +29,7 @@
     </script>
 
 
-
+    <jsp:include page="../include/metalink.jsp"/>
 </head>
 
 <body class="d-flex align-items-center justify-content-center min-vh-100 py-4 bg-body-tertiary">

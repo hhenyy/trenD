@@ -32,7 +32,7 @@
 <c:forEach var = "list" items="${commList}">
     <tr>
         <td>${list.trNo}</td>
-        <td>${list.userId}</td>
+        <td>${list.userVO.userName}</td>
         <td>${list.cateCd}</td>
         <td><a href = "post?trNo=${list.trNo}">${list.trSubject}</a></td>
         <td>${list.trContent}</td>
