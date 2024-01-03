@@ -1,45 +1,33 @@
 package com.td.TrenD.model;
 
 import lombok.*;
+
 import javax.persistence.*;
 import java.util.Date;
 
-@Getter
-@Setter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "trend_tbl")
 public class TrendVO {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "trNo", nullable = false)
-	private int trNo;
 
-	@ManyToOne
-	@JoinColumn(name = "userId")
-	private UserVO userVO;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int trNo;
 
-	@ManyToOne
-	@JoinColumn(name = "cateCd")
-	private CategoryVO categoryVO;
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private UserVO userVO;
 
-	@Column(name = "trSubject")
-	private String trSubject;
+    @ManyToOne
+    @JoinColumn(name = "cateCd", insertable = false, updatable = false)
+    private CategoryVO categoryVO;
 
-	@Column(name = "trContent")
-	private String trContent;
+    private String cateCd;
+    private String trSubject;
+    private String trContent;
+    private int trReadCount;
+    private Date trDate;
+    private Date trUpdate;
+    private char trDelYn;
 
-	@Column(name = "trReadCount")
-	private Integer trReadCount;
-
-	@Column(name = "trDate")
-	private Date trDate;
-
-	@Column(name = "trUpdate")
-	private Date trUpdate;
-
-	@Column(name = "trDelYn")
-	private Character trDelYn;
 }
