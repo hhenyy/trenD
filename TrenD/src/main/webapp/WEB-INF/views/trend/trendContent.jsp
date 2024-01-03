@@ -35,7 +35,7 @@
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">${post.categoryVO.cateNm}</li>
-                        <li class="breadcrumb-item">${post.userId}</li>
+                        <li class="breadcrumb-item">${post.userVO.userName}</li>
                         <li class="breadcrumb-item">${post.trDate}</li>
                     </ol>
                 </nav>
