@@ -59,4 +59,13 @@ public class TrendController {
         return "trend/trendContent";
     }
 
+    @RequestMapping("totalSearch")
+    public String totalSearch(HttpServletRequest request, Model model) {
+
+        model.addAttribute("keyword", request.getParameter("keyword"));
+
+        return "main/totalSearch";
+    }
+
+
 }

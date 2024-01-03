@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="com.td.TrenD.model.TrendVO" %>
+<%
+    TrendVO post = (TrendVO) request.getAttribute("post");
+
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    String formattedDate = dateFormat.format(post.getTrDate());
+%>
 <!DOCTYPE html>
 <html>
 
@@ -31,12 +40,13 @@
         <div class="pagetitle">
 
             <h1>커뮤니티 게시판</h1>
+            <div name = "info" style="display: flex; justify-content: space-between";>
             <div class="title_left">
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">${post.categoryVO.cateNm}</li>
                         <li class="breadcrumb-item">${post.userVO.userName}</li>
-                        <li class="breadcrumb-item">${post.trDate}</li>
+                        <li class="breadcrumb-item"><%=formattedDate%></li>
                     </ol>
                 </nav>
             </div>
@@ -44,11 +54,14 @@
             <div class="title_right">
                 <nav>
                     <ol class="breadcrumb">
+                        <c:if test="${sessionScope.userId.equals(post.userVO.userId)}">
                         <li class="breadcrumb-item"><a href="javascript:void(0);" onclick="deletePost()">삭제</a></li>
                         <li class="breadcrumb-item"><a href="javascript:void(0);" onclick="updateForm()">수정</a></li>
-                        <li class="breadcrumb-item"><a href="/">목록</a></li>
+                        </c:if>
+                            <li class="breadcrumb-item"><a href="/">목록</a></li>
                     </ol>
                 </nav>
+            </div>
             </div>
         </div><!-- End Page Title -->
         <!--본문-->

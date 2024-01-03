@@ -134,13 +134,5 @@ public class CommunityController {
         return "redirect:/";
     }
 
-    @RequestMapping("totalSearch")
-    public String searchTest(HttpServletRequest request, Model model) {
-
-        model.addAttribute("keyword", request.getParameter("keyword"));
-
-
-        return "main/totalSearch";
-    }
 
 }

@@ -16,7 +16,7 @@
 
             <h1>통합검색</h1>
 
- <div class="title_left">
+            <div class="title_left">
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"></li>
@@ -53,14 +53,14 @@
             </table>
 
             <div style="display: flex; justify-content: center; margin-bottom: 10px;">
-            <!-- Pagination with icons -->
-            <nav aria-label="Page navigation example">
-                <ul class="pagination" id="trendPage">
+                <!-- Pagination with icons -->
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination" id="trendPage">
 
-                    <!-- script로 trend 페이징 출력 -->
+                        <!-- script로 trend 페이징 출력 -->
 
-                </ul>
-            </nav><!-- End Pagination with icons -->
+                    </ul>
+                </nav><!-- End Pagination with icons -->
             </div>
         </div>
         <!-- 통합검색(트렌드 출력 공간) end-->
@@ -89,16 +89,16 @@
             </table>
 
             <div style="display: flex; justify-content: center; margin-bottom: 10px;">
-            <!-- Pagination with icons -->
-            <nav aria-label="Page navigation example">
-                <ul class="pagination" id="commPage">
+                <!-- Pagination with icons -->
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination" id="commPage">
 
 
-                    <!-- script로 comm 페이징 출력 -->
+                        <!-- script로 comm 페이징 출력 -->
 
 
-                </ul>
-            </nav><!-- End Pagination with icons -->
+                    </ul>
+                </nav><!-- End Pagination with icons -->
             </div>
             <!-- 통합검색(커뮤니티 출력 공간) end-->
         </div>
