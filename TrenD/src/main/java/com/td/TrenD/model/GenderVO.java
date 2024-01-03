@@ -23,4 +23,5 @@ public class GenderVO {
 
 	@Column(name = "idx_gender")
 	private String idx_gender;
+
 }
