@@ -1,0 +1,7 @@
+.title_left, .title_right {
+    display: inline-block;
+}
+
+.title_right {
+    float: right;
+}

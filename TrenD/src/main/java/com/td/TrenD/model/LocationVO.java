@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
+
 @Getter
 @Setter
 @Builder
@@ -24,4 +25,5 @@ public class LocationVO {
 
 	@Column(name = "idx_location")
 	private String idx_location;
+
 }

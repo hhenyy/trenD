@@ -23,4 +23,5 @@ public class JpaConfig {
 
         return em;
     }
+
 }

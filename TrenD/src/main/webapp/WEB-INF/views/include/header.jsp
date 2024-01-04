@@ -1,36 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-<title>CSS</title>
-<meta content="" name="description">
-<meta content="" name="keywords">
-
-<!-- Favicons -->
-<link href="${pageContext.request.contextPath}/assets/img/favicon.png" rel="icon">
-<link href="${pageContext.request.contextPath}/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-<!-- Google Fonts -->
-<link href="https://fonts.gstatic.com" rel="preconnect">
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-      rel="stylesheet">
-
-<!-- Vendor CSS Files -->
-<link href="${pageContext.request.contextPath}/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/assets/vendor/quill/quill.snow.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/assets/vendor/simple-datatables/style.css" rel="stylesheet">
-
-<!-- Template Main CSS File -->
-<link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet">
-
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-
 <!-- ======= Header ======= -->
 <header id="header" class="header fixed-top d-flex align-items-center">
 
@@ -45,13 +15,28 @@
 
     <div class="search-bar">
         <form class="search-form d-flex align-items-center" method="get"
-              action="totalSearch">
+              action="totalSearch" id = "totalSearch">
             <input type="text" name="keyword" placeholder="검색"
-                   value="${keyword}" title="Enter search keyword">
+                   value="${keyword}" title="Enter search keyword" id="keyword">
+
             <button type="submit" title="Search">
                 <i class="bi bi-search"></i>
             </button>
         </form>
+
+        <script>
+            $(function(){
+                $("#totalSearch").submit(function(){
+                    if($("#keyword").val()==""){
+                        alert("검색어를 입력하세요");
+                        $("#keyword").focus();
+                        return false;
+                    }
+                });
+            });
+
+        </script>
+
     </div>
     <!-- End Search Bar -->
 
@@ -64,44 +49,55 @@
                 </a>
             </li>
             <!-- End Search Icon-->
+            <c:choose>
+                <c:when test="${not empty sessionScope.userName}">
+                    <li class="nav-item dropdown pe-3">
+                        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
+                           data-bs-toggle="dropdown">
+                            <span class="d-none d-md-block dropdown-toggle ps-2">${sessionScope.userName}</span>
+                        </a>
+                        <!-- End Profile Iamge Icon -->
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                            <li class="dropdown-header">
+                                <h6>${sessionScope.userName}</h6>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center"
+                                   href="${pageContext.request.contextPath}/mypage/userpage">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <span>마이페이지</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/editUserForm">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <span>회원정보수정</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center"
+                                   href="${pageContext.request.contextPath}/logOut">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <span>로그아웃</span>
+                                </a>
+                            </li>
+                        </ul><!-- End Profile Dropdown Items -->
+                    </li>
+                </c:when>
+                <c:otherwise>
+                    <!-- 로그인이 안 된 경우에 대한 처리 -->
+                    <li class="nav-item dropdown pe-3">
+                        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="/loginform">
+                            로그인
+                        </a>
+                    </li>
+                </c:otherwise>
+            </c:choose>
 
-            <c:if test="${not empty sessionScope.userName}">
-                <li class="nav-item dropdown pe-3">
-                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">${sessionScope.userName}</span>
-                    </a>
-                    <!-- End Profile Iamge Icon -->
-                    <ul
-                            class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                        <li class="dropdown-header">
-                            <h6>${sessionScope.userName}</h6>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/editUserForm">
-                                <i class="bi bi-box-arrow-right"></i>
-                                <span>회원정보수정</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/logOut">
-                                <i class="bi bi-box-arrow-right"></i>
-                                <span>로그아웃</span>
-                            </a>
-                        </li>
-                    </ul><!-- End Profile Dropdown Items -->
-                </li>
-                <!-- End Profile Nav -->
-            </c:if>
-            <c:if test="${empty sessionScope.userName}">
-                <li class="nav-item dropdown pe-3">
-                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="/loginform">
-                        로그인
-                    </a>
-                </li>
-            </c:if>
+>>>>>>> fba15b36457389388514d45e77e4151651b978e2
             <!-- End Profile Nav -->
 
 
