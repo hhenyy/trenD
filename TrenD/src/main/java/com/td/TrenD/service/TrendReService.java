@@ -1,22 +1,20 @@
 package com.td.TrenD.service;
 
 import com.td.TrenD.dao.TrendReRepository;
-import com.td.TrenD.dao.UserRepository;
 import com.td.TrenD.model.RePagingVO;
 import com.td.TrenD.model.TrendReVO;
+import com.td.TrenD.model.UserVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class TrendReService {
 	private final TrendReRepository trendReRepository;
-	private final UserRepository userRepository;
 
 	public Page<TrendReVO> findByTrNo(RePagingVO params, Pageable pageable) {
 		System.out.println("TrendReService.findByTrNo");
@@ -24,15 +22,28 @@ public class TrendReService {
 	}
 
 	//저장 후 trReNo 반환
-	public Integer saveReply(TrendReVO params, String userId) {
+	public TrendReVO saveReply(TrendReVO params, UserVO userVO) {
 		System.out.println("TrendReService.saveReply");
-		params.setUserVO(userRepository.findById(userId).get());
+
+		//댓글 - ref x, level 0
+		//대댓글 - ref o, level 1
+		if (params.getTrReRef() != null) params.setTrReLev(1);
+		else params.setTrReLev(0);
+
+		//공통
+		params.setUserVO(userVO);
 		params.setTrReDate(new Timestamp(System.currentTimeMillis()));
 		params.setTrReUpdate(new Timestamp(System.currentTimeMillis()));
 		params.setTrReDelYn('n');
-		params.setTrReRef(0);
-		params.setTrReLev(0);
-		return trendReRepository.save(params).getTrReNo();
+		TrendReVO save = trendReRepository.save(params);
+
+		//댓글
+		if (params.getTrReRef() == null){
+			save.synchronizeRefWithTrReNo();
+			trendReRepository.save(save);
+		}
+
+		return save;
 	}
 
 	public TrendReVO findById(Integer trReNo) {

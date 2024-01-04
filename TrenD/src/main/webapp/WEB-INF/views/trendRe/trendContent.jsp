@@ -78,21 +78,32 @@
                 let date = new Date(row.trReDate).toLocaleDateString();
                 let content = row.trReContent;
                 let trReNo = row.trReNo;
+                let trReLev = row.trReLev;
+                let deleted = row.trReDelYn;
+                let sessionId = '<%= session.getAttribute("id") %>';
+
+
+	commentHtml += '<div class="comment">';
+                if (trReLev > 0) commentHtml += '<i class="bi bi-arrow-return-right" style="margin-right: 5px; vertical-align: top;"></i>';
 
                 commentHtml +=
-                    ' <div> ' +
-                    '<span class="writer_img"><img src="/images/default_profile.png" width="30" height="30" alt="기본 프로필 이미지"/></span> ' +
-                    '<p class="writer"> ' +
-                    '<em>' + id + '</em>' +
-                    '</p>' +
-                    '<span class="date">' + date + '</span>' +
-                    '<div class="cont"><div class="txt_con">' + content + '</div></div>' +
-                    '<p class="func_btns">' +
-                    "<button type='button' onclick='openCommentUpdatePopup(" + trReNo + ");' class='btns'><span class='icons icon_modify'>수정</span></button>" +
-                    "<button type='button' onclick='deleteComment(" + trReNo + ");' class='btns'><span class='icons icon_del'>삭제</span></button>" +
-                    '</p>' +
-                    '</div>';
-            })
+	                '<div class="comment-content" style="margin-left: ' + (trReLev * 10) + 'px; display: inline-block; vertical-align: middle;">' +
+	                '<p style="font-weight: bold; color: black">' + id +'</p>' +
+	                '<span class="date">' + date + '</span>' +
+                    '<div class="cont">' +
+	                '<div class="txt_con" style="color: black">' + ((deleted === 'n') ? content : '삭제된 댓글입니다.') + '</div></div>' +
+	                '<div class="reply"><p class="func_btns">';
+
+                if (trReLev === 0)
+                    commentHtml += "<button type='button' onclick='openReplyInputPopup(" + trReNo + ");' class='btns'><span class='icons icon_reply'>답글</span></button>";
+
+                if (id === sessionId && deleted === 'n') {
+                    commentHtml +=
+	                    "<button type='button' onclick='openCommentUpdatePopup(" + trReNo + ");' class='btns'><span class='icons icon_modify'>수정</span></button>" +
+	                    "<button type='button' onclick='deleteComment(" + trReNo + ");' class='btns'><span class='icons icon_del'>삭제</span></button>";
+                }
+                commentHtml += '</p></div></div></div>';
+            });
 
             document.querySelector('.cm_list').innerHTML = commentHtml;
         }
@@ -257,6 +268,50 @@
                 }
             })
         }
+
+        //답글 저장
+        function saveReply(trReNo) {
+            const content = document.getElementById('inputModalContent');
+            isValid(content, '댓글');
+
+            const trNo = ${trNo};
+            const params = {
+                trNo: trNo,
+	            trReRef: trReNo,
+                trReContent: content.value,
+            }
+
+            $.ajax({
+                url: '/post/${trNo}/reply',
+                type: 'post',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify(params),
+                async: false,
+                success: function (response) {
+                    alert('답글이 저장되었습니다.');
+                    content.value = '';
+                    closeCommentUpdatePopup();
+                    findAllComment();
+                },
+                error: function (request, status, error) {
+                    console.log(error)
+                }
+            })
+        }
+
+        // 답글 입력 팝업 open
+        function openReplyInputPopup(trReNo) {
+            document.getElementById('replyInputBtn').setAttribute('onclick', "saveReply(" + trReNo + ")");
+            layerPop('replyInputPopup');
+        }
+
+        // 답글 입력 팝업 close
+        function closeReplyInputPopup() {
+            document.querySelectorAll('#InputModalContent').forEach(element => element.value = '');
+            document.getElementById('replyInputBtn').removeAttribute('onclick');
+            layerPopClose('replyInputPopup');
+        }
 	</script>
 </head>
 <body>
@@ -320,8 +375,31 @@
 						<button type="button" class="btns btn_bdr2" onclick="closeCommentUpdatePopup();">취소</button>
 					</p>
 				</div>
-				<button type="button" class="btn_close" onclick="closeCommentUpdatePopup();"><span><i
-						class="far fa-times-circle"></i></span></button>
+				<button type="button" class="btn_close" onclick="closeCommentUpdatePopup();"><span><i class="far fa-times-circle"></i></span></button>
+			</div>
+
+			<!--/* 답글 입력 popup */-->
+			<div id="replyInputPopup" class="popLayer">
+				<h3>답글 입력</h3>
+				<div class="pop_container">
+					<table class="tb tb_row tl">
+						<colgroup>
+							<col style="width:30%;"/>
+							<col style="width:70%;"/>
+						</colgroup>
+						<tbody>
+						<tr>
+							<th scope="row">내용<span class="es">필수 입력</span></th>
+							<td><textarea id="inputModalContent" name="modalContent" cols="90" rows="10" placeholder="답글을 입력해 주세요."></textarea></td>
+						</tr>
+						</tbody>
+					</table>
+					<p class="btn_set">
+						<button type="button" id="replyInputBtn" class="btns btn_st2">저장</button>
+						<button type="button" class="btns btn_bdr2" onclick="closeReplyInputPopup();">취소</button>
+					</p>
+				</div>
+				<button type="button" class="btn_close" onclick="closeReplyInputPopup();"><span><i class="far fa-times-circle"></i></span></button>
 			</div>
 		</div>
 	</div>

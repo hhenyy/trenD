@@ -18,11 +18,11 @@ public class TrendVO {
 	@Column(name = "trNo", nullable = false)
 	private int trNo;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "userId")
 	private UserVO userVO;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "cateCd")
 	private CategoryVO categoryVO;
 

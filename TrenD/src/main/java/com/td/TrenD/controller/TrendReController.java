@@ -2,6 +2,7 @@ package com.td.TrenD.controller;
 
 import com.td.TrenD.model.RePagingVO;
 import com.td.TrenD.model.TrendReVO;
+import com.td.TrenD.model.UserVO;
 import com.td.TrenD.service.TrendReService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,16 +27,19 @@ public class TrendReController {
 	@PostMapping("/post/{trNo}/reply")
 	public TrendReVO saveComment(@PathVariable final Integer trNo, @RequestBody final TrendReVO params, HttpSession session) {
 		System.out.println("TrendReController.saveComment");
-		String id = (String) session.getAttribute("id");
-		Integer trReNo = trendReService.saveReply(params, id);
-		return trendReService.findById(trReNo);
+
+		//Create User Instance
+		UserVO userVO = new UserVO();
+		userVO.setUserId((String) session.getAttribute("id"));
+
+		return trendReService.saveReply(params, userVO);
 	}
 
 	// 댓글 리스트 조회
 	@GetMapping("/post/{trNo}/reply")
 	public Map<String, Object> findAllReply(@PathVariable final Integer trNo, final RePagingVO params) {
 		System.out.println("TrendReController.findAllReply");
-		Pageable pageable = PageRequest.of(params.getPage(), params.getItemPerPage(), Sort.by(Sort.Direction.ASC, "trReNo"));
+		Pageable pageable = PageRequest.of(params.getPage(), params.getItemPerPage(), Sort.by(Sort.Direction.ASC, "trReRef", "trReNo"));
 		Page<TrendReVO> page = trendReService.findByTrNo(params, pageable);
 
 		//예외처리

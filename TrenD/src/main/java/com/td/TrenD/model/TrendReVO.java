@@ -1,8 +1,8 @@
 package com.td.TrenD.model;
 
-		import lombok.*;
-		import javax.persistence.*;
-		import java.sql.Timestamp;
+import lombok.*;
+import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -18,28 +18,25 @@ public class TrendReVO {
 	@Column(name = "trReNo", nullable = false)
 	private int trReNo;
 
-	@Column(name = "trNo")
-	private int trNo;
-
 	@ManyToOne
 	@JoinColumn(name = "userId")
 	private UserVO userVO;
 
-	@Column(name = "trReRef")
+	private int trNo;
+
 	private Integer trReRef;
 
-	@Column(name = "trReLev")
 	private Integer trReLev;
 
-	@Column(name = "trReDate")
 	private Timestamp trReDate;
 
-	@Column(name = "trReUpdate")
 	private Timestamp trReUpdate;
 
-	@Column(name = "trReDelYn")
 	private Character trReDelYn;
 
-	@Column(name = "trReContent")
 	private String trReContent;
+
+	public void synchronizeRefWithTrReNo() {
+		this.trReRef = this.trReNo;
+	}
 }

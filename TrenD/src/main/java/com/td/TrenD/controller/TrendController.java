@@ -18,4 +18,10 @@ public class TrendController {
 		session.setAttribute("id", "jun");
 		return "trendRe/trendContent";
 	}
+
+	@RequestMapping("/")
+	public String start() {
+		System.out.println("TrendController.start");
+		return "sample_css/css_test";
+	}
 }
