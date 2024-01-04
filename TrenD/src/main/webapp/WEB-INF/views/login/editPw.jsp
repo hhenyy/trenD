@@ -13,7 +13,7 @@
 
     <script src="./js/user/edit.js"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-
+    <jsp:include page="../include/metalink.jsp"/>
 </head>
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
 

@@ -97,7 +97,6 @@
                 </c:otherwise>
             </c:choose>
 
->>>>>>> fba15b36457389388514d45e77e4151651b978e2
             <!-- End Profile Nav -->
 
 

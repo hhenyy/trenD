@@ -84,7 +84,7 @@ public class LoginService {
         
         // 임시 비밀번호로 변경
         System.out.println(user.getUserName());
-        System.out.println(user.getAgeCd());
+
         user.setUserPw(tempPw);
         user.setUserUpdate(new Date());
         dao.save(user);

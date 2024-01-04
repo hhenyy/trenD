@@ -14,13 +14,16 @@
 
 <%--    <script src="./js/user/edit.js"></script>--%>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-
+    <jsp:include page="../include/metalink.jsp"/>
 </head>
-<body class="d-flex align-items-center py-4 bg-body-tertiary">
 
+
+<body class="d-flex align-items-center py-4 bg-body-tertiary">
 <jsp:include page="../include/header.jsp"/>
 
+
 <main class="form-joinin w-1000 m-auto">
+
     <form name="updateUserform" method="post" action="updateUser"
           onsubmit="return editcheck()">
         <input type="hidden" value="${user.userPw}" name = "userPw">
@@ -122,5 +125,6 @@
     </form>
     <%--<%@ include file="../include/footer.jsp" %>--%>
 </main>
+
 </body>
 </html>
