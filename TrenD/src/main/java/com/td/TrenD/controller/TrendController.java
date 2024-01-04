@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 import com.td.TrenD.model.StatisticsVO;
-import com.td.TrenD.model.TrendVO;
 import com.td.TrenD.model.UserVO;
 import com.td.TrenD.service.StatisticsService;
+import com.td.TrenD.model.TrendVO;
 import com.td.TrenD.service.TrendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,8 +47,8 @@ public class TrendController {
         System.out.println("TrendList Controller - Page: " + page + ", Keyword: " + keyword);
 
         int limit = 10;
-        PageRequest pageable = PageRequest.of(page-1, limit);
-        System.out.println("pageable : "+pageable);
+        PageRequest pageable = PageRequest.of(page - 1, limit);
+        System.out.println("pageable : " + pageable);
 
         try {
             Page<TrendVO> trendPage;
@@ -74,40 +74,39 @@ public class TrendController {
             System.err.println("Error in TrendList Controller: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-    @RequestMapping("post")
-    public String commContent(HttpServletRequest request, Model model) {
-
-
-        // 트렌드 글 처리 별도 조건문 처리
-
-        UserVO user = new UserVO();
-
-        TrendVO post = new TrendVO();
-        int trNo = Integer.parseInt(request.getParameter("trNo"));
-
-        post = trendService.trendContent(trNo);
-        if (post.getTrDelYn() == 'n') {
-            int readCount = post.getTrReadCount() + 1;
-            post.setTrReadCount(readCount);
-            trendService.saveTrend(post);
-
-
-            StatisticsVO statics = new StatisticsVO();
-            statics = staticsService.checkStatics(userId, trNo);
-            if (statics == null) {
-                statics = new StatisticsVO();
-                statics.setTrNo(trNo);
-                user.setUserId(userId);
-                statics.setUserVO(user);
-                staticsService.saveStatics(statics);
-            }
-        }
-
-        model.addAttribute("post", post);
-
-        return "trend/trendContent";
-
     }
 
+        @RequestMapping("post")
+        public String commContent (HttpServletRequest request, Model model){
+
+            // 트렌드 글 처리 별도 조건문 처리
+
+            UserVO user = new UserVO();
+
+            TrendVO post = new TrendVO();
+            int trNo = Integer.parseInt(request.getParameter("trNo"));
+
+            post = trendService.trendContent(trNo);
+            if (post.getTrDelYn() == 'n') {
+                int readCount = post.getTrReadCount() + 1;
+                post.setTrReadCount(readCount);
+                trendService.saveTrend(post);
+
+
+                StatisticsVO statics = new StatisticsVO();
+                statics = staticsService.checkStatics(userId, trNo);
+                if (statics == null) {
+                    statics = new StatisticsVO();
+                    statics.setTrNo(trNo);
+                    user.setUserId(userId);
+                    statics.setUserVO(user);
+                    staticsService.saveStatics(statics);
+                }
+            }
+
+            model.addAttribute("post", post);
+
+            return "trend/trendContent";
+
+    }
 }

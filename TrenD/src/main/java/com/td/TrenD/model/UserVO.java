@@ -1,9 +1,5 @@
 package com.td.TrenD.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.Date;
 import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
@@ -16,8 +12,8 @@ import java.util.Date;
 @Entity
 @Table(name = "user")
 public class UserVO {
-  
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "userId", nullable = false)
 	private String userId;
 
@@ -27,9 +23,17 @@ public class UserVO {
 	@Column(name = "userName")
 	private String userName;
 
-	private String genCd;
-	private String ageCd;
-	private String locCd;
+	@ManyToOne
+	@JoinColumn(name = "genCd")
+	private GenderVO genderVO;
+
+	@ManyToOne
+	@JoinColumn(name = "ageCd")
+	private AgeVO ageVO;
+
+	@ManyToOne
+	@JoinColumn(name = "locCd")
+	private LocationVO locationVO;
 
 	@Column(name = "userEmail")
 	private String userEmail;

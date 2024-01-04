@@ -1,4 +1,5 @@
 package com.td.TrenD.controller;
+
 import com.td.TrenD.model.CategoryVO;
 import com.td.TrenD.model.TrendVO;
 import com.td.TrenD.model.UserVO;
@@ -186,7 +187,6 @@ public class CommunityController {
     public String searchTest(HttpServletRequest request, Model model) {
 
         model.addAttribute("keyword", request.getParameter("keyword"));
-
 
         return "main/totalSearch";
     }
