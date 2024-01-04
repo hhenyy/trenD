@@ -36,9 +36,8 @@
 </head>
 <body class="d-flex align-items-center justify-content-center min-vh-100 py-4 bg-body-tertiary">
 <%@ include file="../include/header.jsp" %>
-<%@ include file="../include/sidebar.jsp" %>
-<%--<jsp:include page="../include/header.jsp"/>
-<jsp:include page="../include/sidebar.jsp"/>--%>
+
+
 <main class="form-signin w-500 m-auto">
 <main class="main">
     <form method="post" action="checkLogin" onsubmit="return check()">
