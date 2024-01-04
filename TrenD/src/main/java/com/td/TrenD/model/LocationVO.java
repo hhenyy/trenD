@@ -24,4 +24,5 @@ public class LocationVO {
 
 	@Column(name = "idx_location")
 	private String idx_location;
+
 }
