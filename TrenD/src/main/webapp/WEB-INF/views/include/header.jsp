@@ -72,7 +72,9 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item d-flex align-items-center" href="${pageContext.request.contextPath}/editUserForm">
+                                <a class="dropdown-item d-flex align-items-center" 
+                                   href="${pageContext.request.contextPath}/editUserForm">
+
                                     <i class="bi bi-box-arrow-right"></i>
                                     <span>회원정보수정</span>
                                 </a>
@@ -96,7 +98,6 @@
                     </li>
                 </c:otherwise>
             </c:choose>
-
             <!-- End Profile Nav -->
 
 
