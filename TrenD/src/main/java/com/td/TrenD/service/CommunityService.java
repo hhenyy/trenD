@@ -4,10 +4,13 @@ import com.td.TrenD.dao.CommunityRepository;
 import com.td.TrenD.model.CategoryVO;
 import com.td.TrenD.model.TrendVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
-
 import javax.swing.tree.TreeNode;
 import javax.transaction.Transactional;
 import java.util.Date;
@@ -31,9 +34,17 @@ public class CommunityService {
     public List<CategoryVO> findAllCategory() {
         return commRepo.findAllCategory();
     }
+  
+    public Page<TrendVO> findCommList(PageRequest pageable){
+        return commRepo.findCommList(pageable);
+    }
 
-    public List<TrendVO> commList() {
-        return commRepo.commList();
+    public Page<TrendVO> findCategoryList(String cateCd, PageRequest pageable){
+        return commRepo.findCategoryList(cateCd, pageable);
+    }
+
+    public Page<TrendVO> searchCommList(String keyword, String search, PageRequest pageable){
+        return commRepo.searchCommList(keyword, search, pageable);
     }
 
     public int commUpdate(int trNo, String cateCd, String trSubject, String trContent, Date trUpdate) {

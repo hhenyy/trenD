@@ -3,6 +3,10 @@ package com.td.TrenD.model;
 import lombok.*;
 import javax.persistence.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 @Data
 @Entity
 @Table(name = "category_code")

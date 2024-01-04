@@ -1,8 +1,11 @@
 package com.td.TrenD.model;
 
-import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import lombok.*;
 import java.util.Date;
 
 @Data
@@ -13,15 +16,6 @@ public class TrendVO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int trNo;
-
-    @ManyToOne
-    @JoinColumn(name = "userId")
-    private UserVO userVO;
-
-    @ManyToOne
-    @JoinColumn(name = "cateCd", insertable = false, updatable = false)
-    private CategoryVO categoryVO;
-
     private String cateCd;
     private String trSubject;
     private String trContent;
@@ -29,5 +23,13 @@ public class TrendVO {
     private Date trDate;
     private Date trUpdate;
     private char trDelYn;
+  
+    @ManyToOne
+    @JoinColumn(name = "cateCd", insertable = false, updatable = false)
+    private CategoryVO categoryVO;
+  
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private UserVO userVO;
 
 }

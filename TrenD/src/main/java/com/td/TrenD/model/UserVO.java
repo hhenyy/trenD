@@ -1,5 +1,9 @@
 package com.td.TrenD.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.Date;
 import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
@@ -12,6 +16,7 @@ import java.util.Date;
 @Entity
 @Table(name = "user")
 public class UserVO {
+  
 	@Id
 	@Column(name = "userId", nullable = false)
 	private String userId;
@@ -21,7 +26,6 @@ public class UserVO {
 
 	@Column(name = "userName")
 	private String userName;
-
 
 	private String genCd;
 	private String ageCd;
