@@ -5,11 +5,13 @@ import com.td.TrenD.model.GenderVO;
 import com.td.TrenD.model.LocationVO;
 import com.td.TrenD.model.UserVO;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface LoginDao extends JpaRepository<UserVO, String> {
@@ -32,4 +34,11 @@ public interface LoginDao extends JpaRepository<UserVO, String> {
     public int checkNick(@Param("userName") String userName);
 
     public UserVO findByUserId(String userId);
+
+    @Modifying
+    @Query(value ="update UserVO SET userDelYn = 'y', userUpdate = CURRENT_TIMESTAMP WHERE userId = :userId")
+    public void deleteUser(@Param("userId") String userId);
+
+    Optional<UserVO> findByUserNameAndUserEmail(String userName, String userEmail);
+
 }
