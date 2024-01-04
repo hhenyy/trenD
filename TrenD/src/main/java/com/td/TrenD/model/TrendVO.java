@@ -6,7 +6,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Data
 @Entity
@@ -26,8 +25,8 @@ public class TrendVO {
 	private Timestamp trUpdate;
 	private char trDelYn;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "cateCd")
+	@ManyToOne
+	@JoinColumn(name = "cateCd", insertable = false, updatable = false)
 	private CategoryVO category;
 
 }
