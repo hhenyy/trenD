@@ -27,23 +27,23 @@ public interface CommunityRepository extends JpaRepository<TrendVO, Integer> {
     List<CategoryVO> findAllCategory();
 
     @Query("SELECT t FROM TrendVO t " +
-            "JOIN CategoryVO c ON t.category.cateCd = c.cateCd " +
+            "JOIN CategoryVO c ON t.categoryVO.cateCd = c.cateCd " +
             "where c.cateCd <> 't' AND t.trDelYn = 'n'"+
             "ORDER BY t.trNo DESC")
     Page<TrendVO> findCommList(Pageable pageable);
 
     @Query("SELECT t FROM TrendVO t " +
-            "JOIN CategoryVO c ON t.category.cateCd = c.cateCd " +
+            "JOIN CategoryVO c ON t.categoryVO.cateCd = c.cateCd " +
             "where c.cateCd = :cateCd AND t.trDelYn = 'n'"+
             " ORDER BY t.trNo DESC")
     Page<TrendVO> findCategoryList(@Param("cateCd") String cateCd ,Pageable pageable);
 
     @Query("SELECT t FROM TrendVO t " +
-            "JOIN CategoryVO c ON t.category.cateCd = c.cateCd " +
+            "JOIN CategoryVO c ON t.categoryVO.cateCd = c.cateCd " +
             "WHERE c.cateCd <> 't' AND t.trDelYn = 'n' " +
             "AND CASE " +
             "   WHEN :search = 'trSubject' THEN LOWER(t.trSubject) " +
-            "   WHEN :search = 'userId' THEN LOWER(t.userId) " +
+            "   WHEN :search = 'userId' THEN LOWER(t.userVO.userId) " +
             "   WHEN :search = 'trContent' THEN LOWER(t.trContent) " +
             "   ELSE '' END LIKE CONCAT('%', LOWER(:keyword), '%') " +
             "ORDER BY t.trNo DESC")

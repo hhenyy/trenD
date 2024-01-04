@@ -21,13 +21,13 @@ public interface TrendRepository extends JpaRepository<TrendVO, Integer> {
     Page<TrendVO> trendSearchResult(@Param("keyword") String keyword, @Param("cateCd") String cateCd, Pageable pageable);
     
     @Query("SELECT t FROM TrendVO t " +
-            "JOIN CategoryVO c ON t.category.cateCd = c.cateCd " +
+            "JOIN CategoryVO c ON t.categoryVO.cateCd = c.cateCd " +
             "where c.cateCd = 't'"+
             "ORDER BY t.trNo DESC")
     Page<TrendVO> findTrendList(Pageable pageable);
 
     @Query("SELECT t FROM TrendVO t " +
-            "JOIN CategoryVO c ON t.category.cateCd = c.cateCd " +
+            "JOIN CategoryVO c ON t.categoryVO.cateCd = c.cateCd " +
             "WHERE c.cateCd = 't' AND t.trSubject LIKE CONCAT('%', :keyword, '%') " +
             "ORDER BY t.trNo DESC")
     Page<TrendVO> searchTrendList(@Param("keyword") String keyword, Pageable pageable);
