@@ -2,7 +2,6 @@ package com.td.TrenD.model;
 
 import lombok.*;
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Date;
 
 @Getter
@@ -45,10 +44,10 @@ public class UserVO {
 	private String userKey;
 
 	@Column(name = "userDate")
-	private Timestamp userDate;
+	private Date userDate;
 
 	@Column(name = "userUpdate")
-	private Timestamp userUpdate;
+	private Date userUpdate;
 
 	@Column(name = "userDelYn")
 	private Character userDelYn;
