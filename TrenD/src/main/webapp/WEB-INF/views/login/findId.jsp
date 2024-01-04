@@ -25,6 +25,7 @@
             }
         }
     </script>
+    <jsp:include page="../include/metalink.jsp"/>
 </head>
 <jsp:include page="../include/header.jsp"/>
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
