@@ -9,41 +9,34 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
-import java.util.List;
 
 @Repository
 public interface CommunityRepository extends JpaRepository<TrendVO, Integer> {
 
-    @Query("select c from CategoryVO c order by c.idx_category")
+    @Query("select c from CategoryVO c where c.cateCd <>'t' order by c.idx_category")
     List<CategoryVO> findAllCategory();
 
     @Query("SELECT t FROM TrendVO t " +
-            "JOIN CategoryVO c ON t.category.cateCd = c.cateCd " +
+            "JOIN CategoryVO c ON t.categoryVO.cateCd = c.cateCd " +
             "where c.cateCd <> 't' AND t.trDelYn = 'n'"+
             "ORDER BY t.trNo DESC")
     Page<TrendVO> findCommList(Pageable pageable);
 
     @Query("SELECT t FROM TrendVO t " +
-            "JOIN CategoryVO c ON t.category.cateCd = c.cateCd " +
+            "JOIN CategoryVO c ON t.categoryVO.cateCd = c.cateCd " +
             "where c.cateCd = :cateCd AND t.trDelYn = 'n'"+
             " ORDER BY t.trNo DESC")
     Page<TrendVO> findCategoryList(@Param("cateCd") String cateCd ,Pageable pageable);
 
     @Query("SELECT t FROM TrendVO t " +
-            "JOIN CategoryVO c ON t.category.cateCd = c.cateCd " +
+            "JOIN CategoryVO c ON t.categoryVO.cateCd = c.cateCd " +
             "WHERE c.cateCd <> 't' AND t.trDelYn = 'n' " +
             "AND CASE " +
             "   WHEN :search = 'trSubject' THEN LOWER(t.trSubject) " +
-            "   WHEN :search = 'userId' THEN LOWER(t.userId) " +
+            "   WHEN :search = 'userName' THEN LOWER(t.userVO.userName) " +
             "   WHEN :search = 'trContent' THEN LOWER(t.trContent) " +
             "   ELSE '' END LIKE CONCAT('%', LOWER(:keyword), '%') " +
             "ORDER BY t.trNo DESC")
