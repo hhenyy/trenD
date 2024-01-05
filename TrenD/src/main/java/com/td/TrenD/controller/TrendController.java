@@ -1,5 +1,6 @@
 package com.td.TrenD.controller;
 
+import com.td.TrenD.model.CategoryVO;
 import com.td.TrenD.model.StatisticsVO;
 import com.td.TrenD.model.TrendVO;
 import com.td.TrenD.model.UserVO;
@@ -9,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class TrendController {
@@ -22,16 +25,8 @@ public class TrendController {
     private StatisticsService staticsService;
 
     @RequestMapping("post")
-    public String commContent(HttpServletRequest request, Model model) {
+    public String commContent(HttpServletRequest request, HttpSession session, Model model) {
 
-
-        // 트렌드 글 처리 별도 조건문 처리
-
-        UserVO user = new UserVO();
-
-        String userId;
-//        userId = request.getParameter("userId");
-        userId = "sun";
 
         TrendVO post = new TrendVO();
         int trNo = Integer.parseInt(request.getParameter("trNo"));
@@ -43,14 +38,18 @@ public class TrendController {
             trendService.saveTrend(post);
 
 
-            StatisticsVO statics = new StatisticsVO();
-            statics = staticsService.checkStatics(userId, trNo);
-            if (statics == null) {
-                statics = new StatisticsVO();
-                statics.setTrNo(trNo);
-                user.setUserId(userId);
-                statics.setUserVO(user);
-                staticsService.saveStatics(statics);
+            UserVO user = new UserVO();
+            String userId = (String) session.getAttribute("userId");
+            if (userId != null) {
+                StatisticsVO statics = new StatisticsVO();
+                statics = staticsService.checkStatics(userId, trNo);
+                if (statics == null) {
+                    statics = new StatisticsVO();
+                    statics.setTrNo(trNo);
+                    user.setUserId(userId);
+                    statics.setUserVO(user);
+                    staticsService.saveStatics(statics);
+                }
             }
         }
 
@@ -67,5 +66,14 @@ public class TrendController {
         return "main/totalSearch";
     }
 
+    @RequestMapping("viewTrend")
+    public String viewTrend(@RequestParam("trend") String trend) {
+
+        TrendVO result = trendService.findTrend(trend);
+
+        String trNo = Integer.toString(result.getTrNo());
+
+        return "redirect:post?trNo=" + trNo;
+    }
 
 }
