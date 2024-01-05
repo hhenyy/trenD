@@ -1,3 +1,10 @@
+<%--
+작업자 : 김선홍, 서준혁
+수정일자 : 2024-01-05
+설명 :  댓글 기능을 추가한 게시글 상세 페이지.
+		RESTful API 형태로 댓글 CRUD, 페이징이 가능하다.
+--%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -14,9 +21,26 @@
 	<link href="${pageContext.request.contextPath}/css/content.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/css/default.css" rel="stylesheet">
 
-	<script src="${pageContext.request.contextPath}/js/trend.js"></script>
 	<script src="${pageContext.request.contextPath}/js/common.js"></script>
 	<script src="${pageContext.request.contextPath}/js/function.js"></script>
+	<%--글 관련 JS--%>
+	<script>
+        function updateForm() {
+            location.href = "commUpdateForm?trNo=${post.trNo}"
+        }
+
+        function deletePost() {
+            var check = confirm('글을 삭제하시겠습니까?');
+
+            if (check) {
+                location.href = "deletePost?trNo=${post.trNo}"
+                alert('글이 삭제되었습니다.');
+            } else {
+
+            }
+        }
+	</script>
+	<%--댓글 관련 JS--%>
 	<script>
         window.onload = () => {
             findAllComment();
@@ -46,7 +70,7 @@
                 trReContent: content.value,
             }
             callApi(url, method, params);
-            alert('저장되었습니다.');
+            alert('댓글이 저장되었습니다.');
             content.value = '';
             document.getElementById('counter').innerText = '0/300자';
             let lastPage = calculateLastPage();
@@ -195,7 +219,7 @@
             }
 
             callApi(uri, method, params);
-            alert('수정되었습니다.');
+            alert('댓글이 수정되었습니다.');
             closeCommentUpdatePopup();
             findAllComment();
         }
@@ -212,7 +236,7 @@
             const method = 'delete';
 
             callApi(url, method, {});
-            alert('삭제되었습니다.');
+            alert('댓글이 삭제되었습니다.');
 
             findAllComment();
         }
@@ -267,7 +291,6 @@
             }
         }
 	</script>
-
 </head>
 <body>
 <jsp:include page="../include/header.jsp"/>

@@ -1,3 +1,8 @@
+/**
+ * 작업자 : 서준혁
+ * 수정일자 : 2024-01-05
+ * 설명 : 댓글 Controller Class
+ */
 package com.td.TrenD.controller;
 
 import com.td.TrenD.model.RePagingVO;
@@ -32,7 +37,6 @@ public class TrendReController {
 
 		//find User Instance
 		UserVO userVO = loginService.checkUserId((String) session.getAttribute("userId"));
-		System.out.println("userVO.getUserId() = " + userVO.getUserId());
 
 		return trendReService.saveReply(params, userVO);
 	}

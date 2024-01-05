@@ -1,3 +1,9 @@
+/**
+ * 작업자 : 서준혁
+ * 수정일자 : 2024-01-05
+ * 설명 : 댓글 CRUD 관련 Service Class
+ */
+
 package com.td.TrenD.service;
 
 import com.td.TrenD.dao.TrendReRepository;
@@ -16,18 +22,12 @@ import java.util.Optional;
 public class TrendReService {
 	private final TrendReRepository trendReRepository;
 
-	public Page<TrendReVO> findByTrNo(RePagingVO params, Pageable pageable) {
-		System.out.println("TrendReService.findByTrNo");
-		return trendReRepository.findByTrNo(params.getTrNo(), pageable);
-	}
-
-	//
-	public Integer countAllReplyByTrNo(int trNo) {
-		System.out.println("TrendReService.countAllReplyByTrNo");
-		return trendReRepository.countAllReplyByTrNo(trNo);
-	}
-
-	//저장 후 trReNo 반환
+	/**
+	 * 댓글 저장
+	 * @param params
+	 * @param userVO
+	 * @return TrendReVO
+	 */
 	public TrendReVO saveReply(TrendReVO params, UserVO userVO) {
 		System.out.println("TrendReService.saveReply");
 
@@ -52,11 +52,42 @@ public class TrendReService {
 		return save;
 	}
 
+	/**
+	 * 댓글 목록 조회
+	 * @param params
+	 * @param pageable
+	 * @return Page<TrendReVO>
+	 */
+	public Page<TrendReVO> findByTrNo(RePagingVO params, Pageable pageable) {
+		System.out.println("TrendReService.findByTrNo");
+		return trendReRepository.findByTrNo(params.getTrNo(), pageable);
+	}
+
+	/**
+	 * 댓글 개수 조회
+	 * @param trNo
+	 * @return Integer
+	 */
+	//
+	public Integer countAllReplyByTrNo(int trNo) {
+		System.out.println("TrendReService.countAllReplyByTrNo");
+		return trendReRepository.countAllReplyByTrNo(trNo);
+	}
+
+	/**
+	 * 댓글 객체 조회
+	 * @param trReNo
+	 * @return TrendReVO
+	 */
 	public TrendReVO findById(Integer trReNo) {
 		System.out.println("TrendReService.findById");
 		return trendReRepository.findById(trReNo).orElse(null);
 	}
 
+	/**
+	 * 댓글 수정
+	 * @param params
+	 */
 	public void updateReply(TrendReVO params) {
 		System.out.println("TrendReService.updateReply");
 		Optional<TrendReVO> reVO = trendReRepository.findById(params.getTrReNo());
@@ -67,6 +98,10 @@ public class TrendReService {
 		});
 	}
 
+	/**
+	 * 댓글 삭제
+	 * @param trReNo
+	 */
 	public void deleteReply(Integer trReNo) {
 		System.out.println("TrendReService.deleteReply");
 		Optional<TrendReVO> reVO = trendReRepository.findById(trReNo);
