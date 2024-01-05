@@ -9,7 +9,7 @@ group = 'com.td'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '11'
+//    sourceCompatibility = '11'
 }
 
 configurations {
@@ -23,6 +23,7 @@ repositories {
 }
 
 dependencies {
+
     //JSP
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
 
@@ -54,6 +55,13 @@ dependencies {
 
     //MySQL
     runtimeOnly 'com.mysql:mysql-connector-j'
+    
+    //smtp
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    //jackson
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
+
 
     //Test
     testCompileOnly 'org.projectlombok:lombok'
