@@ -105,7 +105,7 @@
                 row = '<tr>' +
                     '<td>' + no-- + '</td>' +
                     '<td><a href="#">' + community.trSubject + '</a></td>' +
-                    '<td>' + community.userId + '</td>' +
+                    '<td>' + community.userVO.userName + '</td>' +
                     '<td>' + formatDate(community.trDate) + '</td>' +
                     '<td>' + community.trReadCount + '</td>' +
                     '</tr>';
@@ -193,7 +193,7 @@
     <div id="searchDiv" align="center">
         <select id="searchHead">
             <option value="trSubject">제목</option>
-            <option value="userId">작성자</option>
+            <option value="userName">작성자</option>
             <option value="trContent">내용</option>
         </select>
         <input type="text" id="searchInput" placeholder="제목을 입력하세요">

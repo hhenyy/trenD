@@ -79,6 +79,9 @@ public class TrendController {
 
             UserVO user = new UserVO();
 
+            String userId;
+            userId = request.getParameter("userId");
+
             TrendVO post = new TrendVO();
             int trNo = Integer.parseInt(request.getParameter("trNo"));
 
