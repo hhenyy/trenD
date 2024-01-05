@@ -32,7 +32,6 @@
             document.getElementById('counter').innerText = content.value.length + '/300자';
         }
 
-
         //----------------------------------------- 댓글 CRUD -----------------------------------------
         // 댓글 저장
         function saveComment() {
