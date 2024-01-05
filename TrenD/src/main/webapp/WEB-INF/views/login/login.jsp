@@ -13,6 +13,9 @@
     <title>로그인</title>
 
     <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <!-- 네이버 로그인 -->
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+
     <script>
         function check() {
             if ($.trim($("#userId").val()) == "") {
@@ -28,15 +31,13 @@
         }
     </script>
 
-
     <jsp:include page="../include/metalink.jsp"/>
-</head>
 
+</head>
 <body class="d-flex align-items-center justify-content-center min-vh-100 py-4 bg-body-tertiary">
 <%@ include file="../include/header.jsp" %>
-<%@ include file="../include/sidebar.jsp" %>
-<%--<jsp:include page="../include/header.jsp"/>
-<jsp:include page="../include/sidebar.jsp"/>--%>
+
+
 <main class="form-signin w-500 m-auto">
 <main class="main">
     <form method="post" action="checkLogin" onsubmit="return check()">
@@ -65,37 +66,29 @@
         <h2 class="h6 fw-bold" align="center">SNS 계정으로 로그인</h2>
         <hr>
 
-<%--        <div class="d-flex justify-content-center column-gap-3">--%>
-<%--            <!-- 네이버 로그인-->--%>
-<%--            <div id="naver_id_login"></div>--%>
-<%--            <script type="text/javascript">--%>
+        <div class="d-flex justify-content-center column-gap-3">
+            <!-- 네이버 로그인-->
+            <div id="naver_id_login"></div>
+            <script type="text/javascript">
+                console.log("네이버들어옴");
+                // .gitignore
+                var naver_id_login = new naver_id_login("Vr6jD6ZAK9pWVBE5bZhK", "http://localhost/naverCallback");
 
-<%--                // .gitignore--%>
-<%--                var naver_id_login = new naver_id_login("",--%>
-<%--                    "http://localhost/obriProject/loginNaver.do");--%>
-
-<%--                var state = naver_id_login.getUniqState();--%>
-<%--                naver_id_login.setButton("green", 1, 40);--%>
-<%--                naver_id_login--%>
-<%--                    .setDomain("http://localhost/obriProject/login.do");--%>
-<%--                naver_id_login.setState(state);--%>
-<%--                //	naver_id_login.setPopup();		// 팝업 방식 해제--%>
-<%--                naver_id_login.init_naver_id_login();--%>
-<%--            </script>--%>
-
-<%--            <!-- 카카오 로그인 -->--%>
-<%--            <div id="kakao_id_login">--%>
-<%--                <a href="javascript:loginWithKakao()"> <img--%>
-<%--                        src="./images/kakao_logo.png" style="width: 40px; height: 40px;" />--%>
-<%--                </a>--%>
-<%--            </div>--%>
-<%--        </div>--%>
+                var state = naver_id_login.getUniqState();
+                naver_id_login.setButton("green", 1, 40);
+                naver_id_login.setDomain("http://localhost/naverLogin");
+                naver_id_login.setState(state);
+                //	naver_id_login.setPopup();		// 팝업 방식 해제
+                naver_id_login.init_naver_id_login();
+                console.log("네이버들어옴22");
+            </script>
+        </div>
 
 
         <p class="mt-4 mb-3 text-body-secondary" align="center"
            style="font-size: 90%">
-            <a href="findId.do" style="color: gray">아이디 찾기</a>&nbsp;|&nbsp;<a
-                href="findPw.do" style="color: gray">비밀번호 찾기</a><br>아직 회원이
+            <a href="findId" style="color: gray">아이디 찾기</a>&nbsp;|&nbsp;<a
+                href="findPw" style="color: gray">비밀번호 찾기</a><br>아직 회원이
             아니신가요?&nbsp;<a href="joinform" style="color: gray">회원가입</a>
         </p>
 

@@ -23,17 +23,10 @@ public class UserVO {
 	@Column(name = "userName")
 	private String userName;
 
-	@ManyToOne
-	@JoinColumn(name = "genCd")
-	private GenderVO genderVO;
 
-	@ManyToOne
-	@JoinColumn(name = "ageCd")
-	private AgeVO ageVO;
-
-	@ManyToOne
-	@JoinColumn(name = "locCd")
-	private LocationVO locationVO;
+	private String genCd;
+	private String ageCd;
+	private String locCd;
 
 	@Column(name = "userEmail")
 	private String userEmail;

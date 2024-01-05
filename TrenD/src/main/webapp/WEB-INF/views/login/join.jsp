@@ -152,14 +152,13 @@
 
   // 닉네임 중복 확인
   function chkNick(){
-      console.log("여기들어옴22");
       $("#nickNameGuide").hide();
       var memnick=$("#userName").val();
       console.log(memnick);
 
       // 1. 길이 검사
       if($.trim($("#userName").val()).length < 2 || $.trim($("#userName").val()).length > 8){
-          var newtext='<font color="red">아이디는 2~8자의 값이어야 합니다.</font>';
+          var newtext='<font color="red">닉네임는 2~8자의 값이어야 합니다.</font>';
           $("#nickNameGuide").text('');
           $("#nickNameGuide").show();
           $("#nickNameGuide").append(newtext);
@@ -294,7 +293,7 @@
     // 입력 비밀번호 유효성 검사 : 영대소문자, 숫자 , 몇 가지 특수 문자 허용
     function validateUserPw(mempw){
         var pattern = new RegExp(/^[A-Za-z0-9!@#$%^]+$/);
-      return pattern.test(mempw);''
+      return pattern.test(mempw);
     }
 
     // 입력 닉네임 유효성 검사 : 한글, 영어 가능
@@ -340,7 +339,7 @@
     <div class="row mb-3">
       <label for="userPw" class="form-label" align="left">비밀번호</label> <input
             type="password" class="form-control" id="userPw" name="userPw"
-            placeholder="6~12자 영대소문자, 숫자 이용" maxlength="12"  >
+            placeholder="8~12자 영대소문자, 숫자 이용 가능" maxlength="12"  >
     </div>
     <div class="form-text mb-2" id="pwGuide" align="left"></div>
 
