@@ -21,6 +21,12 @@ public class TrendReService {
 		return trendReRepository.findByTrNo(params.getTrNo(), pageable);
 	}
 
+	//
+	public Integer countAllReplyByTrNo(int trNo) {
+		System.out.println("TrendReService.countAllReplyByTrNo");
+		return trendReRepository.countAllReplyByTrNo(trNo);
+	}
+
 	//저장 후 trReNo 반환
 	public TrendReVO saveReply(TrendReVO params, UserVO userVO) {
 		System.out.println("TrendReService.saveReply");

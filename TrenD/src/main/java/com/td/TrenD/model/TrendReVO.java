@@ -22,7 +22,7 @@ public class TrendReVO {
 	@Column(name = "trNo")
 	private int trNo;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "userId")
 	private UserVO userVO;
 

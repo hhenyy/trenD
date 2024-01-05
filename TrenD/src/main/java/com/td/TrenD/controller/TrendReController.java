@@ -3,6 +3,7 @@ package com.td.TrenD.controller;
 import com.td.TrenD.model.RePagingVO;
 import com.td.TrenD.model.TrendReVO;
 import com.td.TrenD.model.UserVO;
+import com.td.TrenD.service.LoginService;
 import com.td.TrenD.service.TrendReService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,15 +23,16 @@ import java.util.Objects;
 public class TrendReController {
 
 	private final TrendReService trendReService;
+	private final LoginService loginService;
 
 	//댓글 저장
 	@PostMapping("/post/{trNo}/reply")
 	public TrendReVO saveComment(@PathVariable final Integer trNo, @RequestBody final TrendReVO params, HttpSession session) {
 		System.out.println("TrendReController.saveComment");
 
-		//Create User Instance
-		UserVO userVO = new UserVO();
-		userVO.setUserId((String) session.getAttribute("id"));
+		//find User Instance
+		UserVO userVO = loginService.checkUserId((String) session.getAttribute("userId"));
+		System.out.println("userVO.getUserId() = " + userVO.getUserId());
 
 		return trendReService.saveReply(params, userVO);
 	}
@@ -72,6 +74,13 @@ public class TrendReController {
 	public TrendReVO findReplyById(@PathVariable final Integer trNo, @PathVariable final Integer trReNo) {
 		System.out.println("TrendReController.findReplyById");
 		return trendReService.findById(trReNo);
+	}
+
+	// 전체 댓글 개수 조회
+	@GetMapping("/post/{trNo}/reply/count")
+	public Integer CountAllReply(@PathVariable final Integer trNo) {
+		System.out.println("TrendReController.CountAllReply");
+		return trendReService.countAllReplyByTrNo(trNo);
 	}
 
 	// 기존 댓글 수정
