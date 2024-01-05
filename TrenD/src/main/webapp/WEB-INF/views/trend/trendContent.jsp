@@ -35,8 +35,6 @@
             if (check) {
                 location.href = "deletePost?trNo=${post.trNo}"
                 alert('글이 삭제되었습니다.');
-            } else {
-
             }
         }
 	</script>
@@ -290,6 +288,18 @@
                 return 0;
             }
         }
+
+        //
+        function redirectToLoginIfNotLoggedIn() {
+            let userId = <%= session.getAttribute("userId") %>;
+
+            if (userId != null)
+                return false;
+
+            if (confirm("로그인 창으로 이동하시겠습니까?")) {
+                location.href = "loginform";
+            }
+        }
 	</script>
 </head>
 <body>
@@ -346,8 +356,7 @@
 				<fieldset>
 					<legend class="skipinfo">댓글 입력</legend>
 					<div class="cm_input">
-						<p><textarea id="content" name="content" onkeyup="countingLength(this);" cols="90"
-						             rows="4" placeholder="댓글을 입력해 주세요."></textarea></p>
+						<p><textarea id="content" name="content" onclick="redirectToLoginIfNotLoggedIn()" onkeyup="countingLength(this)" cols="90" rows="4" placeholder="댓글을 입력해 주세요."></textarea></p>
 						<span><button type="button" class="btns" onclick="saveComment();">등 록</button> <i
 								id="counter">0/300자</i></span>
 					</div>
