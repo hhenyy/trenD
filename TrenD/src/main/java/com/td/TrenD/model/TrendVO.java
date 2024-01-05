@@ -1,7 +1,6 @@
 package com.td.TrenD.model;
 
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -29,5 +28,4 @@ public class TrendVO {
     private Date trDate;
     private Date trUpdate;
     private char trDelYn;
-
 }

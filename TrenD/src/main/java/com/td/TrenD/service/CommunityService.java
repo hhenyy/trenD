@@ -4,11 +4,7 @@ import com.td.TrenD.dao.CommunityRepository;
 import com.td.TrenD.model.CategoryVO;
 import com.td.TrenD.model.TrendVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
-
-import javax.swing.tree.TreeNode;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
