@@ -28,6 +28,10 @@ public class CommunityService {
         this.commRepo = repo;
     }
 
+    public List<TrendVO> commList() {
+        return commRepo.commList();
+    }
+
     public TrendVO commInsert(TrendVO trendVO) {
         return commRepo.save(trendVO);
     }

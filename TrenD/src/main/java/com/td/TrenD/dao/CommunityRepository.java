@@ -19,6 +19,9 @@ public interface CommunityRepository extends JpaRepository<TrendVO, Integer> {
     @Query("select c from CategoryVO c where c.cateCd <>'t' order by c.idx_category")
     List<CategoryVO> findAllCategory();
 
+    @Query("select t from TrendVO t order by t.trNo desc")
+    List<TrendVO> commList();
+
     @Query("SELECT t FROM TrendVO t " +
             "JOIN CategoryVO c ON t.categoryVO.cateCd = c.cateCd " +
             "where c.cateCd <> 't' AND t.trDelYn = 'n'"+
