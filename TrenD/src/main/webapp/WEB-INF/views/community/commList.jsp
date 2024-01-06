@@ -142,6 +142,7 @@
     </div>
     <div align="left" id="categoryDiv">
         <select id="cateCd"></select>
+        <a href="/commForm">글 작성</a>
     </div>
     <!-- 게시물 목록 테이블 -->
     <table id="communityTable" align="center" border="1" class="table">
