@@ -4,34 +4,9 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>자유게시판</title>
+    <jsp:include page="../include/metalink.jsp"/>
 
-    <title>Testing CSS</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
-
-    <!-- Favicons -->
-    <link href="${pageContext.request.contextPath}/${pageContext.request.contextPath}/assets/img/favicon.png" rel="icon">
-    <link href="${pageContext.request.contextPath}/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
-    <link href="${pageContext.request.contextPath}/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/vendor/quill/quill.snow.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/vendor/simple-datatables/style.css" rel="stylesheet">
-
-    <!-- Template Main CSS File -->
-    <link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet">
-
-    <%@ include file="../include/header.jsp" %>
 
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script>
@@ -43,7 +18,7 @@
             }
 
             $.ajax({
-                url: "/api/community/list/1",
+                url: "/community/list/1",
                 type: "GET",
                 success: function (data) {
                     displayCommList(data);
@@ -59,7 +34,7 @@
             var search = $('#searchHead').val();
             // 페이지가 제공되지 않으면 기본값으로 1을 사용
             $.ajax({
-                url: "/api/community/list/" + (page || 1),
+                url: "/community/list/" + (page || 1),
                 type: "GET",
                 data: { "keyword": searchTerm,
                     "cateCd": selectedCateCd,
@@ -103,8 +78,8 @@
 
             $.each(data.commList, function(index, community) {
                 row = '<tr>' +
-                    '<td>' + no-- + '</td>' +
-                    '<td><a href="#">' + community.trSubject + '</a></td>' +
+                    '<td>' + community.categoryVO.cateNm + '</td>' +
+                    '<td><a href="/commPost?trNo=' + community.trNo + '">' + community.trSubject + '</a></td>' +
                     '<td>' + community.userVO.userName + '</td>' +
                     '<td>' + formatDate(community.trDate) + '</td>' +
                     '<td>' + community.trReadCount + '</td>' +
@@ -157,6 +132,8 @@
 </head>
 
 <body>
+<jsp:include page="../include/header.jsp"/>
+<jsp:include page="../include/sidebar.jsp"/>
 
 <main id="main" class="main">
 
@@ -170,7 +147,7 @@
     <table id="communityTable" align="center" border="1" class="table">
         <thead>
         <tr>
-            <th>번호</th>
+            <th>머릿말</th>
             <th>제목</th>
             <th>작성자</th>
             <th>작성일</th>
@@ -202,20 +179,7 @@
 
 </main>
 
-<!-- Vendor JS Files -->
-<script src="${pageContext.request.contextPath}/assets/vendor/apexcharts/apexcharts.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/vendor/chart.js/chart.umd.js"></script>
-<script src="${pageContext.request.contextPath}/assets/vendor/echarts/echarts.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/vendor/quill/quill.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/vendor/simple-datatables/simple-datatables.js"></script>
-<script src="${pageContext.request.contextPath}/assets/vendor/tinymce/tinymce.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/vendor/php-email-form/validate.js"></script>
-
-<!-- Template Main JS File -->
-<script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
-
-<%@ include file="../include/footer.jsp" %>
+<jsp:include page="../include/footer.jsp"/>
 
 </body>
 </html>

@@ -55,7 +55,7 @@ dependencies {
 
     //MySQL
     runtimeOnly 'com.mysql:mysql-connector-j'
-    
+
     //smtp
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 

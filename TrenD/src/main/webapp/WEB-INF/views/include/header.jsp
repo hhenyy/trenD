@@ -15,7 +15,7 @@
 
     <div class="search-bar">
         <form class="search-form d-flex align-items-center" method="get"
-              action="totalSearch" id = "totalSearch">
+              action="${pageContext.request.contextPath}/totalSearch" id = "totalSearch">
             <input type="text" name="keyword" placeholder="검색"
                    value="${keyword}" title="Enter search keyword" id="keyword">
 
