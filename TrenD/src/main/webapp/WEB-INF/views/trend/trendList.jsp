@@ -71,7 +71,7 @@
             $.each(data.trendList, function(index, trend) {
                 row = '<tr>' +
                     '<td>' + no-- + '</td>' +
-                    '<td><a href="/trend/post?trNo=' + trend.trNo + '">' + trend.trSubject + '</a></td>' +
+                    '<td><a href="/trendPost?trNo=' + trend.trNo + '">' + trend.trSubject + '</a></td>' +
                     '<td>' + formatDate(trend.trDate) + '</td>' +
                     '<td>' + trend.trReadCount + '</td>' +
                     '</tr>';
@@ -121,6 +121,10 @@
 
     <div>
         <a href="javascript:goBackList()"><h2>Trend List</h2></a>
+    </div>
+
+    <div align="left">
+        <a href="/commForm">글 작성</a>
     </div>
 
     <!-- 게시물 목록 테이블 -->

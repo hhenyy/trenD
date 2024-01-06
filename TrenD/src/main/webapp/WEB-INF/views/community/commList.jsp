@@ -79,7 +79,7 @@
             $.each(data.commList, function(index, community) {
                 row = '<tr>' +
                     '<td>' + community.categoryVO.cateNm + '</td>' +
-                    '<td><a href="/community/post?trNo=' + community.trNo + '">' + community.trSubject + '</a></td>' +
+                    '<td><a href="/commPost?trNo=' + community.trNo + '">' + community.trSubject + '</a></td>' +
                     '<td>' + community.userVO.userName + '</td>' +
                     '<td>' + formatDate(community.trDate) + '</td>' +
                     '<td>' + community.trReadCount + '</td>' +
