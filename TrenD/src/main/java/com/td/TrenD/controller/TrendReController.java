@@ -1,7 +1,9 @@
 /**
  * 작업자 : 서준혁
- * 수정일자 : 2024-01-05
- * 설명 : 댓글 Controller Class
+ * 수정일자 : 2024-01-06
+ * 수정내용
+ * - 불필요한 parameter 제거
+ * - URL RESTful API 방식으로 작성
  */
 package com.td.TrenD.controller;
 
@@ -20,8 +22,6 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-
 
 @RestController
 @RequiredArgsConstructor
@@ -31,8 +31,8 @@ public class TrendReController {
 	private final LoginService loginService;
 
 	//댓글 저장
-	@PostMapping("/post/{trNo}/reply")
-	public TrendReVO saveComment(@PathVariable final Integer trNo, @RequestBody final TrendReVO params, HttpSession session) {
+	@PostMapping("/reply/")
+	public TrendReVO saveComment(@RequestBody final TrendReVO params, HttpSession session) {
 		System.out.println("TrendReController.saveComment");
 
 		//find User Instance
@@ -43,7 +43,7 @@ public class TrendReController {
 
 	// 댓글 리스트 조회
 	@GetMapping("/post/{trNo}/reply")
-	public Map<String, Object> findAllReply(@PathVariable final Integer trNo, final RePagingVO params) {
+	public Map<String, Object> findAllReply(final RePagingVO params) {
 		System.out.println("TrendReController.findAllReply");
 		Pageable pageable = PageRequest.of(params.getPage(), params.getItemPerPage(), Sort.by(Sort.Direction.ASC, "trReRef", "trReNo"));
 		Page<TrendReVO> page = trendReService.findByTrNo(params, pageable);
@@ -74,8 +74,8 @@ public class TrendReController {
 	}
 
 	// 댓글 상세정보 조회
-	@GetMapping("/post/{trNo}/reply/{trReNo}")
-	public TrendReVO findReplyById(@PathVariable final Integer trNo, @PathVariable final Integer trReNo) {
+	@GetMapping("/reply/{trReNo}")
+	public TrendReVO findReplyById(@PathVariable final Integer trReNo) {
 		System.out.println("TrendReController.findReplyById");
 		return trendReService.findById(trReNo);
 	}
@@ -88,16 +88,16 @@ public class TrendReController {
 	}
 
 	// 기존 댓글 수정
-	@PatchMapping("/post/{trNo}/reply/{trReNo}")
-	public TrendReVO updateReply(@PathVariable final Integer trNo, @PathVariable final Integer trReNo, @RequestBody final TrendReVO params) {
+	@PatchMapping("/reply/")
+	public TrendReVO updateReply(@RequestBody final TrendReVO params) {
 		System.out.println("TrendReController.updateReply");
 		trendReService.updateReply(params);
-		return trendReService.findById(trReNo);
+		return trendReService.findById(params.getTrReNo());
 	}
 
 	// 댓글 삭제
-	@DeleteMapping("/post/{trNo}/reply/{trReNo}")
-	public TrendReVO deleteReply(@PathVariable final Integer trNo, @PathVariable final Integer trReNo) {
+	@DeleteMapping("/reply/{trReNo}")
+	public TrendReVO deleteReply(@PathVariable final Integer trReNo) {
 		System.out.println("TrendReController.deleteReply");
 		trendReService.deleteReply(trReNo);
 		return trendReService.findById(trReNo);

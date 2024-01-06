@@ -35,8 +35,6 @@
             if (check) {
                 location.href = "deletePost?trNo=${post.trNo}"
                 alert('글이 삭제되었습니다.');
-            } else {
-
             }
         }
 	</script>
@@ -63,14 +61,13 @@
             isValid(content, '댓글');
 
             const trNo = ${post.trNo};
-            const url = '/post/${post.trNo}/reply';
+            const url = '/reply/';
             const method = 'post';
             const params = {
                 trNo: trNo,
                 trReContent: content.value,
             }
             callApi(url, method, params);
-            alert('댓글이 저장되었습니다.');
             content.value = '';
             document.getElementById('counter').innerText = '0/300자';
             let lastPage = calculateLastPage();
@@ -185,7 +182,7 @@
         // 댓글 수정 팝업 Open
         function openCommentUpdatePopup(trReNo) {
 
-            let uri = '/post/' + ${post.trNo} +'/reply/' + trReNo;
+            let uri = '/reply/' + trReNo;
 
             let response = getJson(uri, {});
             document.getElementById('modalWriter').value = response.userVO.userId;
@@ -209,34 +206,28 @@
             isValid(writer, '작성자');
             isValid(content, '수정할 내용');
 
-            const trNo = ${post.trNo};
-            const uri = '/post/' + trNo + '/reply/' + trReNo;
+            const uri = '/reply/';
             const method = 'patch';
             const params = {
-                trNo: trNo,
                 trReNo: trReNo,
                 trReContent: content.value,
             }
 
             callApi(uri, method, params);
-            alert('댓글이 수정되었습니다.');
             closeCommentUpdatePopup();
             findAllComment();
         }
 
         // 댓글 삭제
         function deleteComment(trReNo) {
-
             if (!confirm('선택하신 댓글을 삭제할까요?')) {
                 return false;
             }
 
-            const trNo = ${post.trNo};
-            const url = '/post/' + trNo + '/reply/' + trReNo;
+            const url = '/reply/' + trReNo;
             const method = 'delete';
 
             callApi(url, method, {});
-            alert('댓글이 삭제되었습니다.');
 
             findAllComment();
         }
@@ -261,7 +252,7 @@
             isValid(content, '댓글');
 
             const trNo = ${post.trNo};
-            const url = '/post/${post.trNo}/reply';
+            const url = '/reply/';
             const method = 'post';
             const params = {
                 trNo: trNo,
@@ -271,7 +262,6 @@
 
             callApi(url, method, params);
 
-            alert('답글이 저장되었습니다.');
             content.value = '';
             closeReplyInputPopup()
             findAllComment();
@@ -288,6 +278,18 @@
             } catch (error) {
                 console.error("Error fetching data:", error);
                 return 0;
+            }
+        }
+
+        //
+        function redirectToLoginIfNotLoggedIn() {
+            let userId = <%= session.getAttribute("userId") %>;
+
+            if (userId != null)
+                return false;
+
+            if (confirm("로그인 창으로 이동하시겠습니까?")) {
+                location.href = "loginform";
             }
         }
 	</script>
@@ -346,8 +348,7 @@
 				<fieldset>
 					<legend class="skipinfo">댓글 입력</legend>
 					<div class="cm_input">
-						<p><textarea id="content" name="content" onkeyup="countingLength(this);" cols="90"
-						             rows="4" placeholder="댓글을 입력해 주세요."></textarea></p>
+						<p><textarea id="content" name="content" onclick="redirectToLoginIfNotLoggedIn()" onkeyup="countingLength(this)" cols="90" rows="4" placeholder="댓글을 입력해 주세요."></textarea></p>
 						<span><button type="button" class="btns" onclick="saveComment();">등 록</button> <i
 								id="counter">0/300자</i></span>
 					</div>
