@@ -1,10 +1,10 @@
 <%--
-  Created by IntelliJ IDEA.
-  User: Yeo InBeom
-  Date: 2024-01-06
-  Time: 오후 9:12
-  To change this template use File | Settings | File Templates.
+작업자 : 김선홍, 서준혁
+수정일자 : 2024-01-07
+설명 :  댓글 기능을 추가한 게시글 상세 페이지.
+		RESTful API 형태로 댓글 CRUD, 페이징이 가능하다.
 --%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -12,34 +12,34 @@
 
 <head>
 
-    <title>TrenD Community Content</title>
+	<title>TrenD Community Content</title>
 
-    <jsp:include page="../include/metalink.jsp"/>
+	<jsp:include page="../include/metalink.jsp"/>
 
-    <link href="${pageContext.request.contextPath}/css/button.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/common.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/content.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/default.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/css/button.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/css/common.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/css/content.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/css/default.css" rel="stylesheet">
 
-    <script src="${pageContext.request.contextPath}/js/common.js"></script>
-    <script src="${pageContext.request.contextPath}/js/function.js"></script>
-    <%--글 관련 JS--%>
-    <script>
+	<script src="${pageContext.request.contextPath}/js/common.js"></script>
+	<script src="${pageContext.request.contextPath}/js/function.js"></script>
+	<%--글 관련 JS--%>
+	<script>
         function updateForm() {
-            location.href = "commUpdateForm?trNo=${post.trNo}"
+            location.href = "/trend/commUpdateForm?trNo=${post.trNo}"
         }
 
         function deletePost() {
             var check = confirm('글을 삭제하시겠습니까?');
 
             if (check) {
-                location.href = "deletePost?trNo=${post.trNo}"
+                location.href = "/trend/deletePost?trNo=${post.trNo}"
                 alert('글이 삭제되었습니다.');
             }
         }
-    </script>
-    <%--댓글 관련 JS--%>
-    <script>
+	</script>
+	<%--댓글 관련 JS--%>
+	<script>
         window.onload = () => {
             findAllComment();
         }
@@ -61,7 +61,7 @@
             isValid(content, '댓글');
 
             const trNo = ${post.trNo};
-            const url = '/reply/';
+            const url = '/replies';
             const method = 'post';
             const params = {
                 trNo: trNo,
@@ -85,7 +85,7 @@
             page = (page < 1) ? 1 : page;
 
             const trNo = ${post.trNo};
-            const uri = `/post/${post.trNo}/reply`;
+            const uri = `/replies`;
             const params = {
                 page: page - 1,
                 pageListSize: 10,
@@ -182,7 +182,7 @@
         // 댓글 수정 팝업 Open
         function openCommentUpdatePopup(trReNo) {
 
-            let uri = '/reply/' + trReNo;
+            let uri = '/replies/' + trReNo;
 
             let response = getJson(uri, {});
             document.getElementById('modalWriter').value = response.userVO.userId;
@@ -206,7 +206,7 @@
             isValid(writer, '작성자');
             isValid(content, '수정할 내용');
 
-            const uri = '/reply/';
+            const uri = '/replies';
             const method = 'patch';
             const params = {
                 trReNo: trReNo,
@@ -224,7 +224,7 @@
                 return false;
             }
 
-            const url = '/reply/' + trReNo;
+            const url = '/replies/' + trReNo;
             const method = 'delete';
 
             callApi(url, method, {});
@@ -252,7 +252,7 @@
             isValid(content, '댓글');
 
             const trNo = ${post.trNo};
-            const url = '/reply/';
+            const url = '/replies';
             const method = 'post';
             const params = {
                 trNo: trNo,
@@ -270,7 +270,7 @@
         //----------------------------------------- 마지막 페이지 계산 -----------------------------------------
         function calculateLastPage() {
             const trNo = ${post.trNo};
-            const url = `/post/${post.trNo}/reply/count`;
+            const url = `/replies/count/` + trNo;
 
             try {
                 let totalItems = getJson(url, {});
@@ -292,7 +292,7 @@
                 location.href = "loginform";
             }
         }
-    </script>
+	</script>
 </head>
 <body>
 <jsp:include page="../include/header.jsp"/>
@@ -300,128 +300,128 @@
 
 
 <c:if test="${Character.toString(post.trDelYn) eq 'y'}">
-    <script>
+	<script>
         alert('해당 글은 삭제되었습니다.');
         window.location.href = '../../..';
-    </script>
+	</script>
 </c:if>
 
 
 <main id="main" class="main">
-    <div class="row align-items-top col-8" style="margin: 0 auto">
+	<div class="row align-items-top col-8" style="margin: 0 auto">
 
-        <div class="pagetitle" style="padding: 0">
+		<div class="pagetitle" style="padding: 0">
 
-            <h1>커뮤니티 게시판</h1>
-            <div class="title_left">
-                <nav>
-                    <ol class="breadcrumb" style="margin: 5px 0 0 0">
-                        <li class="breadcrumb-item">${post.categoryVO.cateNm}</li>
-                        <li class="breadcrumb-item">${post.userVO.userName}</li>
-                        <li class="breadcrumb-item">${post.trDate}</li>
-                    </ol>
-                </nav>
-            </div>
+			<h1>트렌드 게시판</h1>
+			<div class="title_left">
+				<nav>
+					<ol class="breadcrumb" style="margin: 5px 0 0 0">
+						<li class="breadcrumb-item">${post.categoryVO.cateNm}</li>
+						<li class="breadcrumb-item">${post.userVO.userName}</li>
+						<li class="breadcrumb-item">${post.trDate}</li>
+					</ol>
+				</nav>
+			</div>
 
-            <div class="title_right">
-                <nav>
-                    <ol class="breadcrumb" style="margin: 5px 0 0 0">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);" onclick="deletePost()">삭제</a></li>
-                        <li class="breadcrumb-item"><a href="javascript:void(0);" onclick="updateForm()">수정</a></li>
-                        <li class="breadcrumb-item"><a href="/community/posts">목록</a></li>
-                    </ol>
-                </nav>
-            </div>
-        </div><!-- End Page Title -->
-        <!--본문-->
-        <div class="card" style="margin-bottom: 0">
-            <div class="card-body">
-                <h5 class="card-title">${post.trSubject}</h5>
+			<div class="title_right">
+				<nav>
+					<ol class="breadcrumb" style="margin: 5px 0 0 0">
+						<li class="breadcrumb-item"><a href="javascript:void(0);" onclick="deletePost()">삭제</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0);" onclick="updateForm()">수정</a></li>
+						<li class="breadcrumb-item"><a href="/trend/posts">목록</a></li>
+					</ol>
+				</nav>
+			</div>
+		</div><!-- End Page Title -->
+		<!--본문-->
+		<div class="card" style="margin-bottom: 0">
+			<div class="card-body">
+				<h5 class="card-title">${post.trSubject}</h5>
 
-                ${post.trContent}
-            </div>
-        </div>
-        <!--end 본문-->
-        <section style="padding: 0">
-            <!--/* 댓글 작성 */-->
-            <div class="cm_write">
-                <fieldset>
-                    <legend class="skipinfo">댓글 입력</legend>
-                    <div class="cm_input">
-                        <p><textarea id="content" name="content" onclick="redirectToLoginIfNotLoggedIn()" onkeyup="countingLength(this)" cols="90" rows="4" placeholder="댓글을 입력해 주세요."></textarea></p>
-                        <span><button type="button" class="btns" onclick="saveComment();">등 록</button> <i
-                                id="counter">0/300자</i></span>
-                    </div>
-                </fieldset>
-            </div>
-            <!-- 댓글 렌더링 영역 -->
-            <div class="cm_list">
+				${post.trContent}
+			</div>
+		</div>
+		<!--end 본문-->
+		<section style="padding: 0">
+			<!--/* 댓글 작성 */-->
+			<div class="cm_write">
+				<fieldset>
+					<legend class="skipinfo">댓글 입력</legend>
+					<div class="cm_input">
+						<p><textarea id="content" name="content" onclick="redirectToLoginIfNotLoggedIn()" onkeyup="countingLength(this)" cols="90" rows="4" placeholder="댓글을 입력해 주세요."></textarea></p>
+						<span><button type="button" class="btns" onclick="saveComment();">등 록</button> <i
+								id="counter">0/300자</i></span>
+					</div>
+				</fieldset>
+			</div>
+			<!-- 댓글 렌더링 영역 -->
+			<div class="cm_list">
 
-            </div>
+			</div>
 
-            <!--/* 페이지네이션 렌더링 영역 */-->
-            <div class="paging">
+			<!--/* 페이지네이션 렌더링 영역 */-->
+			<div class="paging">
 
-            </div>
+			</div>
 
-            <!--/* 댓글 수정 popup */-->
-            <div id="commentUpdatePopup" class="popLayer">
-                <h3>댓글 수정</h3>
-                <div class="pop_container">
-                    <table class="tb tb_row tl">
-                        <colgroup>
-                            <col style="width:30%;"/>
-                            <col style="width:70%;"/>
-                        </colgroup>
-                        <tbody>
-                        <tr>
-                            <th scope="row">작성자<span class="es">필수 입력</span></th>
-                            <td><input type="text" id="modalWriter" name="modalWriter" readonly/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">내용<span class="es">필수 입력</span></th>
-                            <td><textarea id="modalContent" name="modalContent" cols="90" rows="10"
-                                          placeholder="수정할 내용을 입력해 주세요."></textarea></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <p class="btn_set">
-                        <button type="button" id="commentUpdateBtn" class="btns btn_st2">수정</button>
-                        <button type="button" class="btns btn_bdr2" onclick="closeCommentUpdatePopup();">취소</button>
-                    </p>
-                </div>
-                <button type="button" class="btn_close" onclick="closeCommentUpdatePopup();"><span><i
-                        class="far fa-times-circle"></i></span></button>
-            </div>
+			<!--/* 댓글 수정 popup */-->
+			<div id="commentUpdatePopup" class="popLayer">
+				<h3>댓글 수정</h3>
+				<div class="pop_container">
+					<table class="tb tb_row tl">
+						<colgroup>
+							<col style="width:30%;"/>
+							<col style="width:70%;"/>
+						</colgroup>
+						<tbody>
+						<tr>
+							<th scope="row">작성자<span class="es">필수 입력</span></th>
+							<td><input type="text" id="modalWriter" name="modalWriter" readonly/>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">내용<span class="es">필수 입력</span></th>
+							<td><textarea id="modalContent" name="modalContent" cols="90" rows="10"
+							              placeholder="수정할 내용을 입력해 주세요."></textarea></td>
+						</tr>
+						</tbody>
+					</table>
+					<p class="btn_set">
+						<button type="button" id="commentUpdateBtn" class="btns btn_st2">수정</button>
+						<button type="button" class="btns btn_bdr2" onclick="closeCommentUpdatePopup();">취소</button>
+					</p>
+				</div>
+				<button type="button" class="btn_close" onclick="closeCommentUpdatePopup();"><span><i
+						class="far fa-times-circle"></i></span></button>
+			</div>
 
-            <!--/* 답글 입력 popup */-->
-            <div id="replyInputPopup" class="popLayer" style="margin: 0 auto">
-                <h3>답글 입력</h3>
-                <div class="pop_container">
-                    <table class="tb tb_row tl">
-                        <colgroup>
-                            <col style="width:30%;"/>
-                            <col style="width:70%;"/>
-                        </colgroup>
-                        <tbody>
-                        <tr>
-                            <th scope="row">내용<span class="es">필수 입력</span></th>
-                            <td><textarea id="inputModalContent" name="modalContent" cols="90" rows="10"
-                                          placeholder="답글을 입력해 주세요."></textarea></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <p class="btn_set">
-                        <button type="button" id="replyInputBtn" class="btns btn_st2">저장</button>
-                        <button type="button" class="btns btn_bdr2" onclick="closeReplyInputPopup();">취소</button>
-                    </p>
-                </div>
-                <button type="button" class="btn_close" onclick="closeReplyInputPopup();"><span><i
-                        class="far fa-times-circle"></i></span></button>
-            </div>
-        </section>
-    </div>
+			<!--/* 답글 입력 popup */-->
+			<div id="replyInputPopup" class="popLayer" style="margin: 0 auto">
+				<h3>답글 입력</h3>
+				<div class="pop_container">
+					<table class="tb tb_row tl">
+						<colgroup>
+							<col style="width:30%;"/>
+							<col style="width:70%;"/>
+						</colgroup>
+						<tbody>
+						<tr>
+							<th scope="row">내용<span class="es">필수 입력</span></th>
+							<td><textarea id="inputModalContent" name="modalContent" cols="90" rows="10" onclick="redirectToLoginIfNotLoggedIn()"
+							              placeholder="답글을 입력해 주세요."></textarea></td>
+						</tr>
+						</tbody>
+					</table>
+					<p class="btn_set">
+						<button type="button" id="replyInputBtn" class="btns btn_st2">저장</button>
+						<button type="button" class="btns btn_bdr2" onclick="closeReplyInputPopup();">취소</button>
+					</p>
+				</div>
+				<button type="button" class="btn_close" onclick="closeReplyInputPopup();"><span><i
+						class="far fa-times-circle"></i></span></button>
+			</div>
+		</section>
+	</div>
 </main>
 
 <jsp:include page="../include/footer.jsp"/>

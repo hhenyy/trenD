@@ -1,9 +1,8 @@
 /**
  * 작업자 : 서준혁
- * 수정일자 : 2024-01-06
+ * 수정일자 : 2024-01-07
  * 수정내용
- * - 불필요한 parameter 제거
- * - URL RESTful API 방식으로 작성
+ * - URL RESTful API 방식으로 작성 : resources 복수 형태로 작성, 불필요한 경로 제거
  */
 package com.td.TrenD.controller;
 
@@ -31,7 +30,7 @@ public class TrendReController {
 	private final LoginService loginService;
 
 	//댓글 저장
-	@PostMapping("/reply/")
+	@PostMapping("/replies")
 	public TrendReVO saveComment(@RequestBody final TrendReVO params, HttpSession session) {
 		System.out.println("TrendReController.saveComment");
 
@@ -42,7 +41,7 @@ public class TrendReController {
 	}
 
 	// 댓글 리스트 조회
-	@GetMapping("/post/{trNo}/reply")
+	@GetMapping("/replies")
 	public Map<String, Object> findAllReply(final RePagingVO params) {
 		System.out.println("TrendReController.findAllReply");
 		Pageable pageable = PageRequest.of(params.getPage(), params.getItemPerPage(), Sort.by(Sort.Direction.ASC, "trReRef", "trReNo"));
@@ -74,21 +73,21 @@ public class TrendReController {
 	}
 
 	// 댓글 상세정보 조회
-	@GetMapping("/reply/{trReNo}")
+	@GetMapping("/replies/{trReNo}")
 	public TrendReVO findReplyById(@PathVariable final Integer trReNo) {
 		System.out.println("TrendReController.findReplyById");
 		return trendReService.findById(trReNo);
 	}
 
 	// 전체 댓글 개수 조회
-	@GetMapping("/post/{trNo}/reply/count")
+	@GetMapping("/replies/count/{trNo}")
 	public Integer CountAllReply(@PathVariable final Integer trNo) {
 		System.out.println("TrendReController.CountAllReply");
 		return trendReService.countAllReplyByTrNo(trNo);
 	}
 
 	// 기존 댓글 수정
-	@PatchMapping("/reply/")
+	@PatchMapping("/replies")
 	public TrendReVO updateReply(@RequestBody final TrendReVO params) {
 		System.out.println("TrendReController.updateReply");
 		trendReService.updateReply(params);
@@ -96,7 +95,7 @@ public class TrendReController {
 	}
 
 	// 댓글 삭제
-	@DeleteMapping("/reply/{trReNo}")
+	@DeleteMapping("/replies/{trReNo}")
 	public TrendReVO deleteReply(@PathVariable final Integer trReNo) {
 		System.out.println("TrendReController.deleteReply");
 		trendReService.deleteReply(trReNo);

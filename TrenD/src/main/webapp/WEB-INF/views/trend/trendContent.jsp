@@ -1,6 +1,6 @@
 <%--
 작업자 : 김선홍, 서준혁
-수정일자 : 2024-01-05
+수정일자 : 2024-01-07
 설명 :  댓글 기능을 추가한 게시글 상세 페이지.
 		RESTful API 형태로 댓글 CRUD, 페이징이 가능하다.
 --%>
@@ -61,7 +61,7 @@
 			isValid(content, '댓글');
 
 			const trNo = ${post.trNo};
-			const url = '/reply/';
+			const url = '/replies';
 			const method = 'post';
 			const params = {
 				trNo: trNo,
@@ -85,7 +85,7 @@
 			page = (page < 1) ? 1 : page;
 
 			const trNo = ${post.trNo};
-			const uri = `/post/${post.trNo}/reply`;
+			const uri = `/replies`;
 			const params = {
 				page: page - 1,
 				pageListSize: 10,
@@ -182,7 +182,7 @@
 		// 댓글 수정 팝업 Open
 		function openCommentUpdatePopup(trReNo) {
 
-			let uri = '/reply/' + trReNo;
+			let uri = '/replies/' + trReNo;
 
 			let response = getJson(uri, {});
 			document.getElementById('modalWriter').value = response.userVO.userId;
@@ -206,7 +206,7 @@
 			isValid(writer, '작성자');
 			isValid(content, '수정할 내용');
 
-			const uri = '/reply/';
+			const uri = '/replies';
 			const method = 'patch';
 			const params = {
 				trReNo: trReNo,
@@ -224,7 +224,7 @@
 				return false;
 			}
 
-			const url = '/reply/' + trReNo;
+			const url = '/replies/' + trReNo;
 			const method = 'delete';
 
 			callApi(url, method, {});
@@ -252,7 +252,7 @@
 			isValid(content, '댓글');
 
 			const trNo = ${post.trNo};
-			const url = '/reply/';
+			const url = '/replies';
 			const method = 'post';
 			const params = {
 				trNo: trNo,
@@ -270,7 +270,7 @@
 		//----------------------------------------- 마지막 페이지 계산 -----------------------------------------
 		function calculateLastPage() {
 			const trNo = ${post.trNo};
-			const url = `/post/${post.trNo}/reply/count`;
+			const url = `/replies/count/` + trNo;
 
 			try {
 				let totalItems = getJson(url, {});
@@ -407,7 +407,7 @@
 						<tbody>
 						<tr>
 							<th scope="row">내용<span class="es">필수 입력</span></th>
-							<td><textarea id="inputModalContent" name="modalContent" cols="90" rows="10"
+							<td><textarea id="inputModalContent" name="modalContent" cols="90" rows="10" onclick="redirectToLoginIfNotLoggedIn()"
 										  placeholder="답글을 입력해 주세요."></textarea></td>
 						</tr>
 						</tbody>
