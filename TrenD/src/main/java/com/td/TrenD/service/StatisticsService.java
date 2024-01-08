@@ -25,6 +25,11 @@ public class StatisticsService {
     public StatisticsVO checkStatics(String userId, int trNo){
         return statisticsDao.findByUserIdAndTrNo(userId, trNo);
     }
+    
+	public int count(String categoryOpt) {
+		
+		return statisticsDao.count(categoryOpt);
+	}
 
 
 
