@@ -24,3 +24,4 @@ public class StatisticsVO {
 	@JoinColumn(name = "trNo")
 	private TrendVO trendVO;
 }
+

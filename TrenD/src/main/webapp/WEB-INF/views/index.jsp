@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="/Statistics">안녕하세요</a>
-<a href="/test">안녕하세요</a>
+
 </body>
 </html>
