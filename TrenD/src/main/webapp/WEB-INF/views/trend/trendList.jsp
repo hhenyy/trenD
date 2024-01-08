@@ -71,7 +71,7 @@
             $.each(data.trendList, function(index, trend) {
                 row = '<tr>' +
                     '<td>' + no-- + '</td>' +
-                    '<td><a href="/trendPost?trNo=' + trend.trNo + '">' + trend.trSubject + '</a></td>' +
+                    '<td><a href="/post?trNo=' + trend.trNo + '">' + trend.trSubject + '</a></td>' +
                     '<td>' + formatDate(trend.trDate) + '</td>' +
                     '<td>' + trend.trReadCount + '</td>' +
                     '</tr>';

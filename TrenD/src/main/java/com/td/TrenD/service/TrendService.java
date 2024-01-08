@@ -1,7 +1,9 @@
 package com.td.TrenD.service;
 
+import java.util.Date;
 import java.util.Optional;
 
+import com.td.TrenD.model.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,7 +63,37 @@ public int commSearchResultCount(String cateCd, String keyword, char trDelYn){
 public int trendSearchResultCount(String cateCd, String keyword, char trDelYn){
         return trendRepository.countTrendVOByCateCdContainingIgnoreCaseAndTrSubjectContainingAndTrDelYn(cateCd, keyword, trDelYn);
 }
-        
+
+    public TrendVO findTrend(String trSubject) {
+
+
+        TrendVO result = trendRepository.findByTrSubject(trSubject);
+
+        if (result == null) {
+            result = new TrendVO();
+            UserVO user = new UserVO();
+
+            user.setUserId("admin");
+
+            result.setUserVO(user);
+            result.setCateCd("t");
+            result.setTrSubject(trSubject);
+            result.setTrContent("");
+
+            result.setTrDate(new Date());
+            result.setTrUpdate(new Date());
+            result.setTrDelYn('n');
+            result.setTrReadCount(0);
+
+            result = trendRepository.save(result);
+        }
+
+        return result;
+    }
+
+
+
+
         public Optional<TrendVO> getCate(Integer c) {
 
     		return trendRepository.findById(c);
