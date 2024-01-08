@@ -22,5 +22,5 @@ public class CategoryVO {
 	private Character cateDelYn;
 
 	@Column(name = "idx_category")
-	private String idxCategory;
+	private String idx_category;
 }

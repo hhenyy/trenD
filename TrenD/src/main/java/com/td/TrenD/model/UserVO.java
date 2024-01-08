@@ -13,6 +13,7 @@ import java.util.Date;
 @Table(name = "user")
 public class UserVO {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "userId", nullable = false)
 	private String userId;
 
@@ -22,15 +23,15 @@ public class UserVO {
 	@Column(name = "userName")
 	private String userName;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "genCd")
 	private GenderVO genderVO;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "ageCd")
 	private AgeVO ageVO;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "locCd")
 	private LocationVO locationVO;
 

@@ -2,6 +2,9 @@ package com.td.TrenD.dao;
 
 import java.util.List;
 
+import com.td.TrenD.model.StatisticsVO;
+import com.td.TrenD.model.TrendVO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -58,6 +61,9 @@ public interface StatisticsDao extends JpaRepository<StatisticsVO,Integer> {
 //			 left join age_code a on u.ageCd=a.ageCd
 //			 where cateNm='트렌드'; 
 	//이 쿼리문을 JPA 시스템을 이용해 적용시키려면 어떻게 해야 할까? 
+	
+	@Query("SELECT s FROM StatisticsVO s WHERE s.userVO.userId = :userId AND s.trNo = :trNo")
+    StatisticsVO findByUserIdAndTrNo(@Param("userId") String userId, @Param("trNo") int trNo);
 	
 	
 }
