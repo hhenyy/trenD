@@ -1231,3 +1231,26 @@ h6 {
   font-size: 13px;
   color: #174907;
 }
+
+/*--------------------------------------------------------------
+# Pagination
+--------------------------------------------------------------*/
+.pagination .page-item.active .page-link,
+.pagination .page-link:active {
+  background-color: #198754;
+  border-color: #198754;
+  color: #fff;
+}
+
+.pagination .page-link {
+  color: #198754;
+}
+
+.pagination .page-link:hover {
+  text-color: #198754;
+}
+
+.pagination .page-link:hover {
+  background-color: #F8F9FA;
+  color: #198754;
+}
