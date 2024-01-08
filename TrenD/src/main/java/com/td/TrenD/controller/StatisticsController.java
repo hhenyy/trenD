@@ -6,8 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.td.TrenD.model.CategoryVO;
-import com.td.TrenD.model.StatisticsVO;
-import com.td.TrenD.model.TrendVO;
 import com.td.TrenD.service.AgeService;
 import com.td.TrenD.service.GenderService;
 import com.td.TrenD.service.LocationService;
@@ -16,14 +14,9 @@ import com.td.TrenD.service.StatisticsService;
 import com.td.TrenD.service.TrendService;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
-import javax.persistence.EntityManager;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
 @Controller
@@ -111,7 +104,7 @@ public class StatisticsController {
 	System.out.println(list);
 	model.addAttribute("json", list);
 	//json 데이터를 뷰 페이지로 전송, 뷰 페이지에선 워드클라우드 라이브러리가 이 자료들을 받아 출력	
-	return "Statistics";
+	return "statistics/Statistics";
 	}
 	
 	
@@ -147,7 +140,7 @@ public class StatisticsController {
 			vlist = locationService.getList();
 			clist = locationService.countLocation(category.getCateNm());
 		}else {
-			return "StatisticsDetail";
+			return "statistics/StatisticsDetail";
 		}
 		
 		System.out.println(clist);
@@ -175,7 +168,7 @@ public class StatisticsController {
 		model.addAttribute("list", finalList);
 		model.addAttribute("value", value);
 		model.addAttribute("category", category.getCateNm());
-		return "StatisticsDetail";
+		return "statistics/StatisticsDetail";
 	}
 		
 }
