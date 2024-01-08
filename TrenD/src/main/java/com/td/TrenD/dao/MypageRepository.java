@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface MypageRepository extends JpaRepository<TrendVO, Integer> {
 
@@ -20,24 +22,29 @@ public interface MypageRepository extends JpaRepository<TrendVO, Integer> {
 
     @Query("SELECT t FROM TrendVO t " +
             "JOIN CategoryVO c ON t.categoryVO.cateCd = c.cateCd " +
-            "WHERE t.userVO.userId = :userId " +
+            "WHERE t.userVO.userId = :userId AND t.trDelYn = 'n' " +
             "ORDER BY t.trNo DESC")
     Page<TrendVO> findBoardListByUserId(@Param("userId") String userId, Pageable pageable);
 
     @Query("SELECT tr FROM TrendReVO tr " +
-            "WHERE tr.userVO.userId = :userId " +
+            "WHERE tr.userVO.userId = :userId AND tr.trReDelYn = 'n' " +
             "ORDER BY tr.trReNo DESC")
     Page<TrendReVO> findReplyListByUserId(@Param("userId") String userId, Pageable pageable);
 
-    @Query("SELECT t FROM TrendVO t ORDER BY t.trNo DESC")
+    @Query("SELECT t FROM TrendVO t WHERE t.trDelYn = 'n' ORDER BY t.trNo DESC")
     Page<TrendVO> findBoardList(Pageable pageable);
 
-    @Query("SELECT tr FROM TrendReVO tr ORDER BY tr.trReNo DESC")
+    @Query("SELECT tr FROM TrendReVO tr WHERE tr.trReDelYn = 'n' ORDER BY tr.trReNo DESC")
     Page<TrendReVO> findReplyList(Pageable pageable);
 
-    @Query("SELECT t FROM TrendVO t ORDER BY t.trNo DESC")
+    @Query("SELECT t FROM TrendVO t WHERE t.trDelYn = 'n' ORDER BY t.trNo DESC")
     Page<TrendVO> findAllBoardForAdmin(Pageable pageable);
 
-    @Query("SELECT tr FROM TrendReVO tr ORDER BY tr.trReNo DESC")
+    @Query("SELECT tr FROM TrendReVO tr WHERE tr.trReDelYn = 'n' ORDER BY tr.trReNo DESC")
     Page<TrendReVO> findAllReplyForAdmin(Pageable pageable);
+
+    @Query("SELECT tr FROM TrendReVO tr WHERE tr.trNo = :trNo")
+    List<TrendReVO> findReplyByTrNo(@Param("trNo") int trNo);
+
+
 }

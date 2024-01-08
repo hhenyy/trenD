@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import javax.swing.tree.TreeNode;
+import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +26,10 @@ public class CommunityService {
     @Autowired
     public CommunityService(CommunityRepository repo) {
         this.commRepo = repo;
+    }
+
+    public List<TrendVO> commList() {
+        return commRepo.commList();
     }
 
     public TrendVO commInsert(TrendVO trendVO) {

@@ -23,3 +23,4 @@ public class StatisticsVO {
 	@Column(name = "trNo")
 	private Integer trNo;
 }
+

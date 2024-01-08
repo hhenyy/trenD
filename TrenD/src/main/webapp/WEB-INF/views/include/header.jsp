@@ -15,7 +15,7 @@
 
     <div class="search-bar">
         <form class="search-form d-flex align-items-center" method="get"
-              action="totalSearch" id = "totalSearch">
+              action="${pageContext.request.contextPath}/totalSearch" id = "totalSearch">
             <input type="text" name="keyword" placeholder="검색"
                    value="${keyword}" title="Enter search keyword" id="keyword">
 
@@ -40,9 +40,8 @@
     </div>
     <!-- End Search Bar -->
 
-    <nav class="header-nav ms-auto">
-        <ul class="d-flex align-items-center">
-
+	<nav class="header-nav ms-auto">
+		<ul class="d-flex align-items-center">
             <li class="nav-item d-block d-lg-none">
                 <a class="nav-link nav-icon search-bar-toggle " href="#">
                     <i class="bi bi-search"></i>
