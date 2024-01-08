@@ -6,12 +6,12 @@ import com.td.TrenD.service.TrendService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/main")
 @RequiredArgsConstructor
 public class MainController {
 
