@@ -1,10 +1,26 @@
 package com.td.TrenD.model;
 
-import lombok.Data;
+import lombok.*;
+import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "category_code")
 public class CategoryVO {
+	@Id
+	@Column(name = "cateCd", nullable = false)
 	private String cateCd;
+
+	@Column(name = "cateNm")
 	private String cateNm;
-	private char cateDelYn;
+
+	@Column(name = "cateDelYn")
+	private Character cateDelYn;
+
+	@Column(name = "idx_category")
+	private String idxCategory;
 }

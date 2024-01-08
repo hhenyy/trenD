@@ -1,10 +1,26 @@
 package com.td.TrenD.model;
 
-import lombok.Data;
+import lombok.*;
+import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "statistics")
 public class StatisticsVO {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "staNo", nullable = false)
 	private int staNo;
-	private String userId;
-	private int trNo;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "userId")
+	private UserVO userVO;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "trNo")
+	private TrendVO trendVO;
 }
