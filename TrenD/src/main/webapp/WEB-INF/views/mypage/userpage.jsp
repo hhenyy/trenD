@@ -49,14 +49,16 @@
                     console.log(result);
                     if (result.boardlist.length === 0) {
                         // 작성된 내용이 없을 때의 처리
-                        $("#boardbody").html("<tr><td colspan='4'>작성된 내용이 없습니다.</td></tr>");
+                        $("#boardbody").html("<tr><td colspan='5'>작성된 내용이 없습니다.</td></tr>");
                         $("#pagination").html("");  // 페이지네이션 숨기기
                     } else {
-                        var boardContent = "<tr><th>머릿말</th>";
+                        var boardContent = "<tr><th class='table-success' style='width: 15%'>머릿말</th>";
                         if (result.isAdmin) {
-                            boardContent += "<th>작성자</th>";
+                            boardContent += "<th class='table-success' style='width: 20%'>작성자</th>";
                         }
-                        boardContent += "<th>제목</th><th>날짜</th><th>조회수</th></tr>";
+                        boardContent += "<th class='table-success' style='width: " + (result.isAdmin ? "40%" : "60%") + "'>제목</th>";
+                        boardContent += "<th class='table-success' style='width: 15%'>날짜</th>";
+                        boardContent += "<th class='table-success' style='width: 10%'>조회수</th></tr>";
                         var content = "";  // content 변수 선언
 
                         $.each(result.boardlist, function (index, item) {
@@ -91,14 +93,14 @@
                     console.log(result);
                     if (result.replylist.length === 0) {
                         // 작성된 내용이 없을 때의 처리
-                        $("#replybody").html("<tr><td colspan='2'>작성된 내용이 없습니다.</td></tr>");
+                        $("#replybody").html("<tr><td colspan='3'>작성된 내용이 없습니다.</td></tr>");
                         $("#pagination").html("");  // 페이지네이션 숨기기
                     } else {
-                        var replyContent = "<tr><th>내용</th>";
+                        var replyContent = "<tr><th class='table-success'>내용</th>";
                         if (result.isAdmin) {
-                            replyContent += "<th>작성자</th>";
+                            replyContent += "<th class='table-success'>작성자</th>";
                         }
-                        replyContent += "<th>작성일</th></tr>";
+                        replyContent += "<th class='table-success'>작성일</th></tr>";
                         $.each(result.replylist, function (index, item) {
                             // item.trReContent가 null 또는 undefined인 경우에 대한 처리
                             var trReContent = item.trReContent != null ? item.trReContent : 'N/A';
@@ -166,6 +168,40 @@
         }
 
     </script>
+    <style>
+        #pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn-group {
+            width: 100%;
+            text-align: center;
+            margin: auto;
+        }
+
+        .btn {
+            width: 50%;
+        }
+
+        /* 댓글 테이블의 열 너비 조정 */
+        #replybody th, #replybody td {
+            text-align: center;
+        }
+        /* 내용 열의 너비 */
+        #replybody th:nth-child(1), #replybody td:nth-child(1) {
+            width: 60%;
+        }
+        /* 작성자 열의 너비 */
+        #replybody th:nth-child(2), #replybody td:nth-child(2) {
+            width: 20%;
+        }
+        /* 작성일 열의 너비 */
+        #replybody th:nth-child(3), #replybody td:nth-child(3) {
+            width: 20%;
+        }
+    </style>
     <jsp:include page="../include/metalink.jsp"/>
 </head>
 <body>
@@ -174,11 +210,12 @@
 <%@ include file="../include/sidebar.jsp" %>
 
 <main id="main" class="main">
-    <div>
-        <input type="button" id="board" value="게시글" onclick="boardlist(1);">
-        <input type="button" id="reply" value="댓글" onclick="replylist(1);">
+
+    <div class="btn-group d-flex mt-3 mb-4" role="group" aria-label="Basic outlined example">
+        <button type="button" class="btn btn-success" id="board" onclick="boardlist(1);">게시글</button>
+        <button type="button" class="btn btn-success" id="reply" value="댓글" onclick="replylist(1);">댓글</button>
     </div>
-    <table align="center" width=800 class="table table-hover">
+    <table align="center" width="800px" class="table table-hover">
         <%-- 트랜드 글목록 --%>
         <tbody id="boardbody"></tbody>
         <%-- 트랜드 댓글목록 --%>

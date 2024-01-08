@@ -18,11 +18,13 @@
             </a>
             <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
+
                     <a href="${pageContext.request.contextPath}/trend/posts">
                         <i class="bi bi-circle"></i><span>트렌드 게시판</span>
                     </a>
                 </li>
                 <li>
+
                     <a href="${pageContext.request.contextPath}/community/posts">
                         <i class="bi bi-circle"></i><span>자유 게시판</span>
                     </a>

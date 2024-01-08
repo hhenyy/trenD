@@ -7,7 +7,6 @@ import com.td.TrenD.model.UserVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.Date;
 
@@ -21,11 +20,17 @@ public class TrendService {
         this.trendRepository = trendRepository;
     }
 
-
     public TrendVO trendContent(int trNo) {
         return trendRepository.trendContent(trNo);
     }
+  
+    public Page<TrendVO> getTrendList(PageRequest pageable) {
+        return trendRepository.findTrendList(pageable);
+    }
 
+    public Page<TrendVO> searchTrendList(String keyword, PageRequest pageable) {
+        return trendRepository.searchTrendList(keyword, pageable);
+    }
 
     public TrendVO saveTrend(TrendVO trendVO) {
         return trendRepository.save(trendVO);
@@ -46,6 +51,7 @@ public class TrendService {
 
     public int trendSearchResultCount(String cateCd, String keyword, char trDelYn) {
         return trendRepository.countTrendVOByCateCdContainingIgnoreCaseAndTrSubjectContainingAndTrDelYn(cateCd, keyword, trDelYn);
+
     }
 
     public TrendVO findTrend(String trSubject) {
@@ -74,6 +80,5 @@ public class TrendService {
 
         return result;
     }
-
 
 }
