@@ -74,9 +74,9 @@
         <!--본문-->
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">${post.trSubject}</h5>
+                <h5 class="card-title" style="font-weight: bold;">${post.trSubject}</h5>
 
-                ${post.trContent}
+            ${post.trContent}
             </div>
         </div>
         <!--end 본문-->
