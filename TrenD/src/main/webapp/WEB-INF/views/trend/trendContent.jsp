@@ -312,33 +312,20 @@
 
 		<div class="pagetitle" style="padding: 0">
 
-			<h1>트렌드 게시판</h1>
-			<div class="title_left">
-				<nav>
-					<ol class="breadcrumb" style="margin: 5px 0 0 0">
-						<li class="breadcrumb-item">${post.categoryVO.cateNm}</li>
-						<li class="breadcrumb-item">${post.userVO.userName}</li>
-						<li class="breadcrumb-item">${post.trDate}</li>
-					</ol>
-				</nav>
-			</div>
+			<h1>커뮤니티 게시판</h1>
 
-			<div class="title_right">
-				<nav>
-					<ol class="breadcrumb" style="margin: 5px 0 0 0">
-						<li class="breadcrumb-item"><a href="javascript:void(0);" onclick="deletePost()">삭제</a></li>
-						<li class="breadcrumb-item"><a href="javascript:void(0);" onclick="updateForm()">수정</a></li>
-						<li class="breadcrumb-item"><a href="/trend/posts">목록</a></li>
-					</ol>
-				</nav>
-			</div>
+
+
+
+
+
 		</div><!-- End Page Title -->
 		<!--본문-->
 		<div class="card" style="margin-bottom: 0">
 			<div class="card-body">
-				<h5 class="card-title">${post.trSubject}</h5>
+				<h5 class="card-title" style="font-weight: bold;">${post.trSubject}</h5>
 
-				${post.trContent}
+			${post.trContent}
 			</div>
 		</div>
 		<!--end 본문-->
