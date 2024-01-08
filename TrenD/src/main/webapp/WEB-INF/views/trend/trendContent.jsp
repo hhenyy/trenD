@@ -142,7 +142,7 @@
 				if (trReLev === 0)
 					commentHtml += "<button type='button' onclick='openReplyInputPopup(" + trReNo + ");' class='btns'><span class='icons icon_reply'>답글</span></button>";
 
-				if (id === sessionId && deleted === 'n') {
+				if ((id === sessionId || sessionId === 'admin') && deleted === 'n') {
 					commentHtml +=
 							"<button type='button' onclick='openCommentUpdatePopup(" + trReNo + ");' class='btns'><span class='icons icon_modify'>수정</span></button>" +
 							"<button type='button' onclick='deleteComment(" + trReNo + ");' class='btns'><span class='icons icon_del'>삭제</span></button>";
