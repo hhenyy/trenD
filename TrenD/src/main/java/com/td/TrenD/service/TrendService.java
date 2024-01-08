@@ -1,5 +1,13 @@
 package com.td.TrenD.service;
 
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.td.TrenD.dao.TrendDao;
+import com.td.TrenD.model.TrendVO;
+
 import com.td.TrenD.dao.TrendRepository;
 import com.td.TrenD.model.TrendVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +57,14 @@ public class TrendService {
 public int commSearchResultCount(String cateCd, String keyword, char trDelYn){
         return trendRepository.countTrendVOByCateCdNotContainingIgnoreCaseAndTrSubjectContainingAndTrDelYn(cateCd, keyword, trDelYn);
 }
+
 public int trendSearchResultCount(String cateCd, String keyword, char trDelYn){
         return trendRepository.countTrendVOByCateCdContainingIgnoreCaseAndTrSubjectContainingAndTrDelYn(cateCd, keyword, trDelYn);
+}
+        
+        public Optional<TrendVO> getCate(Integer c) {
+
+    		return trendRepository.findById(c);
 
 }
 

@@ -16,11 +16,12 @@ public class StatisticsVO {
 	@Column(name = "staNo", nullable = false)
 	private int staNo;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userId")
 	private UserVO userVO;
 
-	@Column(name = "trNo")
-	private Integer trNo;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "trNo")
+	private TrendVO trendVO;
 }
 

@@ -1,7 +1,6 @@
 package com.td.TrenD.model;
 
 import lombok.*;
-
 import javax.persistence.*;
 
 @Getter
