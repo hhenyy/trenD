@@ -6,7 +6,9 @@ import com.td.TrenD.model.GenderVO;
 import com.td.TrenD.model.LocationVO;
 import com.td.TrenD.model.UserVO;
 import com.td.TrenD.service.LoginService;
+import com.td.TrenD.service.tempKey;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class LoginController {
@@ -26,7 +29,7 @@ public class LoginController {
     // 로그인 , 로그아웃 시 메인화면으로
     @RequestMapping("/loginout_ok")
     public String loginSuc(){
-        return "redirect:/";
+        return "main/main";
     }
 
     @RequestMapping("/loginform")
@@ -39,6 +42,164 @@ public class LoginController {
     public String join(){
         System.out.println("회원가입폼 들어옴");
         return "login/join";
+    }
+
+    @RequestMapping("/editUserForm")
+    public String editUser(@SessionAttribute("userId") String id , Model model){
+        System.out.println("수정회원폼 들어옴");
+        System.out.println(id);
+
+        UserVO user = loginService.checkUserId(id);
+
+        List<AgeVO> ageVOList = loginService.selectAge();
+        List<GenderVO> genderVOList = loginService.selectGender();
+        List<LocationVO> locVOList = loginService.selectLoc();
+
+        model.addAttribute("user",user);
+        model.addAttribute("ageList",ageVOList);
+        model.addAttribute("genderList",genderVOList);
+        model.addAttribute("locList",locVOList);
+
+        return "/login/editUser";
+    }
+
+    @RequestMapping("/updateUser")
+    public String updateUser(@ModelAttribute UserVO user ,Model model){
+        System.out.println("수정");
+        System.out.println("userVO" + user);
+        System.out.println(user.getUserDate());
+        user.setUserUpdate(new Date());
+
+        loginService.updateUser(user);
+
+        return "/login/editUserOk";
+    }
+
+    @RequestMapping("/editPw")
+    public String editPw(){
+        return "/login/editPw";
+    }
+
+    @RequestMapping("/editPwOk")
+    public String editPwOk(@RequestParam("userId") String userId, @RequestParam("userPw") String userChgPw){
+        System.out.println("암호"+userChgPw);
+        System.out.println("아이디"+userId);
+
+        UserVO user = loginService.checkUserId(userId);
+
+        user.setUserUpdate(new Date());
+        user.setUserPw(userChgPw);
+
+        loginService.updateUser(user);
+
+        return "login/editPwOk";
+    }
+
+    @RequestMapping("/delUser")
+    public String delUserForm(){
+        return "login/delUser";
+    }
+
+    @RequestMapping("/delCheckOk")
+    public String delUserOk(@RequestParam("userId") String userId, HttpSession session){
+        loginService.deleteUser(userId);
+        session.invalidate();
+        return "login/delUserOk";
+    }
+
+    @RequestMapping("/findId")
+    public String findId(){
+        return "login/findId";
+    }
+
+    // 아이디 찾기
+    @RequestMapping(value = "findIdCheck", method = RequestMethod.POST)
+    public String fIdCheck(UserVO user, Model model) throws Exception {
+
+        Optional<UserVO> u = loginService.findId(user.getUserName(), user.getUserEmail());
+
+        if(u.isPresent()){
+            String id = u.get().getUserId();
+            model.addAttribute("findId", id);
+            return "login/findId";
+        }else{
+            return "login/findIdFail";
+        }
+    }
+
+    @RequestMapping("/findPw")
+    public String findPw(){
+        return "login/findPw";
+    }
+
+    @RequestMapping("/findPwCheck")
+    public String findPwCheck(UserVO user, Model model) throws  Exception{
+
+        UserVO u = loginService.checkUserId(user.getUserId());
+
+        // 1. 조회한 회원이 없을 때
+        if(u == null){
+            return "login/findFail";
+        // 2. 탈퇴한 회원인 경우
+        }else if(u.getUserDelYn() == 'y'){
+            return "login/findFail";
+        // 3. 조회한 회원이 있는 경우
+        } else {
+            loginService.updatePw(u);
+            model.addAttribute("findPw",1);
+            return "login/findPw";
+        }
+
+    }
+
+    @RequestMapping("/naverCallback")
+    public String naverLogin(){
+        System.out.println("네네이버 로그인 들어옴");
+        return "login/loginNaver";
+    }
+
+    @RequestMapping("/joinNaverUser")
+    @ResponseBody
+    public String joinNaverUser(@RequestParam("userId") String userId,
+                                @RequestParam("userName") String userName,
+                                @RequestParam("userEmail") String userEmail,
+                                UserVO user,
+                                HttpSession session){
+
+        user.setUserId(userId);
+        // 랜덤 문자열을 생성해 임시 비밀번호 저장
+        String userPw = new tempKey().getKey(8,false);
+        user.setUserPw(userPw);
+        user.setUserName(userName);
+        user.setUserEmail(userEmail);
+        user.setUserDate(new Date());
+        user.setUserUpdate(new Date());
+        user.setUserDelYn('n');
+
+        UserVO chkUser = loginService.checkUserId(userId);
+
+        // 1. 연동기록이 없는 최초의 가입 일 경우
+        if(chkUser == null){
+            // 회원 가입 실패
+            if(loginService.insert(user) == null) {
+                return "E";
+            // 회원 가입 성공
+            } else {
+                System.out.println("최초가입");
+                session.setAttribute("userId", userId);
+                session.setAttribute("userName", userName);
+                return "J";
+            }
+        // 2. 탈퇴한 회원 인 경우
+        } else if(chkUser.getUserDelYn() == 'y'){
+            return "N";
+        // 3. 로그인 성공
+        } else {
+            System.out.println("네이버 로그인 성공");
+            session.setAttribute("userId", userId);
+            session.setAttribute("userName", userName);
+            return "Y";
+        }
     }
 
     @RequestMapping("/selectAge")

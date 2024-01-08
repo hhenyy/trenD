@@ -46,13 +46,15 @@ public class PostController {
 
 
             UserVO user = new UserVO();
+            TrendVO trend = new TrendVO();
             String userId = (String) session.getAttribute("userId");
             if (userId != null) {
                 StatisticsVO statics = new StatisticsVO();
                 statics = staticsService.checkStatics(userId, trNo);
                 if (statics == null) {
                     statics = new StatisticsVO();
-                    statics.setTrNo(trNo);
+                    trend.setTrNo(trNo);
+                    statics.setTrendVO(trend);
                     user.setUserId(userId);
                     statics.setUserVO(user);
                     staticsService.saveStatics(statics);
@@ -137,7 +139,7 @@ public class PostController {
     }
 
     @RequestMapping("commUpdate")
-    public String commUpdate(HttpServletRequest request, Model model) {
+    public String commUpdate(HttpServletRequest request) {
 
 
         int trNo = Integer.parseInt(request.getParameter("trNo"));
@@ -159,7 +161,7 @@ public class PostController {
     }
 
     @RequestMapping("deletePost")
-    public String deletePost(HttpServletRequest request, Model model) {
+    public String deletePost(HttpServletRequest request) {
 
         int trNo = Integer.parseInt(request.getParameter("trNo"));
 

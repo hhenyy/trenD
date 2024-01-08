@@ -49,22 +49,35 @@
                     console.log(result);
                     if (result.boardlist.length === 0) {
                         // 작성된 내용이 없을 때의 처리
-                        $("#boardbody").html("<tr><td colspan='4'>작성된 내용이 없습니다.</td></tr>");
+                        $("#boardbody").html("<tr><td colspan='5'>작성된 내용이 없습니다.</td></tr>");
                         $("#pagination").html("");  // 페이지네이션 숨기기
                     } else {
-                        var boardContent = "<tr><th>머릿말</th>";
+                        var boardContent = "<tr><th class='table-success' style='width: 15%'>머릿말</th>";
                         if (result.isAdmin) {
-                            boardContent += "<th>작성자</th>";
+                            boardContent += "<th class='table-success' style='width: 20%'>작성자</th>";
                         }
-                        boardContent += "<th>제목</th><th>날짜</th><th>조회수</th></tr>";
+                        boardContent += "<th class='table-success' style='width: " + (result.isAdmin ? "40%" : "60%") + "'>제목</th>";
+                        boardContent += "<th class='table-success' style='width: 15%'>날짜</th>";
+                        boardContent += "<th class='table-success' style='width: 10%'>조회수</th></tr>";
                         var content = "";  // content 변수 선언
 
                         $.each(result.boardlist, function (index, item) {
+                            var linkUrl = ""; // 동적 URL을 저장할 변수
+                            if (item.categoryVO && item.categoryVO.cateCd) {
+                                // 트랜드 게시판
+                                if (item.categoryVO.cateCd === 't') {
+                                    linkUrl = '/trendPost?trNo=' + item.trNo;
+                                } else {
+                                    // 커뮤니티 게시판
+                                    linkUrl = '/commPost?trNo=' + item.trNo;
+                                }
+                            }
                             content += "<tr><td>" + (item.categoryVO ? item.categoryVO.cateNm : 'N/A') + "</td>";
                             if (result.isAdmin) {
                                 content += "<td>" + item.userVO.userName + "(" + item.userVO.userId + ")" + "</td>";
                             }
-                            content += "<td><a href='javascript:boardcontent(" + item.trNo + "," + page + ")'>" + item.trSubject + "</a></td>";
+                            // 클릭 이벤트 추가
+                            content += "<td><a href='javascript:boardcontent(" + item.trNo + "," + page + ",\"" + linkUrl + "\")'>" + item.trSubject + "</a></td>";
                             content += "<td>" + formatDateTime(item.trDate) + "</td>";
                             content += "<td>" + item.trReadCount + "</td></tr>";
                         });
@@ -82,6 +95,23 @@
             });
         }
 
+        // 클릭했을 경우의 함수
+        function boardcontent(trNo, page, linkUrl) {
+            $.ajax({
+                type: "GET",
+                url: linkUrl, // 선택한 글의 URL
+                success: function (result) {
+                    console.log(result);
+                    // 페이지 이동
+                    window.location.href = linkUrl;
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+
+
         // 댓글 목록
         function replylist(page) {
             $.ajax({
@@ -91,19 +121,30 @@
                     console.log(result);
                     if (result.replylist.length === 0) {
                         // 작성된 내용이 없을 때의 처리
-                        $("#replybody").html("<tr><td colspan='2'>작성된 내용이 없습니다.</td></tr>");
+                        $("#replybody").html("<tr><td colspan='3'>작성된 내용이 없습니다.</td></tr>");
                         $("#pagination").html("");  // 페이지네이션 숨기기
                     } else {
-                        var replyContent = "<tr><th>내용</th>";
+                        var replyContent = "<tr><th class='table-success'>내용</th>";
                         if (result.isAdmin) {
-                            replyContent += "<th>작성자</th>";
+                            replyContent += "<th class='table-success'>작성자</th>";
                         }
-                        replyContent += "<th>작성일</th></tr>";
+                        replyContent += "<th class='table-success'>작성일</th></tr>";
                         $.each(result.replylist, function (index, item) {
+                            var linkUrl = ""; // 동적 URL을 저장할 변수
+                            if (item.categoryVO && item.categoryVO.cateCd) {
+                                // 트랜드 게시판
+                                if (item.categoryVO.cateCd === 't') {
+                                    linkUrl = '/trendPost?trNo=' + item.trNo;
+                                } else {
+                                    // 커뮤니티 게시판
+                                    linkUrl = '/commPost?trNo=' + item.trNo;
+                                }
+                            }
                             // item.trReContent가 null 또는 undefined인 경우에 대한 처리
                             var trReContent = item.trReContent != null ? item.trReContent : 'N/A';
 
-                            replyContent += "<tr><td><a href='javascript:replycontent(" + item.trNo + "," + page + ")'>" + trReContent + "</a></td>";
+                            // 클릭 시에 cateCd 값을 전달
+                            replyContent += "<tr><td><a href='javascript:replycontent(" + item.trNo + "," + page + ",\"" + item.cateCd + "\")'>" + trReContent + "</a></td>";
                             if (result.isAdmin) {
                                 replyContent += "<td>" + item.userVO.userName + "(" + item.userVO.userId + ")" + "</td>";
                             }
@@ -122,6 +163,31 @@
                 }
             });
         }
+
+        // 클릭했을 경우의 함수
+        function replycontent(trNo, page, cateCd) {
+            var linkUrl = "/"; // 기본 URL 설정, 필요에 따라 수정
+            if (cateCd === 't') {
+                linkUrl += 'trendPost?trNo=' + trNo;
+            } else {
+                linkUrl += 'commPost?trNo=' + trNo;
+            }
+
+            $.ajax({
+                type: "GET",
+                url: linkUrl,
+                success: function (result) {
+                    console.log(result);
+                    // 페이지 이동
+                    window.location.href = linkUrl;
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+
+
 
 
 
@@ -166,6 +232,40 @@
         }
 
     </script>
+    <style>
+        #pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn-group {
+            width: 100%;
+            text-align: center;
+            margin: auto;
+        }
+
+        .btn {
+            width: 50%;
+        }
+
+        /* 댓글 테이블의 열 너비 조정 */
+        #replybody th, #replybody td {
+            text-align: center;
+        }
+        /* 내용 열의 너비 */
+        #replybody th:nth-child(1), #replybody td:nth-child(1) {
+            width: 60%;
+        }
+        /* 작성자 열의 너비 */
+        #replybody th:nth-child(2), #replybody td:nth-child(2) {
+            width: 20%;
+        }
+        /* 작성일 열의 너비 */
+        #replybody th:nth-child(3), #replybody td:nth-child(3) {
+            width: 20%;
+        }
+    </style>
     <jsp:include page="../include/metalink.jsp"/>
 </head>
 <body>
@@ -174,11 +274,12 @@
 <%@ include file="../include/sidebar.jsp" %>
 
 <main id="main" class="main">
-    <div>
-        <input type="button" id="board" value="게시글" onclick="boardlist(1);">
-        <input type="button" id="reply" value="댓글" onclick="replylist(1);">
+
+    <div class="btn-group d-flex mt-3 mb-4" role="group" aria-label="Basic outlined example">
+        <button type="button" class="btn btn-success" id="board" onclick="boardlist(1);">게시글</button>
+        <button type="button" class="btn btn-success" id="reply" value="댓글" onclick="replylist(1);">댓글</button>
     </div>
-    <table align="center" width=800 class="table table-hover">
+    <table align="center" width="800px" class="table table-hover">
         <%-- 트랜드 글목록 --%>
         <tbody id="boardbody"></tbody>
         <%-- 트랜드 댓글목록 --%>
