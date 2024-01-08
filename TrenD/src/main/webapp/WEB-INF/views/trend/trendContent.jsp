@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %>
 <%@ page import="com.td.TrenD.model.TrendVO" %>
 <%
     TrendVO post = (TrendVO) request.getAttribute("post");
@@ -61,7 +60,12 @@
                                 <li class="breadcrumb-item"><a href="javascript:void(0);" onclick="updateForm()">수정</a>
                                 </li>
                             </c:if>
-                            <li class="breadcrumb-item"><a href="/">목록</a></li>
+                            <li class="breadcrumb-item"><a href="#" onclick="goBack()">목록</a></li>
+                            <script>
+                                function goBack() {
+                                    window.history.back();
+                                }
+                            </script>
                         </ol>
                     </nav>
                 </div>

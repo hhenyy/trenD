@@ -119,7 +119,7 @@
 
     function trendSearchResult(keyword, page) {
 
-        fetch("/main/search/trend?keyword=${keyword}&page=" + page)
+        fetch("/search/trend?keyword=${keyword}&page=" + page)
 
 
             .then(response => response.json())
@@ -213,7 +213,7 @@
 
     function commSearchResult(keyword, page) {
 
-        fetch("/main/search/comm?keyword=${keyword}&page=" + page)
+        fetch("/search/comm?keyword=${keyword}&page=" + page)
 
 
             .then(response => response.json())
