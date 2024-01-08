@@ -318,10 +318,11 @@
 <main id="main" class="main">
 	<div class="row align-items-top col-8" style="margin: 0 auto">
 
+
 		<div class="pagetitle" style="padding: 0">
 
 			<h1>커뮤니티 게시판</h1>
-			<div name="info" style="display: flex; justify-content: space-between" ;>
+			<div name="info" style="display: flex; justify-content: space-between";>
 				<div class="title_left">
 					<nav>
 						<ol class="breadcrumb">
@@ -358,7 +359,7 @@
 		<!--본문-->
 		<div class="card">
 			<div class="card-body">
-				<<h5 class="card-title" style="font-weight: bold;">${post.trSubject}</h5>
+				<h5 class="card-title" style="font-weight: bold;">${post.trSubject}</h5>
 			${post.trContent}
 			</div>
 		</div>
