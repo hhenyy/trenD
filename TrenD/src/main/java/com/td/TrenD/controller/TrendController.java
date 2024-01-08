@@ -1,6 +1,7 @@
 package com.td.TrenD.controller;
 
 import com.td.TrenD.model.TrendVO;
+import com.td.TrenD.service.TrendReService;
 import com.td.TrenD.service.TrendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +22,7 @@ public class TrendController {
 
     @Autowired
     private TrendService trendService;
-  
+
     @Autowired
     private StatisticsService staticsService;
 
