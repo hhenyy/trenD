@@ -19,14 +19,10 @@
     <form action="commUpdate?trNo=${post.trNo}" method="post" id="commForm">
         <input type="hidden" name = "trNo" value = "${post.trNo}">
 
-        <div class="align-items-top col-8" style="margin: 0 auto">
+        <div align="center">
 
-            <div class="pagetitle">
-                <h1>커뮤니티 글 수정</h1>
-            </div>
 
-            <div class="col-sm-10" style="width: 100%; margin-bottom: 10px;">
-
+            <div class="col-sm-10">
                 <select class="form-select" aria-label="Default select example" name="cateCd">
 
                     <c:forEach var="c" items="${categoryList}">
@@ -52,7 +48,7 @@
                       style="height: 100px;">${post.trContent}</textarea>
                 <label for="content">내용</label>
             </div>
-            <div align="center">
+            <div>
                 <button type="submit" class="btn btn-success rounded-pill" onclick="submitForm()">수정완료</button>
                 <button type="button" class="btn btn-light rounded-pill" onclick="cancelForm()">취소</button>
             </div>
