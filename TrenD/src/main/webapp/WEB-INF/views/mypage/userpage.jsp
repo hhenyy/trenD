@@ -1,9 +1,9 @@
 <%--
-  Created by IntelliJ IDEA.
-  User: nasoo
-  Date: 2023-12-21
-  Time: 오후 5:19
-  To change this template use File | Settings | File Templates.
+작업자 : 정소옥
+수정일자 : 2024-01-08
+설명 :  작성한 게시글, 댓글을 불러와 띄워주는 페이지
+        관리자일 경우 모든 게시글과 댓글을 불러온다.
+        제목 클릭시 해당 게시글로 이동.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
