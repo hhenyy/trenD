@@ -128,9 +128,12 @@ button {
 
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
-<%@ include file="include/header.jsp"%>
 </head>
 <body>
+<%-- header --%>
+<%@ include file="../include/header.jsp" %>
+<%@ include file="../include/sidebar.jsp" %>
+<main id="main" class="main">
 	<div id="container"></div>
 	<div id="button">
 		<button type="button" class="btn btn-primary" id="age" value="연령"
@@ -144,6 +147,8 @@ button {
 			onclick="location.href='/Statistics'">처음으로</button>
 		<input type="hidden" id="category" value=${category }>
 	</div>
-	<%@ include file="include/footer.jsp"%>
+</main>
+<!-- 워드클라우드 출력 -->
+<%@ include file="../include/footer.jsp"%>
 </body>
 </html>

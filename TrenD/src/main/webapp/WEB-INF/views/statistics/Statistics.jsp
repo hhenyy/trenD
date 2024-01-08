@@ -103,11 +103,15 @@ html, body, #container {
 
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
-<%@ include file="include/header.jsp"%>
 </head>
 <body>
+<%-- header --%>
+<%@ include file="../include/header.jsp" %>
+<%@ include file="../include/sidebar.jsp" %>
+<main id="main" class="main">
 <div id="container"></div>
+</main>
 <!-- 워드클라우드 출력 -->
-<%@ include file="include/footer.jsp"%>
+<%@ include file="../include/footer.jsp"%>
 </body>
 </html>

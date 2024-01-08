@@ -1,8 +1,9 @@
 <%--
-작업자 : 김선홍, 서준혁
+작업자 : 김선홍, 서준혁, 정소옥
 수정일자 : 2024-01-07
 설명 :  댓글 기능을 추가한 게시글 상세 페이지.
 		RESTful API 형태로 댓글 CRUD, 페이징이 가능하다.
+		댓글을 적은 유저 수가 5명 이상일 경우 참여인원의 통계를 볼 수 있다.
 --%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
@@ -281,7 +282,7 @@
             }
         }
 
-        //
+        // 로그인 값이 없을 경우 안내
         function redirectToLoginIfNotLoggedIn() {
             let userId = <%= session.getAttribute("userId") %>;
 
@@ -292,6 +293,10 @@
                 location.href = "loginform";
             }
         }
+
+		//----------------------------------------- 댓글통계 -----------------------------------------
+		//
+
 	</script>
 </head>
 <body>
