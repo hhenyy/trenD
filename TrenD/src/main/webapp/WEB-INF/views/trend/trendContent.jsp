@@ -78,8 +78,8 @@
 			callApi(url, method, params);
 			content.value = '';
 			document.getElementById('counter').innerText = '0/300자';
-			let lastPage = calculateLastPage();
-			findAllComment(lastPage);
+			// let lastPage = calculateLastPage();
+			findAllComment();
 		}
 
 		// 전체 댓글 조회
@@ -289,7 +289,7 @@
 			}
 		}
 
-		//
+		//----------------------------------------- 로그인 체크(로그인 했을 때만 댓글을 달 수 있음) -----------------------------------------
 		function redirectToLoginIfNotLoggedIn() {
 			let userId = <%= session.getAttribute("userId") %>;
 

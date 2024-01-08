@@ -44,7 +44,15 @@ public class TrendReController {
 	@GetMapping("/replies")
 	public Map<String, Object> findAllReply(final RePagingVO params) {
 		System.out.println("TrendReController.findAllReply");
-		Pageable pageable = PageRequest.of(params.getPage(), params.getItemPerPage(), Sort.by(Sort.Direction.ASC, "trReRef", "trReNo"));
+		Pageable pageable = PageRequest.of(
+				params.getPage(),
+				params.getItemPerPage(),
+				Sort.by(
+						Sort.Order.desc("trReRef"),
+						Sort.Order.asc("trReNo")
+				)
+		);
+
 		Page<TrendReVO> page = trendReService.findByTrNo(params, pageable);
 
 		//예외처리
