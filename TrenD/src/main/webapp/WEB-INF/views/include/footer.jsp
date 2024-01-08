@@ -1,7 +1,9 @@
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
     <div class="copyright">
-        &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+        <div class="icon">
+        <i class="bi bi-github"></i>
+        <strong><span><a href="https://github.com/Meimeidays/trenD">Trend</a></span></strong>
     </div>
     <div class="credits">
         <!-- All the links in the footer should remain intact. -->

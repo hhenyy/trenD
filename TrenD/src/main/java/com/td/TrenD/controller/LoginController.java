@@ -29,7 +29,7 @@ public class LoginController {
     // 로그인 , 로그아웃 시 메인화면으로
     @RequestMapping("/loginout_ok")
     public String loginSuc(){
-        return "main/main";
+        return "redirect:/";
     }
 
     @RequestMapping("/loginform")

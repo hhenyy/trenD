@@ -1,16 +1,14 @@
 package com.td.TrenD.service;
 
 import com.td.TrenD.dao.TrendRepository;
+import com.td.TrenD.model.CategoryVO;
 import com.td.TrenD.model.TrendVO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
+import com.td.TrenD.model.UserVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
-import java.util.List;
+import java.util.Date;
 
 @Service
 @Transactional
@@ -39,19 +37,48 @@ public class TrendService {
     }
 
 
-    public Page<TrendVO> commSearchResult(String keyword, String cateCd, Pageable pageable){
+    public Page<TrendVO> commSearchResult(String keyword, String cateCd, Pageable pageable) {
         return trendRepository.commSearchResult(keyword, cateCd, pageable);
     }
-    public Page<TrendVO> trendSearchResult(String keyword, String cateCd, Pageable pageable){
+
+    public Page<TrendVO> trendSearchResult(String keyword, String cateCd, Pageable pageable) {
         return trendRepository.trendSearchResult(keyword, cateCd, pageable);
     }
 
-public int commSearchResultCount(String cateCd, String keyword, char trDelYn){
+    public int commSearchResultCount(String cateCd, String keyword, char trDelYn) {
         return trendRepository.countTrendVOByCateCdNotContainingIgnoreCaseAndTrSubjectContainingAndTrDelYn(cateCd, keyword, trDelYn);
-}
-public int trendSearchResultCount(String cateCd, String keyword, char trDelYn){
+    }
+
+    public int trendSearchResultCount(String cateCd, String keyword, char trDelYn) {
         return trendRepository.countTrendVOByCateCdContainingIgnoreCaseAndTrSubjectContainingAndTrDelYn(cateCd, keyword, trDelYn);
 
-}
+    }
+
+    public TrendVO findTrend(String trSubject) {
+
+
+        TrendVO result = trendRepository.findByTrSubject(trSubject);
+
+        if (result == null) {
+            result = new TrendVO();
+            UserVO user = new UserVO();
+
+            user.setUserId("admin");
+
+            result.setUserVO(user);
+            result.setCateCd("t");
+            result.setTrSubject(trSubject);
+            result.setTrContent("");
+
+            result.setTrDate(new Date());
+            result.setTrUpdate(new Date());
+            result.setTrDelYn('n');
+            result.setTrReadCount(0);
+
+            result = trendRepository.save(result);
+        }
+
+        return result;
+    }
 
 }
