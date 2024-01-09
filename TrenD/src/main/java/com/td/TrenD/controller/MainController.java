@@ -4,14 +4,10 @@ import com.td.TrenD.model.TotalSearchVO;
 import com.td.TrenD.model.TrendVO;
 import com.td.TrenD.service.TrendService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController

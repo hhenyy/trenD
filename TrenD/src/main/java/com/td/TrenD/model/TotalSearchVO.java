@@ -14,6 +14,4 @@ public class TotalSearchVO {
     private String lastPage;
     private String pageRange;
     private String count;
-
-
 }
