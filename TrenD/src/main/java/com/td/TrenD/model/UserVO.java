@@ -52,4 +52,6 @@ public class UserVO {
 
 	@Column(name = "userDelYn")
 	private Character userDelYn;
+
 }
+
