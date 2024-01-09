@@ -1,9 +1,9 @@
 package com.td.TrenD.model;
 
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.Date;
+
 
 @Getter
 @Setter
@@ -22,7 +22,7 @@ public class TrendReVO {
 	@Column(name = "trNo")
 	private int trNo;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "userId")
 	private UserVO userVO;
 
@@ -43,4 +43,8 @@ public class TrendReVO {
 
 	@Column(name = "trReContent")
 	private String trReContent;
+
+	public void synchronizeRefWithTrReNo() {
+		this.trReRef = this.trReNo;
+	}
 }
