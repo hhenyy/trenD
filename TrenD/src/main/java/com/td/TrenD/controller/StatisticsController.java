@@ -1,16 +1,23 @@
 package com.td.TrenD.controller;
 
-import com.td.TrenD.model.CategoryVO;
-import com.td.TrenD.service.*;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.td.TrenD.model.CategoryVO;
+import com.td.TrenD.service.AgeService;
+import com.td.TrenD.service.GenderService;
+import com.td.TrenD.service.LocationService;
+import com.td.TrenD.service.CategoryService;
+import com.td.TrenD.service.StatisticsService;
+import com.td.TrenD.service.TrendService;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.json.JSONObject;
 
 @Controller
 public class StatisticsController {

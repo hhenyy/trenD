@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,6 +29,62 @@ public class PostController {
 
     @Autowired
     private StatisticsService staticsService;
+
+
+    @RequestMapping("post")
+    public String commContent(HttpServletRequest request, HttpSession session, Model model) {
+
+
+        TrendVO post = new TrendVO();
+        int trNo = Integer.parseInt(request.getParameter("trNo"));
+
+        post = trendService.trendContent(trNo);
+        if (post.getTrDelYn() == 'n') {
+            int readCount = post.getTrReadCount() + 1;
+            post.setTrReadCount(readCount);
+            trendService.saveTrend(post);
+
+
+            UserVO user = new UserVO();
+            TrendVO trend = new TrendVO();
+            String userId = (String) session.getAttribute("userId");
+            if (userId != null) {
+                StatisticsVO statics = new StatisticsVO();
+                statics = staticsService.checkStatics(userId, trNo);
+                if (statics == null) {
+                    statics = new StatisticsVO();
+                    trend.setTrNo(trNo);
+                    statics.setTrendVO(trend);
+                    user.setUserId(userId);
+                    statics.setUserVO(user);
+                    staticsService.saveStatics(statics);
+                }
+            }
+        }
+
+        model.addAttribute("post", post);
+
+        return "trend/trendContent";
+    }
+
+    @RequestMapping("totalSearch")
+    public String totalSearch(HttpServletRequest request, Model model) {
+
+        model.addAttribute("keyword", request.getParameter("keyword"));
+
+        return "main/totalSearch";
+    }
+
+    @RequestMapping("viewTrend")
+    public String viewTrend(@RequestParam("trend") String trend) {
+
+        TrendVO result = trendService.findTrend(trend);
+
+        String trNo = Integer.toString(result.getTrNo());
+
+        return "redirect:post?trNo=" + trNo;
+    }
+
 
     @RequestMapping("commForm")
     public String commForm(Model model) {
@@ -82,7 +139,7 @@ public class PostController {
     }
 
     @RequestMapping("commUpdate")
-    public String commUpdate(HttpServletRequest request, Model model) {
+    public String commUpdate(HttpServletRequest request) {
 
 
         int trNo = Integer.parseInt(request.getParameter("trNo"));
@@ -104,7 +161,7 @@ public class PostController {
     }
 
     @RequestMapping("deletePost")
-    public String deletePost(HttpServletRequest request, Model model) {
+    public String deletePost(HttpServletRequest request) {
 
         int trNo = Integer.parseInt(request.getParameter("trNo"));
 
@@ -115,14 +172,6 @@ public class PostController {
         trendService.saveTrend(trendVO);
 
         return "redirect:/";
-    }
-
-    @RequestMapping("totalSearch")
-    public String searchTest(HttpServletRequest request, Model model) {
-
-        model.addAttribute("keyword", request.getParameter("keyword"));
-
-        return "main/totalSearch";
     }
 
 }

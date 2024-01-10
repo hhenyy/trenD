@@ -61,7 +61,7 @@
                    name="userPw" placeholder="pw"> <label for="userPw">비밀번호</label>
         </div>
         <br>
-        <button class="btn w-100 pr-100 fw-bold" type="submit">로그인</button>
+        <button class="btn w-100 pr-100 fw-bold" style="border: 2px solid #174907;" type="submit">로그인</button>
         <br> <br>
 
         <h2 class="h6 fw-bold" align="center">SNS 계정으로 로그인</h2>
