@@ -64,13 +64,7 @@
                         $.each(result.boardlist, function (index, item) {
                             var linkUrl = ""; // 동적 URL을 저장할 변수
                             if (item.categoryVO && item.categoryVO.cateCd) {
-                                // 트랜드 게시판
-                                if (item.categoryVO.cateCd === 't') {
-                                    linkUrl = '/trendPost?trNo=' + item.trNo;
-                                } else {
-                                    // 커뮤니티 게시판
-                                    linkUrl = '/commPost?trNo=' + item.trNo;
-                                }
+                                linkUrl = '/post?trNo=' + item.trNo;
                             }
                             content += "<tr><td>" + (item.categoryVO ? item.categoryVO.cateNm : 'N/A') + "</td>";
                             if (result.isAdmin) {
@@ -166,12 +160,8 @@
 
         // 클릭했을 경우의 함수
         function replycontent(trNo, page, cateCd) {
-            var linkUrl = "/"; // 기본 URL 설정, 필요에 따라 수정
-            if (cateCd === 't') {
-                linkUrl += 'trendPost?trNo=' + trNo;
-            } else {
-                linkUrl += 'commPost?trNo=' + trNo;
-            }
+            var linkUrl = "/";
+            linkUrl += 'post?trNo=' + trNo;
 
             $.ajax({
                 type: "GET",
