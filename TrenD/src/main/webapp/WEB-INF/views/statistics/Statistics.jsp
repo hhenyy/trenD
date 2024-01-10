@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<<<<<<< HEAD:TrenD/src/main/webapp/WEB-INF/views/Statistics.jsp
 
 	<title>통계</title>
     <jsp:include page="./include/metalink.jsp"/>
@@ -188,16 +189,38 @@ button {
 }
 </style>
 
+<<<<<<< HEAD:TrenD/src/main/webapp/WEB-INF/views/Statistics.jsp
 </head>
 <body>
 <main id=main class="main">
 <jsp:include page="./include/header.jsp"/>
 <jsp:include page="./include/sidebar.jsp"/>
+=======
+<!-- Vendor JS Files -->
+<script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/chart.js/chart.umd.js"></script>
+<script src="assets/vendor/echarts/echarts.min.js"></script>
+<script src="assets/vendor/quill/quill.min.js"></script>
+<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="assets/vendor/tinymce/tinymce.min.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
+
+	<jsp:include page="../include/metalink.jsp"/>
+</head>
+<body>
+<jsp:include page="../include/header.jsp"/>
+<jsp:include page="../include/sidebar.jsp"/>
+>>>>>>> d61f3e1252c1c84cc52bcddf44bf2855fecdc261:TrenD/src/main/webapp/WEB-INF/views/statistics/Statistics.jsp
 <div id="container"></div>
 <div id="container1"></div>
 <div id="button"></div>
 <!-- 워드클라우드 출력 -->
+<<<<<<< HEAD:TrenD/src/main/webapp/WEB-INF/views/Statistics.jsp
 <%@ include file="include/footer.jsp"%>
 </main>
+=======
+<%@ include file="../include/footer.jsp"%>
+>>>>>>> d61f3e1252c1c84cc52bcddf44bf2855fecdc261:TrenD/src/main/webapp/WEB-INF/views/statistics/Statistics.jsp
 </body>
 </html>

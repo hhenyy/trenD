@@ -34,7 +34,7 @@
         <td>${list.trNo}</td>
         <td>${list.userVO.userName}</td>
         <td>${list.cateCd}</td>
-        <td><a href = "/trend/post?trNo=${list.trNo}">${list.trSubject}</a></td>
+        <td><a href = "/post?trNo=${list.trNo}">${list.trSubject}</a></td>
         <td>${list.trContent}</td>
         <td>${list.trReadCount}</td>
         <td>${list.trDate}</td>

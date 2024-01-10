@@ -1,3 +1,5 @@
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="com.td.TrenD.model.TrendVO" %>
 <%--
 작업자 : 김선홍, 서준혁
 수정일자 : 2024-01-07
@@ -7,6 +9,12 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	TrendVO post = (TrendVO) request.getAttribute("post");
+
+	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	String formattedDate = dateFormat.format(post.getTrDate());
+%>
 <!DOCTYPE html>
 <html>
 
@@ -70,8 +78,8 @@
 			callApi(url, method, params);
 			content.value = '';
 			document.getElementById('counter').innerText = '0/300자';
-			let lastPage = calculateLastPage();
-			findAllComment(lastPage);
+			// let lastPage = calculateLastPage();
+			findAllComment();
 		}
 
 		// 전체 댓글 조회
@@ -134,7 +142,7 @@
 				if (trReLev === 0)
 					commentHtml += "<button type='button' onclick='openReplyInputPopup(" + trReNo + ");' class='btns'><span class='icons icon_reply'>답글</span></button>";
 
-				if (id === sessionId && deleted === 'n') {
+				if ((id === sessionId || sessionId === 'admin') && deleted === 'n') {
 					commentHtml +=
 							"<button type='button' onclick='openCommentUpdatePopup(" + trReNo + ");' class='btns'><span class='icons icon_modify'>수정</span></button>" +
 							"<button type='button' onclick='deleteComment(" + trReNo + ");' class='btns'><span class='icons icon_del'>삭제</span></button>";
@@ -281,7 +289,7 @@
 			}
 		}
 
-		//
+		//----------------------------------------- 로그인 체크(로그인 했을 때만 댓글을 달 수 있음) -----------------------------------------
 		function redirectToLoginIfNotLoggedIn() {
 			let userId = <%= session.getAttribute("userId") %>;
 
@@ -310,35 +318,49 @@
 <main id="main" class="main">
 	<div class="row align-items-top col-8" style="margin: 0 auto">
 
+
 		<div class="pagetitle" style="padding: 0">
 
-			<h1>트렌드 게시판</h1>
-			<div class="title_left">
-				<nav>
-					<ol class="breadcrumb" style="margin: 5px 0 0 0">
-						<li class="breadcrumb-item">${post.categoryVO.cateNm}</li>
-						<li class="breadcrumb-item">${post.userVO.userName}</li>
-						<li class="breadcrumb-item">${post.trDate}</li>
-					</ol>
-				</nav>
-			</div>
+			<h1>커뮤니티 게시판</h1>
+			<div name="info" style="display: flex; justify-content: space-between";>
+				<div class="title_left">
+					<nav>
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item">${post.categoryVO.cateNm}</li>
+							<li class="breadcrumb-item">${post.userVO.userName}</li>
+							<li class="breadcrumb-item"><%=formattedDate%>
+							</li>
+						</ol>
+					</nav>
+				</div>
 
-			<div class="title_right">
-				<nav>
-					<ol class="breadcrumb" style="margin: 5px 0 0 0">
-						<li class="breadcrumb-item"><a href="javascript:void(0);" onclick="deletePost()">삭제</a></li>
-						<li class="breadcrumb-item"><a href="javascript:void(0);" onclick="updateForm()">수정</a></li>
-						<li class="breadcrumb-item"><a href="/trend/posts">목록</a></li>
-					</ol>
-				</nav>
+				<div class="title_right">
+					<nav>
+						<ol class="breadcrumb">
+							<c:if test="${sessionScope.userId.equals(post.userVO.userId) || sessionScope.userId.equals('admin')}">
+								<li class="breadcrumb-item"><a href="javascript:void(0);" onclick="deletePost()">삭제</a>
+								</li>
+							</c:if>
+							<c:if test="${sessionScope.userId.equals(post.userVO.userId)}">
+								<li class="breadcrumb-item"><a href="javascript:void(0);" onclick="updateForm()">수정</a>
+								</li>
+							</c:if>
+							<li class="breadcrumb-item"><a href="#" onclick="goBack()">목록</a></li>
+							<script>
+								function goBack() {
+									window.history.back();
+								}
+							</script>
+						</ol>
+					</nav>
+				</div>
 			</div>
 		</div><!-- End Page Title -->
 		<!--본문-->
-		<div class="card" style="margin-bottom: 0">
+		<div class="card">
 			<div class="card-body">
-				<h5 class="card-title">${post.trSubject}</h5>
-
-				${post.trContent}
+				<h5 class="card-title" style="font-weight: bold;">${post.trSubject}</h5>
+			${post.trContent}
 			</div>
 		</div>
 		<!--end 본문-->
