@@ -1,16 +1,11 @@
 package com.td.TrenD.dao;
 
-import java.util.List;
-
 import com.td.TrenD.model.StatisticsVO;
-import com.td.TrenD.model.TrendVO;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
-import com.td.TrenD.model.StatisticsVO;
+import java.util.List;
 
 public interface StatisticsDao extends JpaRepository<StatisticsVO,Integer> {
 	//jpa에서 제공하는 인터페이스들은 자신을 상속 받는 인터페이스가 있다면 JPA가 구현체를 자동으로 생성하여 
@@ -31,7 +26,7 @@ public interface StatisticsDao extends JpaRepository<StatisticsVO,Integer> {
 //	@Query("select s.staNo from StatisticsVO s left join s.trendVO t where t.cateCd= :categoryOpt")
 //	List<Integer> count(@Param("categoryOpt") String categoryOpt);
 	
-	@Query("select count(s) from StatisticsVO s left join s.trendVO t where cateCd= :categoryOpt")
+	@Query("select count(s) from StatisticsVO s left join s.trendVO t where s.trendVO.categoryVO.cateCd= :categoryOpt")
 	//jpql로 올바르게 조인하는 법. @JoinColumn 등을 통해 연관관계가 설정되어 있는 테이블을 조인하는 방법 사용 중
 	//이때 연관관계의 주인(외래키를 가진 쪽)을 통해 조인해야 함
 	//레프트 조인 규칙에 따라, 왼쪽엔 기준이 되는 엔티티를 위치시킴. 
@@ -64,6 +59,8 @@ public interface StatisticsDao extends JpaRepository<StatisticsVO,Integer> {
 	
 //	@Query("SELECT s FROM StatisticsVO s WHERE s.userVO.userId = :userId AND s.trNo = :trNo")
 //    StatisticsVO findByUserIdAndTrNo(@Param("userId") String userId, @Param("trNo") int trNo);
+	@Query("SELECT s FROM StatisticsVO s WHERE s.userVO.userId = :userId AND s.trendVO.trNo = :trNo")
+    StatisticsVO findByUserIdAndTrNo(@Param("userId") String userId, @Param("trNo") int trNo);
 	
 	
 }

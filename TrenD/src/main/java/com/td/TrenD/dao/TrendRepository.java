@@ -36,4 +36,6 @@ public interface TrendRepository extends JpaRepository<TrendVO, Integer> {
 
     int countTrendVOByCateCdNotContainingIgnoreCaseAndTrSubjectContainingAndTrDelYn(String cateCd, String keyword, char trDelYn);
 
+    TrendVO findByTrSubject(String trSubject);
+
 }

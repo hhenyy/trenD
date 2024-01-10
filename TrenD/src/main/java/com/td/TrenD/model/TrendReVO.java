@@ -19,7 +19,7 @@ public class TrendReVO {
 	@Column(name = "trReNo", nullable = false)
 	private int trReNo;
 
-	@Column(name = "trNo", insertable = false, updatable = false)
+	@Column(name = "trNo")
 	private int trNo;
 
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -46,13 +46,5 @@ public class TrendReVO {
 
 	public void synchronizeRefWithTrReNo() {
 		this.trReRef = this.trReNo;
-	}
-
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "trNo")
-	private TrendVO trendVO;
-
-	public String getCateCd() {
-		return trendVO.getCategoryVO().getCateCd();
 	}
 }

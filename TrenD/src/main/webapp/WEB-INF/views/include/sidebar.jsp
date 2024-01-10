@@ -6,7 +6,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link " href="index.html">
+            <a class="nav-link " href="${pageContext.request.contextPath}/">
                 <i class="bi bi-newspaper"></i>
                 <span>실시간 트렌드</span>
             </a>
@@ -18,36 +18,36 @@
             </a>
             <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="/trend/posts">
+                    <a href="${pageContext.request.contextPath}/trend/posts">
                         <i class="bi bi-circle"></i><span>트렌드 게시판</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/community/posts">
+                    <a href="${pageContext.request.contextPath}/community/posts">
                         <i class="bi bi-circle"></i><span>자유 게시판</span>
                     </a>
                 </li>
-            </ul>
+             </ul>
         </li><!-- End Components Nav -->
 
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="users-profile.html">
+            <a class="nav-link collapsed" href="${pageContext.request.contextPath}/Statistics">
                 <i class="ri ri-bar-chart-2-line"></i>
                 <span>통계</span>
             </a>
         </li>
 
-
+<!--
         <li class="nav-heading">Team</li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="users-profile.html">
+            <a class="nav-link collapsed" href="https://github.com/sun4red">
                 <i class="bi bi-person"></i>
-                <span>준혁</span>
+                <span>선홍</span>
             </a>
         </li>
-
+-->
     </ul>
 
 </aside><!-- End Sidebar-->
