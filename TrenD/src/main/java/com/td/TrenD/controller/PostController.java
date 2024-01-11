@@ -4,9 +4,7 @@ import com.td.TrenD.model.CategoryVO;
 import com.td.TrenD.model.StatisticsVO;
 import com.td.TrenD.model.TrendVO;
 import com.td.TrenD.model.UserVO;
-import com.td.TrenD.service.CommunityService;
-import com.td.TrenD.service.StatisticsService;
-import com.td.TrenD.service.TrendService;
+import com.td.TrenD.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,17 +21,14 @@ public class PostController {
 
     @Autowired
     private CommunityService commService;
-
     @Autowired
     private TrendService trendService;
-
     @Autowired
     private StatisticsService staticsService;
 
 
     @RequestMapping("post")
-    public String commContent(HttpServletRequest request, HttpSession session, Model model) {
-
+    public String commContent(HttpServletRequest request, HttpSession session, Model model, String value) {
 
         TrendVO post = new TrendVO();
         int trNo = Integer.parseInt(request.getParameter("trNo"));
