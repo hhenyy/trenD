@@ -78,8 +78,8 @@
 			callApi(url, method, params);
 			content.value = '';
 			document.getElementById('counter').innerText = '0/300자';
-			let lastPage = calculateLastPage();
-			findAllComment(lastPage);
+			// let lastPage = calculateLastPage();
+			findAllComment();
 		}
 
 		// 전체 댓글 조회
@@ -142,7 +142,7 @@
 				if (trReLev === 0)
 					commentHtml += "<button type='button' onclick='openReplyInputPopup(" + trReNo + ");' class='btns'><span class='icons icon_reply'>답글</span></button>";
 
-				if (id === sessionId && deleted === 'n') {
+				if ((id === sessionId || sessionId === 'admin') && deleted === 'n') {
 					commentHtml +=
 							"<button type='button' onclick='openCommentUpdatePopup(" + trReNo + ");' class='btns'><span class='icons icon_modify'>수정</span></button>" +
 							"<button type='button' onclick='deleteComment(" + trReNo + ");' class='btns'><span class='icons icon_del'>삭제</span></button>";
@@ -289,7 +289,7 @@
 			}
 		}
 
-		//
+		//----------------------------------------- 로그인 체크(로그인 했을 때만 댓글을 달 수 있음) -----------------------------------------
 		function redirectToLoginIfNotLoggedIn() {
 			let userId = <%= session.getAttribute("userId") %>;
 

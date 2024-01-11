@@ -107,17 +107,17 @@ public class MypageController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/replycontent/{trNo}")
-    public String getReplyContent(@PathVariable int trNo, Model model) {
-        TrendReVO replyInfo = myservice.getReplyByTrNo(trNo);
-        model.addAttribute("replyInfo", replyInfo);
-
-        // 확인된 cateCd 값에 따라 리다이렉션
-        if ("t".equals(replyInfo.getTrendVO().getCateCd())) {
-            return "redirect:/trendPost?trNo=" + trNo;
-        } else {
-            return "redirect:/commPost?trNo=" + trNo;
-        }
-    }
+//    @GetMapping("/replycontent/{trNo}")
+//    public String getReplyContent(@PathVariable int trNo, Model model) {
+//        TrendReVO replyInfo = myservice.getReplyByTrNo(trNo);
+//        model.addAttribute("replyInfo", replyInfo);
+//
+//        // 확인된 cateCd 값에 따라 리다이렉션
+//        if ("t".equals(replyInfo.getTrendVO().getCateCd())) {
+//            return "redirect:/trendPost?trNo=" + trNo;
+//        } else {
+//            return "redirect:/commPost?trNo=" + trNo;
+//        }
+//    }
 
 }

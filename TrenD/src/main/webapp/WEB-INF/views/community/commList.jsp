@@ -9,6 +9,7 @@
 
 
     <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="${pageContext.request.contextPath}/js/function.js"></script>
     <script>
 
         function goBackList() {
@@ -41,6 +42,7 @@
                     "search": search},
                 success: function (data) {
                     displayCommList(data);
+                    updatePagination(data.pageCount, data.page, 'searchComm');
                 },
                 error: function () {
                     alert("검색 중 오류가 발생했습니다.");
@@ -77,9 +79,15 @@
             var row='';
 
             $.each(data.commList, function(index, community) {
+                // 댓글 수를 가져오는 함수 호출
+                var commentCount = getCommentCount(community.trNo);
+
+                // 댓글 수가 0이면 댓글 수 표시 없이 제목만 출력
+                var titleWithCommentCount = commentCount > 0 ? '[' + commentCount + ']' : '';
+
                 row = '<tr>' +
                     '<td>' + community.categoryVO.cateNm + '</td>' +
-                    '<td><a href="/post?trNo=' + community.trNo + '">' + community.trSubject + '</a></td>' +
+                    '<td><a href="/post?trNo=' + community.trNo + '">' + community.trSubject + '</a>'+titleWithCommentCount+'</td>' +
                     '<td>' + community.userVO.userName + '</td>' +
                     '<td>' + formatDate(community.trDate) + '</td>' +
                     '<td>' + community.trReadCount + '</td>' +
@@ -87,27 +95,27 @@
                 $('#commTableBody').append(row);
             });
 
-            // Add Previous Button
-            if (data.page > 1) {
-                var prevPage = data.page - 1;
-                var prevButton = '<a href="javascript:searchComm(' + prevPage + ')" data-page="' + prevPage + '">이전</a>';
-                $('#pagingUl').append(prevButton);
-            }
-
-            // Add Page Numbers
-            // Array.from메소드를 사용하여 전달받은 pageCount만큼의 배열을 생성
-            // index에 1을 더하고 data-page속성을 사용하여 페이지 번호를 나타낸다.
-            $.each(Array.from({ length: data.pageCount }, (_, i) => i + 1), function(index, pageNumber) {
-                var li = '<a href="javascript:searchComm(' + pageNumber + ')" data-page="' + pageNumber + '">' + pageNumber + '</a>';
-                $('#pagingUl').append(li);
-            });
-
-            // Add Next Button
-            if (data.page < data.pageCount) {
-                var nextPage = data.page + 1;
-                var nextButton = '<a href="javascript:searchComm(' + nextPage + ')" data-page="' + nextPage + '">다음</a>';
-                $('#pagingUl').append(nextButton);
-            }
+            // // Add Previous Button
+            // if (data.page > 1) {
+            //     var prevPage = data.page - 10;
+            //     var prevButton = '<a class="page-item" href="javascript:searchComm(' + prevPage + ')" data-page="' + prevPage + '">이전</a>';
+            //     $('#pagingUl').html(prevButton);
+            // }
+            //
+            // // Add Page Numbers
+            // // Array.from메소드를 사용하여 전달받은 pageCount만큼의 배열을 생성
+            // // index에 1을 더하고 data-page속성을 사용하여 페이지 번호를 나타낸다.
+            // $.each(Array.from({ length: data.pageCount }, (_, i) => i + 1), function(index, pageNumber) {
+            //     var li = '<a class="page-item" href="javascript:searchComm(' + pageNumber + ')" data-page="' + pageNumber + '">' + pageNumber + '</a>';
+            //     $('#pagingUl').html(li);
+            // });
+            //
+            // // Add Next Button
+            // if (data.page < data.pageCount) {
+            //     var nextPage = data.page + 10;
+            //     var nextButton = '<a class="page-item" href="javascript:searchComm(' + nextPage + ')" data-page="' + nextPage + '">다음</a>';
+            //     $('#pagingUl').html(nextButton);
+            // }
 
             // 여기에 cateList를 사용하여 추가적인 처리를 하도록 작성
             var dropdown = $('#cateCd');
@@ -116,6 +124,46 @@
             $.each(data.cateList, function(index, category) {
                 dropdown.append($('<option>').val(category.cateCd).text(category.cateNm));
             });
+        }
+
+        function getCommentCount(trNo) {
+            const url = `/replies/count/` + trNo;
+
+            try {
+                var totalItems = getJson(url, {});
+                console.log(totalItems);
+                return totalItems; // 댓글 수를 반환
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                return 0; // 에러 발생 시 0을 반환
+            }
+        }
+
+        function updatePagination(totalPages, currentPage, listType) {
+            var paginationHtml = '<nav aria-label="Page navigation"><ul class="pagination">';
+
+            // 이전 버튼
+            var prevPage = currentPage - 10;
+            if (prevPage < 1) {
+                prevPage = 1;
+            }
+            paginationHtml += '<li class="page-item ' + (currentPage === 1 ? 'disabled' : '') + '"><a class="page-link" href="javascript:' + listType + '(' + prevPage + ')">이전</a></li>';
+
+            // 페이지 숫자 버튼
+            for (var i = 1; i <= totalPages; i++) {
+                var activeClass = i === currentPage ? 'active' : '';
+                paginationHtml += '<li class="page-item ' + activeClass + '"><a class="page-link" href="javascript:' + listType + '(' + i + ')">' + i + '</a></li>';
+            }
+
+            // 다음 버튼
+            var nextPage = currentPage + 10;
+            if (nextPage > totalPages) {
+                nextPage = totalPages;
+            }
+            paginationHtml += '<li class="page-item ' + (currentPage === totalPages ? 'disabled' : '') + '"><a class="page-link" href="javascript:' + listType + '(' + nextPage + ')">다음</a></li>';
+
+            paginationHtml += '</ul></nav>';
+            $("#pagination").html(paginationHtml);
         }
 
         // 원하는 날짜 형태를 options에 저장하고
@@ -128,6 +176,13 @@
         }
 
     </script>
+    <style>
+        #pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
 
 </head>
 
@@ -145,7 +200,7 @@
         <a href="/commForm">글 작성</a>
     </div>
     <!-- 게시물 목록 테이블 -->
-    <table id="communityTable" align="center" border="1" class="table">
+    <table id="communityTable" class="table">
         <thead>
         <tr>
             <th>머릿말</th>
@@ -161,11 +216,7 @@
     </table>
 
     <!-- 페이징 -->
-    <div id="pagingDiv" align="center">
-        <ul id="pagingUl"class="">
-            <!-- 페이징 출력될 곳 -->
-        </ul>
-    </div>
+    <div id="pagination"></div>
 
     <!-- 검색창 -->
     <div id="searchDiv" align="center">
