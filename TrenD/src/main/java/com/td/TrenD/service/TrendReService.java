@@ -7,6 +7,7 @@
 package com.td.TrenD.service;
 
 import com.td.TrenD.dao.TrendReRepository;
+import com.td.TrenD.model.AgeVO;
 import com.td.TrenD.model.RePagingVO;
 import com.td.TrenD.model.TrendReVO;
 import com.td.TrenD.model.UserVO;
@@ -15,7 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -110,4 +113,21 @@ public class TrendReService {
 			trendReRepository.save(r);
 		});
 	}
+
+	public List<String> findAgeList(int trNo) {
+
+		return trendReRepository.findAgeList(trNo);
+	}
+
+	public List<String> findLocationList(int trNo) {
+
+		return trendReRepository.findLocationList(trNo);
+	}
+
+	public List<String> findGenderList(int trNo) {
+
+		return trendReRepository.findGenderList(trNo);
+	}
+
+	
 }

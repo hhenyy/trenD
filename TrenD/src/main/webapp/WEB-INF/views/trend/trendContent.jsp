@@ -80,6 +80,8 @@
 			document.getElementById('counter').innerText = '0/300자';
 			// let lastPage = calculateLastPage();
 			findAllComment();
+			
+			reload(trNo);
 		}
 
 		// 전체 댓글 조회
@@ -238,6 +240,8 @@
 			callApi(url, method, {});
 
 			findAllComment();
+			
+			reload(trNo);
 		}
 
 		//----------------------------------------- 답글 -----------------------------------------
@@ -273,6 +277,64 @@
 			content.value = '';
 			closeReplyInputPopup()
 			findAllComment();
+			
+			reload(trNo);
+		}
+		
+		//그래프 새로고침
+		function reload(trNo){
+			$.ajax({
+				type : "post",	//post 방식 요청. @postmapping으로 받게 됨
+				url : "${pageContext.request.contextPath}/reload/"+trNo,
+
+				success : function(result){
+					$("#agecontainer").empty()
+					$("#gendercontainer").empty()	//호출될 때마다 #container의 내용을 비운다. 따라서 다시 호출됐을 때 그림이 덧그려지지 않게 됨
+					
+					// create pie chart with passed data
+		            var agechart = anychart.pie(result.age2);
+		            var genderchart = anychart.pie(result.gender2);
+		            //데이터를 '문자열',숫자  이런 식으로 받네??
+
+		            // configure tooltips
+		            //agechart.tooltip().format("댓글 수:{%value}");
+		            //genderchart.tooltip().format("댓글 수:{%value}");
+		            
+		            //툴팁 지우기
+		            var tooltip = agechart.tooltip();
+		            tooltip.enabled(false);
+		            
+		            var tooltip2 = genderchart.tooltip()
+		            tooltip2.enabled(false);
+
+		            // set chart title text settings
+		            agechart
+		                .title('연령 별 댓글')
+		                // set chart radius
+		                .radius('43%')
+		                // create empty area in pie chart
+		                .innerRadius('30%');
+		            genderchart
+		                .title('성 별 댓글')
+		                // set chart radius
+		                .radius('43%')
+		                // create empty area in pie chart
+		                .innerRadius('30%');
+		            
+		            agechart.width('50%');
+		            genderchart.width('50%');
+
+		            // set container id for the chart
+		            agechart.container('agecontainer');
+		            genderchart.container('gendercontainer');
+		            
+		            // initiate chart drawing
+		            agechart.draw();
+		            genderchart.draw();
+			 	   
+			 	    // initiate chart drawing
+				}	
+			});	
 		}
 
 		//----------------------------------------- 마지막 페이지 계산 -----------------------------------------
@@ -301,6 +363,67 @@
 			}
 		}
 	</script>
+	<!-- anychart 라이브러리 -->
+    <script
+            src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-ui.min.js"></script>
+    <script
+            src="https://cdn.anychart.com/releases/v8/js/anychart-exports.min.js"></script>
+    <link
+            href="https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css"
+            type="text/css" rel="stylesheet">
+    <link
+            href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css"
+            type="text/css" rel="stylesheet">
+    <!-- anychart 그리기 -->       
+    <script>
+
+        anychart.onDocumentReady(function () {
+        console.log(${age})
+
+            // create pie chart with passed data
+            var agechart = anychart.pie(${age});
+            var genderchart = anychart.pie(${gender});
+            //데이터를 '문자열',숫자  이런 식으로 받네??
+
+            // configure tooltips
+            //agechart.tooltip().format("댓글 수:{%value}");
+            //genderchart.tooltip().format("댓글 수:{%value}");
+            
+            //툴팁 지우기
+            var tooltip = agechart.tooltip();
+            tooltip.enabled(false);
+            
+            var tooltip2 = genderchart.tooltip()
+            tooltip2.enabled(false);
+
+            // set chart title text settings
+            agechart
+                .title('연령 별 댓글')
+                // set chart radius
+                .radius('43%')
+                // create empty area in pie chart
+                .innerRadius('30%');
+            genderchart
+                .title('성 별 댓글')
+                // set chart radius
+                .radius('43%')
+                // create empty area in pie chart
+                .innerRadius('30%');
+            
+            agechart.width('50%');
+            genderchart.width('50%');
+
+            // set container id for the chart
+            agechart.container('agecontainer');
+            genderchart.container('gendercontainer');
+            
+            // initiate chart drawing
+            agechart.draw();
+            genderchart.draw();
+        });
+        </script>    
+	
 </head>
 <body>
 <jsp:include page="../include/header.jsp"/>
@@ -322,6 +445,7 @@
 		<div class="pagetitle" style="padding: 0">
 
 			<h1>커뮤니티 게시판</h1>
+			
 			<div name="info" style="display: flex; justify-content: space-between";>
 				<div class="title_left">
 					<nav>
@@ -363,6 +487,10 @@
 			${post.trContent}
 			</div>
 		</div>
+		<c:if test="${count > 0}">
+		<div id="agecontainer" style="margin:10px 10px 10px 200px"></div>
+		<div id="gendercontainer" style="margin:10px 10px 10px 200px"></div>
+		</c:if>
 		<!--end 본문-->
 		<section style="padding: 0">
 			<!--/* 댓글 작성 */-->
