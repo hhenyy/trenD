@@ -1,14 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 
-	<title>통계</title>
-    <jsp:include page="../include/metalink.jsp"/>
+<title>통계</title>
+<jsp:include page="../include/metalink.jsp" />
 
 <!-- anychart 라이브러리 -->
-<script src="https://cdn.anychart.com/releases/8.12.0/js/anychart-core.min.js"></script>
-<script src="https://cdn.anychart.com/releases/8.12.0/js/anychart-tag-cloud.min.js"></script>
+<script
+	src="https://cdn.anychart.com/releases/8.12.0/js/anychart-core.min.js"></script>
+<script
+	src="https://cdn.anychart.com/releases/8.12.0/js/anychart-tag-cloud.min.js"></script>
 <script
 	src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
 <script src="https://cdn.anychart.com/releases/v8/js/anychart-ui.min.js"></script>
@@ -21,15 +24,14 @@
 	href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css"
 	type="text/css" rel="stylesheet">
 <script>
-anychart.onDocumentReady(function () {
-	
-	$("#container1").hide()
-	$("button").hide()
-	
+ anychart.onDocumentReady(
+		function () {
+	$("#container1").hide();
+	$("button").hide();
 
     // create data   
     var data = 
-    	${json}
+    	${json}		//[{"x" : 값,"value" : 값},{"x" : 값,"value" : 값}]의 형태로 값을 받음
     ;
 
     // create a chart and set the data
@@ -71,7 +73,8 @@ anychart.onDocumentReady(function () {
     	}
     });
  
-});
+}
+		); 
 
 function detail(a,b){
 	const value = b
@@ -79,7 +82,7 @@ function detail(a,b){
 	//var category = encodeURIComponent(a);	//  /이 포함된 문자열을 전송하려면 인코딩이 필요. String과 달리 jsp의 변수들은 문자열을 통으로 변환 불가
 	//하지만 인코딩을 하게 되면 /이 포함된 문자열이 저장된 변수는 오류를 발생시킴. 왜
 	var category = a;
-	$("#container1").empty()	//호출될 때마다 #container1의 내용을 비운다. 따라서 다시 호출됐을 때 그림이 덧그려지지 않게 됨
+	
 	
 	$.ajax({
 		type : "get",	//post 방식 요청. @postmapping으로 받게 됨
@@ -105,6 +108,9 @@ function detail(a,b){
 		
 		//서버와 클라이언트 간 페이지 변경 없이 @requestBody로만 값을 주고받게 됨
 		success : function(result){
+			$("#container").hide()
+			$("#container1").empty()	//호출될 때마다 #container1의 내용을 비운다. 따라서 다시 호출됐을 때 그림이 덧그려지지 않게 됨
+										//ajax 안에 있는 게 훨씬 깔끔. 메소드 호출 시점에 비워버리면 비는ㄴ 순간이 보여버림
 			// create pie chart with passed data
 	 	    var chart1 = anychart.pie(result.list);
 	 	 	//데이터를 '문자열',숫자  이런 식으로 받네??
@@ -119,7 +125,7 @@ function detail(a,b){
 	 	      .radius('43%')
 	 	      // create empty area in pie chart
 	 	      .innerRadius('30%');
-
+	 	    
 	 	    // set container id for the chart
 	 	    chart1.container('container1');
 	 	   $("#container1").show()					
@@ -131,7 +137,7 @@ function detail(a,b){
 	 	   
 	 	    // initiate chart drawing
 	 	    
-	 	  $("#container").hide()
+	 	  
 	 	  
 	 	  var buttons = 
 	 		  '<button type="button" class="btn btn-primary" id="age" value="연령"'
@@ -169,12 +175,11 @@ function home(){
 
 </script>
 <style>
-html, body, main, #container,#container1 {
-    width: 95%;
-    height: 100%;
-     margin: 0px 0px 0px 0px;
-    padding: 0px 0px;
-    
+html, body, main, #container, #container1 {
+	width: 95%;
+	height: 95%;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px;
 }
 
 #button {
@@ -190,14 +195,14 @@ button {
 
 </head>
 <body>
-<main id=main class="main">
-<jsp:include page="../include/header.jsp"/>
-<jsp:include page="../include/sidebar.jsp"/>
-<div id="container"></div>
-<div id="container1"></div>
-<div id="button"></div>
-<!-- 워드클라우드 출력 -->
-<%@ include file="../include/footer.jsp"%>
-</main>
+	<main id=main class="main">
+		<jsp:include page="../include/header.jsp" />
+		<jsp:include page="../include/sidebar.jsp" />
+		<div id="container"></div>
+		<div id="container1"></div>
+		<div id="button"></div>
+		<!-- 워드클라우드 출력 -->
+		<%@ include file="../include/footer.jsp"%>
+	</main>
 </body>
 </html>

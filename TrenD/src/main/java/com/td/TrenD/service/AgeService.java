@@ -31,5 +31,6 @@ public class AgeService {
 
 		return dao.countAge(cateNm);
 	}
+	
 
 }
