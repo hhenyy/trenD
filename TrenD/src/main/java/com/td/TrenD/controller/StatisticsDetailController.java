@@ -46,7 +46,8 @@ public class StatisticsDetailController {
 		//걱정하지 않아도 됨. 0이 전송되면 뷰페이지의 통계 라이브러리가 알아서 처리해줌
 		//뷰페이지에선 버튼을 통해서 연령,성별,지역 등으로 값이 변경될 예정
 	
-		@RequestMapping("/StatisticsDetail/{value}")//포스트 방식의 요청을 받는 어노테이션
+		@RequestMapping("/StatisticsDetail/{value}")//포스트 방식의 요청을 받는 어노테이션..이어야 하지만 RequestMapping로도 작동
+													//겟메핑, 포스트매핑 등은 RequestMapping를 세분화한 것. 작동하면 이거 써도 됨
 					 //링크를 통해 전송된 값들은 /{}을 통해 받아야 한다
 		@ResponseBody
 		public ResponseEntity<Map<String, Object>> StatisticsDetail(/* @PathVariable("category") String category, */
