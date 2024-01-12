@@ -11,6 +11,8 @@
 <head>
     <title>회원정보 수정</title>
 
+    <jsp:include page="../include/metalink.jsp"/>
+
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script>
         function check() {
@@ -30,7 +32,7 @@
 <main class="form-findid w-500 m-auto">
     <form method="post" action="delCheckOk" onsubmit="return check()">
         <br> <br>
-        <h1 class="h4 mb-2">
+        <h1 class="h4 mb-2 text-center">
             회원 탈퇴
         </h1>
         <br>
@@ -55,7 +57,7 @@
                    name="userPw" placeholder="pw"> <label for="userPw">비밀번호</label>
         </div>
 
-        <button class="btn w-100 pr-100 fw-bold" type="submit">확인</button>
+        <button class="btn btn-outline-dark w-100 pr-100 fw-bold" type="submit">확인</button>
     </form>
 
     <p class="mt-5 mb-3 text-body-secondary" align="center"

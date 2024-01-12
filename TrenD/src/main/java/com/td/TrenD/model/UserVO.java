@@ -13,6 +13,7 @@ import java.util.Date;
 @Table(name = "user")
 public class UserVO {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "userId", nullable = false)
 	private String userId;
 
@@ -22,10 +23,17 @@ public class UserVO {
 	@Column(name = "userName")
 	private String userName;
 
+	@ManyToOne
+	@JoinColumn(name = "genCd")
+	private GenderVO genderVO;
 
-	private String genCd;
-	private String ageCd;
-	private String locCd;
+	@ManyToOne
+	@JoinColumn(name = "ageCd")
+	private AgeVO ageVO;
+
+	@ManyToOne
+	@JoinColumn(name = "locCd")
+	private LocationVO locationVO;
 
 	@Column(name = "userEmail")
 	private String userEmail;
@@ -44,4 +52,6 @@ public class UserVO {
 
 	@Column(name = "userDelYn")
 	private Character userDelYn;
+
 }
+

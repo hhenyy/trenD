@@ -1,7 +1,6 @@
 package com.td.TrenD.model;
 
 import lombok.*;
-
 import javax.persistence.*;
 
 @Getter
@@ -24,5 +23,4 @@ public class LocationVO {
 
 	@Column(name = "idx_location")
 	private String idx_location;
-
 }

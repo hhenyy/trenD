@@ -10,6 +10,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class MypageService {
 
@@ -55,7 +59,25 @@ public class MypageService {
         return "admin".equals(userId);
     }
 
-    public Page<TrendReVO> getReplyListForAdmin(PageRequest pageable) {
-        return mypageRepository.findAllReplyForAdmin(pageable);
+    public TrendVO getTrendInfoByTrNo(int trNo) {
+        return mypageRepository.findById(trNo)
+                .orElseThrow(() -> new EntityNotFoundException("Trend not found with trNo: " + trNo));
     }
+
+    public Optional<TrendReVO> findReplyByTrNo(int trNo) {
+        List<TrendReVO> replyList = mypageRepository.findReplyByTrNo(trNo);
+        if (!replyList.isEmpty()) {
+            return Optional.of(replyList.get(0));
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    public TrendReVO getReplyByTrNo(int trNo) {
+        Optional<TrendReVO> replyOptional = findReplyByTrNo(trNo);
+        return replyOptional.orElseThrow(() ->
+                new EntityNotFoundException());
+    }
+
+
 }

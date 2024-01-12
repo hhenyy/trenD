@@ -66,7 +66,7 @@ dependencies {
 
     //MySQL
     runtimeOnly 'com.mysql:mysql-connector-j'
-    
+
     //smtp
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 
@@ -74,11 +74,18 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
 
 
+    //jackson
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
+
     //Test
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    
+    //json 라이브러리
+	// https://mvnrepository.com/artifact/org.json/json
+	implementation group: 'org.json', name: 'json', version: '20231013'
 }
 
 tasks.named('bootBuildImage') {

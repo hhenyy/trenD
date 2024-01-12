@@ -46,7 +46,7 @@
         </div>
 
         <div class="row mb-3">
-            <button class="btn w-100 pr-100 fw-bold" type="button"
+            <button class="btn btn-outline-dark w-100 pr-100 fw-bold" type="button"
                     onclick="location.href='editPw';">비밀번호 변경하기</button>
         </div>
 
@@ -66,10 +66,10 @@
             <label for="userAge" class="form-label" align="left">나이</label>
             <select class="form-select" id="userAge" name="ageCd">
                 <c:forEach var="age" items="${ageList}">
-                    <c:if test="${age.ageCd eq user.ageCd}">
+                    <c:if test="${age.ageCd eq user.ageVO.ageCd}">
                         <option value="${age.ageCd}" selected>${age.ageNm}</option>
                     </c:if>
-                    <c:if test="${age.ageCd ne user.ageCd}">
+                    <c:if test="${age.ageCd ne user.ageVO.ageCd}">
                         <option value="${age.ageCd}">${age.ageNm}</option>
                     </c:if>
                 </c:forEach>
@@ -82,10 +82,10 @@
             <label for="userGender" class="form-label" align="left">성별</label>
             <select class="form-select" id="userGender" name="genCd">
                 <c:forEach var="gender" items="${genderList}">
-                    <c:if test="${gender.genCd eq user.genCd}">
+                    <c:if test="${gender.genCd eq user.genderVO.genCd}">
                         <option value="${gender.genCd}" selected>${gender.genNm}</option>
                     </c:if>
-                    <c:if test="${gender.genCd ne user.genCd}">
+                    <c:if test="${gender.genCd ne user.genderVO.genCd}">
                         <option value="${gender.genCd}">${gender.genNm}</option>
                     </c:if>
                 </c:forEach>
@@ -96,10 +96,10 @@
             <label for="userLoc" class="form-label" align="left">지역</label>
             <select class="form-select" id="userLoc" name="locCd">
                 <c:forEach var="loc" items="${locList}">
-                    <c:if test="${loc.locCd eq user.locCd}">
+                    <c:if test="${loc.locCd eq user.locationVO.locCd}">
                         <option value="${loc.locCd}" selected>${loc.locNm}</option>
                     </c:if>
-                    <c:if test="${loc.locCd ne user.locCd}">
+                    <c:if test="${loc.locCd ne user.locationVO.locCd}">
                         <option value="${loc.locCd}">${loc.locNm}</option>
                     </c:if>
                 </c:forEach>
@@ -113,7 +113,7 @@
         </div>
 
         <br>
-        <button class="btn w-100 pr-100 fw-bold" type="submit">수정</button>
+        <button class="btn btn-outline-dark w-100 pr-100 fw-bold" type="submit">수정</button>
 
         <p class="mt-5 mb-3 text-body-secondary" align="center"
            style="font-size: 90%">

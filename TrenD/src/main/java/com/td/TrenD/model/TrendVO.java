@@ -1,7 +1,7 @@
 package com.td.TrenD.model;
 
-import lombok.*;
 
+import lombok.Data;
 import javax.persistence.*;
 import java.util.Date;
 
