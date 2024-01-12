@@ -38,7 +38,7 @@ Google Trends를 활용하여 오늘의 실시간 트랜드와 그와 관련된 
 ## 주요기능 설명
 | 기능 | 담당자 | 상세설명 |
 | --- | --- | --- |
-| 구글 실시간 검색어 크롤링, 챗봇  | 함혜선 | -Rest API방식으로 Serp api로 </br>Google Trends 페이지 크롤링 </br> -openAI Api 연결하여 챗봇 구현|
+| 구글 실시간 검색어 크롤링, 챗봇  | 함혜선 | -Rest API방식으로 Serp api로 </br>  Google Trends 페이지 크롤링 </br> -openAI Api 연결하여 챗봇 구현|
 | OAuth2.0 기반 소셜로그인 | 백대현 |  |
 | 마이페이지 | 정소옥 |  |
 | 목록 페이지 및 게시판 내부 검색 | 여인범 |  |
