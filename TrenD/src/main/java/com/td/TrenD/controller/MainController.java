@@ -8,8 +8,9 @@ import com.td.TrenD.model.GTrend;
 import com.td.TrenD.model.TotalSearchVO;
 import com.td.TrenD.model.TrendVO;
 import com.td.TrenD.service.TrendService;
+
+import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
-import org.jsoup.Jsoup;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -23,14 +24,13 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
-// import com.github.serpapi.GoogleSearch;
-// import serpapi.GoogleSearch;
 
 
 @Controller
@@ -39,63 +39,18 @@ public class MainController {
 
     private final TrendService trendService;
 
-    final String SERP_API_KEY = "";
-
-//    System.out.println("controller in");
-//            System.out.println("controller in");
-    //    @RequestMapping("/googlelist")
-//    public String googlelist(Model model) {
-
-    //  @ResponseBody
-    // public String googlelist() {
+    Dotenv dotenv = Dotenv.load();
+    final String SERP_API_KEY = dotenv.get("SERP_API_KEY");
 
     @RequestMapping("/")
     public String main() {
-
         return "main/main";
     }
 
     //구글 일별 리스트
-/*     @GetMapping("/googlelist")
-     @ResponseBody
-    public List<String> googlelist() {
-        System.out.println("googlelist");
-        String title = "";
-        List list = new ArrayList();
-        try {
-            // XML 데이터를 가져오기 위해 HttpClient 사용
-            HttpClient httpClient = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://trends.google.com/trends/trendingsearches/daily/rss?geo=KR"))
-                    .build();
-            HttpResponse<InputStream> response = httpClient.send(request, HttpResponse.BodyHandlers.ofInputStream());
-
-            // XML 데이터 파싱
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(response.body());
-
-            // 각 항목의 title을 가져와서 출력
-            NodeList itemList = document.getElementsByTagName("item");
-            for (int i = 0; i < itemList.getLength(); i++) {
-                Element item = (Element) itemList.item(i);
-                title = item.getElementsByTagName("title").item(0).getTextContent();
-                System.out.println("Title: " + title);
-
-                list.add(title);
-            }
-           System.out.println(list);
-        } catch (IOException | InterruptedException | ParserConfigurationException | SAXException e) {
-            e.printStackTrace();
-        }
-      //  return title;
-       return list;
-    }*/
-
-    //구글 맞춤 리스트
-    @GetMapping("/mylist")
+    @GetMapping("/googlelist")
     @ResponseBody
-    public GTrend mylist() {
+    public GTrend googlelist() {
          // 현재 날짜 구하기 (시스템 시계, 시스템 타임존)
         // LocalDate now = LocalDate.now();
         
@@ -132,31 +87,30 @@ public class MainController {
                 Object obj = jsonParser.parse(response.body());
                 JSONObject jsonObj = (JSONObject) obj;
                 ObjectMapper mapper = new ObjectMapper();
-                // JSONArray dailySearches = (JSONArray)jsonObj.get("daily_searches");
                 gtrend = mapper.readValue(jsonObj.toJSONString(), GTrend.class);
+                SimpleDateFormat dtFormat = new SimpleDateFormat("yyyyMMdd");
+                SimpleDateFormat newDtFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
+                //람다식 사용법 : (매개변수, ...) -> { 실행문 ... }
                 gtrend.daily_searches.forEach((daily_search) -> {
-                    daily_search.searches.forEach((search) -> {
-                        if(search.articles.size() > 0 ) {
-                            String articleLink = search.articles.get(0).link;
-                            try {
-                                org.jsoup.nodes.Document document = Jsoup.connect(articleLink).get();
-                                // String html = document.html();
-                                String text = document.text();
-                                //System.out.println(articleLink + "\n" + text);
-
-                                // HttpRequest article_request = HttpRequest.newBuilder()
-                                //     .uri(URI.create("https://api.arachn.io/booh1cxg5suxjets/domains/parse"))
-                                //     .POST(BodyPublishers.ofString(String.format("{ \"hostname\": \"{0}\" }", articleLink)))
-                                //     .setHeader("Content-Type", "application/json")
-                                //     .setHeader("X-BLOBR-KEY", "eCMnanbmvQFbO75D5wSk6mEFkl5Flupz")
-                                //     .build();
-
-                                // HttpResponse<String> article_response = client.send(article_request, HttpResponse.BodyHandlers.ofString());
-                            } catch (Exception e) {
-
-                            }
+                    try {
+                        Date formatDate = dtFormat.parse(daily_search.date);
+                        String strNewDtFormat = newDtFormat.format(formatDate);
+                        daily_search.date = strNewDtFormat;
+                    } catch (java.text.ParseException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    int prev_traffic = 99999999;
+                    String[] suffix = {"천+", "만+", "십만+", "백만+"};
+                    int suffix_idx = -1;
+                    for(int i = daily_search.searches.size() - 1; i >= 0; i--) {
+                        int traffic = daily_search.searches.get(i).traffic;
+                        if(traffic < prev_traffic) {
+                            suffix_idx++;
                         }
-                    });
+                        daily_search.searches.get(i).str_traffic = String.valueOf(traffic) + suffix[suffix_idx];
+                        prev_traffic = traffic;
+                    }
                 });
             } catch (ParseException e) {
                 // TODO Auto-generated catch block
@@ -167,57 +121,6 @@ public class MainController {
         }
 
         return gtrend;
-        // Map<String, String> parameter = new HashMap<String, String>();
-
-        // parameter.put("engine", "google_trends_trending_now");
-        // parameter.put("frequency", "daily");
-        // parameter.put("date", "20230722");
-        // parameter.put("api_key", "a0060db95d63b845dc84d8a222d3bdc5366e6ac3421ae0cbf6e3fbc325dbf1b2");
-
-        // GoogleSearch search = new GoogleSearch(parameter);
-
-        // try
-        // {
-        // JsonObject results = search.getJson();
-        // var daily_searches = results.get("daily_searches");
-        // }
-        // catch (SerpApiClientException ex)
-        // {
-        // Console.WriteLine("Exception:");
-        // Console.WriteLine(ex.ToString());
-        // }
-        // System.out.println("mylist");
-        // String title = "";
-        // List list = new ArrayList();
-        // try {
-        //     // XML 데이터를 가져오기 위해 HttpClient 사용
-        //     HttpClient httpClient = HttpClient.newHttpClient();
-        //     HttpRequest request = HttpRequest.newBuilder()
-        //             .uri(URI.create("https://trends.google.com/trends/trendingsearches/daily/rss?geo=KR"))
-        //             .build();
-        //     HttpResponse<InputStream> response = httpClient.send(request, HttpResponse.BodyHandlers.ofInputStream());
-
-        //     // XML 데이터 파싱
-        //     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        //     DocumentBuilder builder = factory.newDocumentBuilder();
-        //     Document document = builder.parse(response.body());
-
-        //     // 각 항목의 title을 가져와서 출력
-        //     NodeList itemList = document.getElementsByTagName("item");
-        //     for (int i = 0; i < itemList.getLength(); i++) {
-        //         Element item = (Element) itemList.item(i);
-        //         title = item.getElementsByTagName("title").item(0).getTextContent();
-        //         System.out.println("Title: " + title);
-        //         //model.addAttribute("title", title);
-        //         //return "/main/main";
-
-        //         list.add(title);
-        //     }
-        //     System.out.println(list);
-        // } catch (IOException | InterruptedException | ParserConfigurationException | SAXException e) {
-        //     e.printStackTrace();
-        // }
-        // return list;
     }
 
     @GetMapping("/search/comm")

@@ -38,6 +38,7 @@ public class GTrend {
         public String serpapi_google_trends_link;
         public ArrayList<Article> articles;
         public int traffic;
+        public String str_traffic;
         public String summary;
         public ArrayList<RelatedQuery> related_queries;
     }
