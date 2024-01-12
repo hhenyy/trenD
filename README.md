@@ -38,17 +38,7 @@ Google Trends를 활용하여 오늘의 실시간 트랜드와 그와 관련된 
 ## 주요기능 설명
 | 기능 | 담당자 | 상세설명 |
 | --- | --- | --- |
-| 구글 실시간 검색어 크롤링, 챗봇  | 함혜선 | 1)구글 트렌드 데이터
-Rest API방식으로 구현
-Serp api로 구글트렌드 데이터를 가져와서 Class를 만들어 각 데이터를 컬럼으로 만들고 json으로 값을 가져옴
-Serp API는 페이지 크롤링 하는 API이고, 그 중 Google Trends 페이지를 크롤링하는 API를 사용해서 구현
-
-2)openAI Api 연결하여 챗봇 구현
--질문에 해당하는 답변 내용을 반응형 stream 구현을 위해 webflux (반응형 및 비동기적인 웹 애플리케이션 개발을 지원하는 모듈)과, 
-reactor 라이브러리를 이용하여 reactive(반응형) 기능 구현
-- server side event 기술을 사용
-js에는 event source로 event를 받고 
-java에서는 sse(server side event)써서 event를 보냄 |
+| 구글 실시간 검색어 크롤링, 챗봇  | 함혜선 |  |
 | OAuth2.0 기반 소셜로그인 | 백대현 |  |
 | 마이페이지 | 정소옥 |  |
 | 목록 페이지 및 게시판 내부 검색 | 여인범 |  |
