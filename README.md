@@ -38,11 +38,11 @@ Google Trends를 활용하여 오늘의 실시간 트랜드와 그와 관련된 
 ## 주요기능 설명
 | 기능 | 담당자 | 상세설명 |
 | --- | --- | --- |
-| 구글 실시간 검색어 크롤링, 챗봇  | 함혜선 | -Rest API 형태로 Serp api를 사용하여 </br>  Google Trends 페이지 크롤링 </br> -openAI Api 연결하여 챗봇 구현|
+| 실시간 검색어 크롤링 | 함혜선 | -Rest API 형태로 Serp api를 사용하여 Google Trends 페이지 크롤링 </br> -openAI Api 연결하여 챗봇 구현</br>(답변 내용을 반응형 stream 구현/server side event 기술 사용)  |
 | OAuth2.0 기반 소셜로그인 | 백대현 |  |
 | 마이페이지 | 정소옥 |  |
-| 목록 페이지 및 게시판 내부 검색 | 여인범 |  |
-| 게시글 CRUD 및 통합 검색 | 김선홍 |  |
+| 목록 페이지 및 게시판 내부 검색 | 여인범 | REST API형태로 게시판별 데이터 목록 및 조건에 해당하는 데이터 조회 구현</br>JPA Repository에서 제공하는 Page Interface를 활용한 게시판 목록 페이징 구현 |
+| 게시글 CRUD 및 통합 검색 | 김선홍 | Google Trends 리스트 조회 시 글 자동 등록</br>RestAPI 적용하여 검색결과를 한 페이지 내에서 트렌드/커뮤니티 개별 페이징 구현 |
 | 통계 페이지 | 빈상욱 |  |
 | 댓글 CRUD | 서준혁 | REST API 형태로 댓글 CRUD 구현</br>댓글 목록 페이징 구현|
 
