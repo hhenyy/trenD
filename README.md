@@ -6,7 +6,7 @@
 Google Trends를 활용하여 오늘의 실시간 트랜드와 그와 관련된 뉴스링크를 제공하며, 댓글로 커뮤니티에 참여하는 사용자들의 성별 및 연령대, 지역별 통계를 통해 어떤 사용자들이 주로 관심을 갖는지 파악할 수 있습니다.  
 
 ## 개발 환경 및 tool
-#JAVA #MySQL #Spring boot #HTML #CSS #JavaScript #JPA #Gradle #GitHub  #JQuery #Ajax #REST API #OpenAI API 
+#JAVA #MySQL #Spring boot #HTML #CSS #JavaScript #JPA #Gradle </br> #GitHub  #JQuery #Ajax #REST API #OpenAI API 
  #Tomcat #intelliJ #AWS #Linux
 
 ## DB 설계
