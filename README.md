@@ -5,7 +5,10 @@
 본 프로젝트는 실시간 트랜드에 관심 있는 사용자들을 위한 댓글형 스레드 커뮤니티로 자유롭게 의견을 나눌 수 있는 새로운 소셜 경험을 제공하고자 합니다.  
 Google Trends를 활용하여 오늘의 실시간 트랜드와 그와 관련된 뉴스링크를 제공하며, 댓글로 커뮤니티에 참여하는 사용자들의 성별 및 연령대, 지역별 통계를 통해 어떤 사용자들이 주로 관심을 갖는지 파악할 수 있습니다.  
 
-## 프로젝트 구조도
+## 개발 환경 및 tool
+#JAVA #MySQL #Spring boot #HTML #CSS #JavaScript #JPA #Gradle #GitHub  #JQuery #Ajax #REST API #OpenAI API 
+ #Tomcat #intelliJ #AWS #Linux
+
 ## DB 설계
 ![TrenD-Database](https://github.com/JunHyeokSeo/trenD/assets/55777781/d6d4da99-90f7-4e04-88e0-f8dcd3d51233)
 
