@@ -283,6 +283,7 @@
 		
 		//그래프 새로고침
 		function reload(trNo){
+			if(${count >=5}){
 			$.ajax({
 				type : "post",	//post 방식 요청. @postmapping으로 받게 됨
 				url : "${pageContext.request.contextPath}/reload/"+trNo,
@@ -331,7 +332,8 @@
 			 	   
 			 	    // initiate chart drawing
 				}	
-			});	
+			})
+			}
 		}
 
 		//----------------------------------------- 마지막 페이지 계산 -----------------------------------------
@@ -495,7 +497,7 @@
 			${post.trContent}
 			</div>
 		</div>
-		<c:if test="${count >= 5}">
+		<c:if test="${count>=5 }">
 		<div class="container">
 		<div id="agecontainer"></div>
 		<div id="gendercontainer"></div>
