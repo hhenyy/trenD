@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>통합검색</title>
+    <title>TrenD</title>
 
     <jsp:include page="../include/metalink.jsp"/>
 </head>

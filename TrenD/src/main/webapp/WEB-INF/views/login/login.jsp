@@ -11,7 +11,7 @@
 <html>
 <head>
 
-    <title>로그인</title>
+    <title>TrenD</title>
 
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <!-- 네이버 로그인 -->

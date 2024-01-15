@@ -18,7 +18,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>마이페이지</title>
+    <title>TrenD</title>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script>
         $(document).ready(function () {

@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-<title>통계 : ${category }</title>
+<title>TrenD</title>
 	<jsp:include page="./include/metalink.jsp"/>
 
 <!-- anychart 라이브러리 -->
