@@ -135,5 +135,10 @@ public class TrendReService {
 		return trendReRepository.findGenderList(trNo);
 	}
 
+	public int countAllUserByTrNo(int trNo) {
+
+		return trendReRepository.countAllUserByTrNo(trNo);
+	}
+
 	
 }

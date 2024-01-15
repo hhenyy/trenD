@@ -89,11 +89,14 @@ public class PostController {
 			}
 		}
 
-		// 통계를 구합시다. 필요한 건 trNo.
+		// 통계를 구합시다. 필요한 건 trNo. trNo에 댓글을 단 유저의 수를 세야 하는데, 이 경우는 '통계 테이블의 자료를 참조해야 함'
+		//통계 테이블에는 한 유저가 최초로 댓글을 단 경우에만 데이터가 저장됨. 따라서 유저 간의 중복은 존재하지 않음
+		//그러니 통계 테이블에서 특정 TrNo를 가진 유저의 리스트를 우선 찾고, 해당 리스트와 연령 등의 코드를 조합하여 리스트를 만들면 된다
 
-		// select * from trendRe where trNo=1; 댓글 갯수
-		int count = trendReService.countAllReplyByTrNo(trNo);
-
+		// select count(*) from Statistics where trNo=1; 해당 글에 댓글을 남긴 유저의 수
+		int count = trendReService.countAllUserByTrNo(trNo);
+		
+		//10대,20대, ...와 남자,여자 리스트를 가져옴
 		List<String> aList = ageService.getList(); // 10대,20대,...
 		List<String> gList = genderService.getList(); // 남자,여자
 		// select ageNm from trendRe t
@@ -105,8 +108,10 @@ public class PostController {
 		// select genNm from trendRe t
 		// left join user u on t.userId=u.userId
 		// left join gender_code g on u.genCd=g.genCd where trNo=1; 댓글 단 사람들의 성별
-		List<String> ageList = trendReService.findAgeList(trNo);
-		List<String> genderList = trendReService.findGenderList(trNo);
+		
+		//해당 글에 댓글을 담긴 유저들의 연령대 목록을 추출
+		List<String> ageList = ageService.getAge(trNo);
+		List<String> genderList = genderService.getGender(trNo);
 
 		List<Object> list = new ArrayList<Object>();
 		List<Object> AgeList = new ArrayList<Object>();

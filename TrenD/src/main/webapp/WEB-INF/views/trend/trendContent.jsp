@@ -50,6 +50,7 @@
 	<script>
 		window.onload = () => {
 			findAllComment();
+			drawchart();
 		}
 
 		// 댓글 길이 카운팅
@@ -377,7 +378,7 @@
     <!-- anychart 그리기 -->       
     <script>
 
-        anychart.onDocumentReady(function () {
+        function drawchart() {
         console.log(${age})
 
             // create pie chart with passed data
@@ -420,7 +421,7 @@
             // initiate chart drawing
             agechart.draw();
             genderchart.draw();
-        });
+        };
         </script>    
 <style>
 .container {

@@ -37,5 +37,8 @@ public interface TrendReRepository extends JpaRepository<TrendReVO, Integer> {
 			+ "left join user u on t.userId=u.userId "
 			+ "left join gender_code g on u.genCd=g.genCd where trNo=:trNo", nativeQuery = true)
 	List<String> findGenderList(@Param("trNo") int trNo);
+
+	@Query(value="select count(*) from statistics where trNo=:trNo",nativeQuery = true)
+	int countAllUserByTrNo(@Param("trNo") int trNo);
 	
 }
