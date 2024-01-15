@@ -1,6 +1,7 @@
 package com.td.TrenD.service;
 
 import com.td.TrenD.dao.AgeDao;
+import com.td.TrenD.dao.StatisticsDao;
 import com.td.TrenD.model.AgeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,9 @@ public class AgeService {
 	
 	@Autowired
 	AgeDao dao;
+	
+	@Autowired
+	StatisticsDao statisticsdao;
 
 	public List<String> getList() {
 		List<AgeVO> ages = dao.findAll();
@@ -30,6 +34,11 @@ public class AgeService {
 	public List<String> countAge(String cateNm) {
 
 		return dao.countAge(cateNm);
+	}
+	
+	public List<String> getAge(int trNo) {	//전달된 trNo를 통해서 연령대 목록을 뽑아온다. 해당하는 TrNo에 달린 ID들을 세야 함
+		
+		return statisticsdao.getAge(trNo);
 	}
 	
 

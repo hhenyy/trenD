@@ -26,6 +26,7 @@ public interface StatisticsDao extends JpaRepository<StatisticsVO,Integer> {
 //	@Query("select s.staNo from StatisticsVO s left join s.trendVO t where t.cateCd= :categoryOpt")
 //	List<Integer> count(@Param("categoryOpt") String categoryOpt);
 	
+	//특정 카테고리에 작성된 게시글의 갯수를 전부 세는 jsql. 다만...중복을 없애는 코드가 추가적으로 필요하다
 	@Query("select count(s) from StatisticsVO s left join s.trendVO t where s.trendVO.categoryVO.cateCd= :categoryOpt")
 	//jpql로 올바르게 조인하는 법. @JoinColumn 등을 통해 연관관계가 설정되어 있는 테이블을 조인하는 방법 사용 중
 	//이때 연관관계의 주인(외래키를 가진 쪽)을 통해 조인해야 함
@@ -61,6 +62,14 @@ public interface StatisticsDao extends JpaRepository<StatisticsVO,Integer> {
 //    StatisticsVO findByUserIdAndTrNo(@Param("userId") String userId, @Param("trNo") int trNo);
 	@Query("SELECT s FROM StatisticsVO s WHERE s.userVO.userId = :userId AND s.trendVO.trNo = :trNo")
     StatisticsVO findByUserIdAndTrNo(@Param("userId") String userId, @Param("trNo") int trNo);
+	
+	//select ageNm from statistics s left join user u on s.userId=u.userId left join age_code a on u.ageCd=a.ageCd where trNo=95;
+	@Query(value="select ageNm from statistics s left join user u on s.userId=u.userId left join age_code a on u.ageCd=a.ageCd where trNo=:trNo",nativeQuery = true)
+	List<String> getAge(@Param("trNo") int trNo);
+
+	//select genNm from statistics s left join user u on s.userId=u.userId left join gender_code a on u.genCd=a.genCd where trNo=95;
+	@Query(value="select genNm from statistics s left join user u on s.userId=u.userId left join gender_code a on u.genCd=a.genCd where trNo=:trNo",nativeQuery = true)
+	List<String> getGender(@Param("trNo") int trNo);
 	
 	
 }
