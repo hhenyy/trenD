@@ -36,7 +36,7 @@
                console.log("네이버 로그인 성공");
                // 연동기록 없는 네이버 로그인 경우
                 if(result === 'J'){
-                    alert("안녕하세요. 트렌D 오신걸 환영합니다. \n 최초의 로그인은 나이, 지역, 성별을 설정해야 합니다.");
+                    alert("안녕하세요. TrenD 오신걸 환영합니다. \n 최초의 로그인은 나이, 지역, 성별을 설정해야 합니다.");
                     location.href = 'editUserForm';
                     // 탈퇴한 회원
                 } else if(result === 'N'){

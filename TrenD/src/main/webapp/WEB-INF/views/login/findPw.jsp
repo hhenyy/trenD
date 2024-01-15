@@ -34,7 +34,7 @@
         <form method="post" action="findPwCheck" onsubmit="return check()">
             <br>
             <h1 class="h4 mb-3" align="center">
-                <br><b>트렌D</b>&nbsp;비밀번호 찾기</h1>
+                <br><b>TrenD</b>&nbsp;비밀번호 찾기</h1>
             <br>
             <div class="form-floating">
                 <input type="text" class="form-control" id="userId" name="userId"

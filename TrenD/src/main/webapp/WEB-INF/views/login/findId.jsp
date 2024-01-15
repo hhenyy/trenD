@@ -35,7 +35,7 @@
 
             <br>
             <h1 class="h4 mb-3" align="center">
-                <br> <b>트렌D</b>&nbsp;아이디 찾기
+                <br> <b>TrenD</b>&nbsp;아이디 찾기
             </h1>
             <br>
             <div class="form-floating">
