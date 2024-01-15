@@ -321,9 +321,6 @@
 		                // create empty area in pie chart
 		                .innerRadius('30%');
 		            
-		            agechart.width('50%');
-		            genderchart.width('50%');
-
 		            // set container id for the chart
 		            agechart.container('agecontainer');
 		            genderchart.container('gendercontainer');
@@ -411,8 +408,8 @@
                 // create empty area in pie chart
                 .innerRadius('30%');
             
-            agechart.width('50%');
-            genderchart.width('50%');
+            agechart.width('100%');
+            genderchart.width('100%');
 
             // set container id for the chart
             agechart.container('agecontainer');
@@ -423,6 +420,17 @@
             genderchart.draw();
         });
         </script>    
+<style>
+.container {
+  display: flex;
+}
+
+#agecontainer, #gendercontainer {
+  flex: 1;
+  margin: 10px;
+}
+
+</style>
 	
 </head>
 <body>
@@ -487,9 +495,11 @@
 			${post.trContent}
 			</div>
 		</div>
-		<c:if test="${count > 0}">
-		<div id="agecontainer" style="margin:10px 10px 10px 200px"></div>
-		<div id="gendercontainer" style="margin:10px 10px 10px 200px"></div>
+		<c:if test="${count >= 5}">
+		<div class="container">
+		<div id="agecontainer"></div>
+		<div id="gendercontainer"></div>
+		</div>
 		</c:if>
 		<!--end 본문-->
 		<section style="padding: 0">
