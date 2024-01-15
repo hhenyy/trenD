@@ -4,7 +4,7 @@
 <html>
 <head>
 
-<title>통계</title>
+<title>TrenD</title>
 <jsp:include page="../include/metalink.jsp" />
 
 <!-- anychart 라이브러리 -->

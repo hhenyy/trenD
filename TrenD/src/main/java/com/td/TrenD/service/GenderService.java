@@ -30,7 +30,6 @@ public class GenderService {
 
 
 	public List<String> countGender(String cateNm) {
-
 		return dao.countGender(cateNm);
 	}
 

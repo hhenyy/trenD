@@ -32,6 +32,8 @@ Google Trends 데이터를 이용해 가져온 실시간 오늘의 인기 검색
 Google Trends를 활용하여 오늘의 실시간 트랜드와 그와 관련된 뉴스링크를 제공하며, 댓글로 커뮤니티에 참여하는 사용자들의 성별 및 연령대, 지역별 통계를 통해 어떤 사용자들이 주로 관심을 갖는지 파악할 수 있습니다.  
 
 ## 프로젝트 구조도
+<img width="max" alt="KakaoTalk_Photo_2024-01-15-12-32-31" src="https://github.com/Meimeidays/trenD/assets/55777781/89bb7582-c0da-422b-a557-fa3f12473500">
+
 ## DB 설계
 ![TrenD-Database](https://github.com/JunHyeokSeo/trenD/assets/55777781/d6d4da99-90f7-4e04-88e0-f8dcd3d51233)
 
@@ -43,7 +45,7 @@ Google Trends를 활용하여 오늘의 실시간 트랜드와 그와 관련된 
 | 마이페이지 | 정소옥 | REST API 형태로 게시글 및 댓글 목록을 갱신<br> 접속자가 관리자(admin)일 경우 전체 목록을 조회, 유저일 경우 해당 유저가 작성한 목록만 출력하도록 구현<br> JPA Repository에서 제공하는 Page Interface를 활용한 게시판 목록 페이징 구현<br> 각 목록에서 특정 항목 클릭시 해당 항목의 상세페이지로 이동 |
 | 목록 페이지 및 게시판 내부 검색 | 여인범 | REST API 형태로 게시판별 데이터 목록 및 조건에 해당하는 데이터 조회 구현</br>JPA Repository에서 제공하는 Page Interface를 활용한 게시판 목록 페이징 구현 |
 | 게시글 CRUD 및 통합 검색 | 김선홍 | Google Trends 리스트 조회 시 글 자동 등록</br>RestAPI 적용하여 검색결과를 한 페이지 내에서 트렌드/커뮤니티 개별 페이징 구현 |
-| 통계 페이지 | 빈상욱 |  |
+| 통계 페이지 | 빈상욱 | 각 게시판(키워드) 별 접속 횟수 및 관심도를 워드클라우드를 통해 시각적으로 구현<br>각 게시판을 방문한 유저의 성별/지역/연령대 정보를 담은 그래프 출력 및 REST API 적용
 | 댓글 CRUD | 서준혁 | REST API 형태로 댓글 CRUD 구현</br>댓글 목록 페이징 구현|
 
 ## 담당작업
