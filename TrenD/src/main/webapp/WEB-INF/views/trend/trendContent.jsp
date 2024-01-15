@@ -20,7 +20,7 @@
 
 <head>
 
-	<title>TrenD Community Content</title>
+	<title>TrenD</title>
 
 	<jsp:include page="../include/metalink.jsp"/>
 

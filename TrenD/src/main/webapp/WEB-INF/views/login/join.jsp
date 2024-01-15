@@ -11,7 +11,7 @@
 <html>
 
 <head>
-  <title>가입하기</title>
+  <title>TrenD</title>
 
   <script src="http://code.jquery.com/jquery-latest.js"></script>
 

@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>회원정보 수정</title>
+    <title>TrenD</title>
 
     <jsp:include page="../include/metalink.jsp"/>
 

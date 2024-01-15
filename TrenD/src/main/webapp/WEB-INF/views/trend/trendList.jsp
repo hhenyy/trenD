@@ -6,7 +6,7 @@
 
 <head>
 
-    <title>트렌드 게시판</title>
+    <title>TrenD</title>
     <jsp:include page="../include/metalink.jsp"/>
 
     <script src="http://code.jquery.com/jquery-latest.js"></script>
@@ -85,28 +85,6 @@
                     '</tr>';
                 $('#trendTableBody').append(row);
             });
-
-            // // Add Previous Button
-            // if (data.page > 1) {
-            //     var prevPage = data.page - 1;
-            //     var prevButton = '<a href="javascript:searchTrend(' + prevPage + ')" data-page="' + prevPage + '">이전</a>';
-            //     $('#pagingUl').append(prevButton);
-            // }
-            //
-            // // Add Page Numbers
-            // // Array.from메소드를 사용하여 전달받은 pageCount만큼의 배열을 생성
-            // // index에 1을 더하고 data-page속성을 사용하여 페이지 번호를 나타낸다.
-            // $.each(Array.from({ length: data.pageCount }, (_, i) => i + 1), function(index, pageNumber) {
-            //     var li = '<a href="javascript:searchTrend(' + pageNumber + ')" data-page="' + pageNumber + '">' + pageNumber + '</a>';
-            //     $('#pagingUl').append(li);
-            // });
-            //
-            // // Add Next Button
-            // if (data.page < data.pageCount) {
-            //     var nextPage = data.page + 1;
-            //     var nextButton = '<a href="javascript:searchTrend(' + nextPage + ')" data-page="' + nextPage + '">다음</a>';
-            //     $('#pagingUl').append(nextButton);
-            // }
         }
 
         function getCommentCount(trNo) {

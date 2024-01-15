@@ -4,7 +4,7 @@
 
 <head>
 
-    <title>커뮤니티 글 작성</title>
+    <title>TrenD</title>
 
 
 
