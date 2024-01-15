@@ -32,7 +32,7 @@ Google Trends 데이터를 이용해 가져온 실시간 오늘의 인기 검색
 Google Trends를 활용하여 오늘의 실시간 트랜드와 그와 관련된 뉴스링크를 제공하며, 댓글로 커뮤니티에 참여하는 사용자들의 성별 및 연령대, 지역별 통계를 통해 어떤 사용자들이 주로 관심을 갖는지 파악할 수 있습니다.  
 
 ## 프로젝트 구조도
-<img width="754" alt="KakaoTalk_Photo_2024-01-15-12-32-31" src="https://github.com/Meimeidays/trenD/assets/55777781/89bb7582-c0da-422b-a557-fa3f12473500">
+<img width="max" alt="KakaoTalk_Photo_2024-01-15-12-32-31" src="https://github.com/Meimeidays/trenD/assets/55777781/89bb7582-c0da-422b-a557-fa3f12473500">
 
 ## DB 설계
 ![TrenD-Database](https://github.com/JunHyeokSeo/trenD/assets/55777781/d6d4da99-90f7-4e04-88e0-f8dcd3d51233)
