@@ -31,7 +31,7 @@
         <!-- 통합검색(트렌드 출력 공간) -->
         <div id="trendResult">
 
-            <h4 style="font-family: 'Nunito', sans-serif; color: #253d1e;">트랜드 검색 결과</h4>
+            <h4 style="font-family: 'Nunito', sans-serif; color: #253d1e;">트렌드 검색 결과</h4>
 
 
             <table class="table">

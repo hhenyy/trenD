@@ -49,7 +49,7 @@
         </div>--%>
         <br>
         <h1 class="h4 mb-3" align="center">
-            <b>트렌D</b>에 오신 것을 환영합니다.
+            <b>TrenD</b>에 오신 것을 환영합니다.
         </h1>
         <br>
         <div class="form-floating">
