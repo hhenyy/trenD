@@ -6,7 +6,7 @@
 
 <head>
 
-    <title>트렌드 게시판</title>
+    <title>TrenD</title>
     <jsp:include page="../include/metalink.jsp"/>
 
     <script src="http://code.jquery.com/jquery-latest.js"></script>

@@ -4,7 +4,7 @@
 <html>
 
 <head>
-    <title>자유게시판</title>
+    <title>TrenD</title>
     <jsp:include page="../include/metalink.jsp"/>
 
 

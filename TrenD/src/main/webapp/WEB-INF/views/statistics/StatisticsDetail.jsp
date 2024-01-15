@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Insert title here</title>
+    <title>TrenD</title>
 
 
     <!-- anychart 라이브러리 -->
