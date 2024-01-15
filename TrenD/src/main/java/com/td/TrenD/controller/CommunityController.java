@@ -31,6 +31,7 @@ public class CommunityController {
     @Autowired
     private StatisticsService staticsService;
 
+
     @GetMapping("/posts")
     public String community() {
         return "community/commList";
@@ -85,3 +86,4 @@ public class CommunityController {
     }
 
 }
+

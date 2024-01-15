@@ -22,5 +22,5 @@ public interface AgeDao extends JpaRepository<AgeVO, Integer> {
             "where cateNm = :cateNm", nativeQuery = true)
 	List<String> countAge(@Param("cateNm") String cateNm);
 	//세 개의 테이블을 조인하여 그 갯수를 세는 메소드가 필요
-
+	
 }

@@ -57,6 +57,8 @@ public interface StatisticsDao extends JpaRepository<StatisticsVO,Integer> {
 //			 where cateNm='트렌드'; 
 	//이 쿼리문을 JPA 시스템을 이용해 적용시키려면 어떻게 해야 할까? 
 	
+//	@Query("SELECT s FROM StatisticsVO s WHERE s.userVO.userId = :userId AND s.trNo = :trNo")
+//    StatisticsVO findByUserIdAndTrNo(@Param("userId") String userId, @Param("trNo") int trNo);
 	@Query("SELECT s FROM StatisticsVO s WHERE s.userVO.userId = :userId AND s.trendVO.trNo = :trNo")
     StatisticsVO findByUserIdAndTrNo(@Param("userId") String userId, @Param("trNo") int trNo);
 	

@@ -22,4 +22,20 @@ public interface TrendReRepository extends JpaRepository<TrendReVO, Integer> {
 	//댓글 리스트 item 개수 count
 	@Query("select count(*) from TrendReVO tr where tr.trNo = :trNo and (tr.trReLev <> 1 or tr.trReDelYn <> 'y')")
 	Integer countAllReplyByTrNo(@Param("trNo") int trNo);
+
+	@Query(value="select ageNm from trendRe t "
+			+ "left join user u on t.userId=u.userId "
+			+ "left join age_code a on u.ageCd = a.ageCd where trNo=:trNo", nativeQuery = true)
+	List<String> findAgeList(@Param("trNo") int trNo);
+
+	@Query(value="select locNm from trendRe t "
+			+ "left join user u on t.userId=u.userId "
+			+ "left join location_code l on u.locCd=l.locCd where trNo=:trNo", nativeQuery = true)
+	List<String> findLocationList(@Param("trNo") int trNo);
+	
+	@Query(value="select genNm from trendRe t "
+			+ "left join user u on t.userId=u.userId "
+			+ "left join gender_code g on u.genCd=g.genCd where trNo=:trNo", nativeQuery = true)
+	List<String> findGenderList(@Param("trNo") int trNo);
+	
 }
