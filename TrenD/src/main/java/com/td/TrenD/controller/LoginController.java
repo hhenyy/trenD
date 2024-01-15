@@ -319,7 +319,7 @@ public class LoginController {
                 session.setAttribute("userId",u.getUserId());
                 session.setAttribute("userName", u.getUserName());
                 System.out.println("로그인 성공");
-                return "redirect:/loginout_ok";
+                return "login/loginSuccess";
             // 비밀번호가 맞지 않아 로그인 실패
             }else{
                 result = 3;

@@ -234,7 +234,9 @@ public class PostController {
 		result = trendService.saveTrend(comm);
 		System.out.println(result);
 
-		return "redirect:/";
+		int trNo = result.getTrNo();
+
+		return "redirect:post?trNo="+trNo;
 	}
 
 	@RequestMapping("commUpdateForm")
