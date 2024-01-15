@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>커뮤니티 작성 폼</title>
+    <title>TrenD</title>
     <jsp:include page="../include/metalink.jsp"/>
 </head>
 <body>

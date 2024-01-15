@@ -1,16 +1,11 @@
 package com.td.TrenD.dao;
 
-import java.util.List;
-
 import com.td.TrenD.model.StatisticsVO;
-import com.td.TrenD.model.TrendVO;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
-import com.td.TrenD.model.StatisticsVO;
+import java.util.List;
 
 public interface StatisticsDao extends JpaRepository<StatisticsVO,Integer> {
 	//jpa에서 제공하는 인터페이스들은 자신을 상속 받는 인터페이스가 있다면 JPA가 구현체를 자동으로 생성하여 
@@ -62,6 +57,8 @@ public interface StatisticsDao extends JpaRepository<StatisticsVO,Integer> {
 //			 where cateNm='트렌드'; 
 	//이 쿼리문을 JPA 시스템을 이용해 적용시키려면 어떻게 해야 할까? 
 	
+//	@Query("SELECT s FROM StatisticsVO s WHERE s.userVO.userId = :userId AND s.trNo = :trNo")
+//    StatisticsVO findByUserIdAndTrNo(@Param("userId") String userId, @Param("trNo") int trNo);
 	@Query("SELECT s FROM StatisticsVO s WHERE s.userVO.userId = :userId AND s.trendVO.trNo = :trNo")
     StatisticsVO findByUserIdAndTrNo(@Param("userId") String userId, @Param("trNo") int trNo);
 	

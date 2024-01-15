@@ -7,6 +7,7 @@
 package com.td.TrenD.service;
 
 import com.td.TrenD.dao.TrendReRepository;
+import com.td.TrenD.model.AgeVO;
 import com.td.TrenD.model.RePagingVO;
 import com.td.TrenD.model.TrendReVO;
 import com.td.TrenD.model.UserVO;
@@ -15,7 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +27,7 @@ public class TrendReService {
 
 	/**
 	 * 댓글 저장
+	 *
 	 * @param params
 	 * @param userVO
 	 * @return TrendReVO
@@ -44,7 +48,7 @@ public class TrendReService {
 		TrendReVO save = trendReRepository.save(params);
 
 		//댓글
-		if (params.getTrReRef() == null){
+		if (params.getTrReRef() == null) {
 			save.synchronizeRefWithTrReNo();
 			trendReRepository.save(save);
 		}
@@ -54,6 +58,7 @@ public class TrendReService {
 
 	/**
 	 * 댓글 목록 조회
+	 *
 	 * @param params
 	 * @param pageable
 	 * @return Page<TrendReVO>
@@ -65,6 +70,7 @@ public class TrendReService {
 
 	/**
 	 * 댓글 개수 조회
+	 *
 	 * @param trNo
 	 * @return Integer
 	 */
@@ -76,6 +82,7 @@ public class TrendReService {
 
 	/**
 	 * 댓글 객체 조회
+	 *
 	 * @param trReNo
 	 * @return TrendReVO
 	 */
@@ -86,6 +93,7 @@ public class TrendReService {
 
 	/**
 	 * 댓글 수정
+	 *
 	 * @param params
 	 */
 	public void updateReply(TrendReVO params) {
@@ -100,6 +108,7 @@ public class TrendReService {
 
 	/**
 	 * 댓글 삭제
+	 *
 	 * @param trReNo
 	 */
 	public void deleteReply(Integer trReNo) {
@@ -110,4 +119,21 @@ public class TrendReService {
 			trendReRepository.save(r);
 		});
 	}
+
+	public List<String> findAgeList(int trNo) {
+
+		return trendReRepository.findAgeList(trNo);
+	}
+
+	public List<String> findLocationList(int trNo) {
+
+		return trendReRepository.findLocationList(trNo);
+	}
+
+	public List<String> findGenderList(int trNo) {
+
+		return trendReRepository.findGenderList(trNo);
+	}
+
+	
 }

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>통합검색</title>
+    <title>TrenD</title>
 
     <jsp:include page="../include/metalink.jsp"/>
 </head>
@@ -119,7 +119,7 @@
 
     function trendSearchResult(keyword, page) {
 
-        fetch("/main/search/trend?keyword=${keyword}&page=" + page)
+        fetch("/search/trend?keyword=${keyword}&page=" + page)
 
 
             .then(response => response.json())
@@ -213,7 +213,7 @@
 
     function commSearchResult(keyword, page) {
 
-        fetch("/main/search/comm?keyword=${keyword}&page=" + page)
+        fetch("/search/comm?keyword=${keyword}&page=" + page)
 
 
             .then(response => response.json())

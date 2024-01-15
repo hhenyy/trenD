@@ -1,13 +1,11 @@
 package com.td.TrenD.dao;
 
-import java.util.List;
-
+import com.td.TrenD.model.AgeVO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
-import com.td.TrenD.model.AgeVO;
+import java.util.List;
 
 public interface AgeDao extends JpaRepository<AgeVO, Integer> {
 	//제네릭의 앞에는 이용할 엔티티가, 뒤에는 해당 엔티티의 고유키 자료형이 들어감
@@ -24,5 +22,5 @@ public interface AgeDao extends JpaRepository<AgeVO, Integer> {
             "where cateNm = :cateNm", nativeQuery = true)
 	List<String> countAge(@Param("cateNm") String cateNm);
 	//세 개의 테이블을 조인하여 그 갯수를 세는 메소드가 필요
-
+	
 }

@@ -1,9 +1,9 @@
 <%--
-  Created by IntelliJ IDEA.
-  User: nasoo
-  Date: 2023-12-21
-  Time: 오후 5:19
-  To change this template use File | Settings | File Templates.
+작업자 : 정소옥
+수정일자 : 2024-01-08
+설명 :  작성한 게시글, 댓글을 불러와 띄워주는 페이지
+        관리자일 경우 모든 게시글과 댓글을 불러온다.
+        제목 클릭시 해당 게시글로 이동.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
@@ -18,7 +18,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>마이페이지</title>
+    <title>TrenD</title>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script>
         $(document).ready(function () {
@@ -64,13 +64,7 @@
                         $.each(result.boardlist, function (index, item) {
                             var linkUrl = ""; // 동적 URL을 저장할 변수
                             if (item.categoryVO && item.categoryVO.cateCd) {
-                                // 트랜드 게시판
-                                if (item.categoryVO.cateCd === 't') {
-                                    linkUrl = '/trendPost?trNo=' + item.trNo;
-                                } else {
-                                    // 커뮤니티 게시판
-                                    linkUrl = '/commPost?trNo=' + item.trNo;
-                                }
+                                linkUrl = '/post?trNo=' + item.trNo;
                             }
                             content += "<tr><td>" + (item.categoryVO ? item.categoryVO.cateNm : 'N/A') + "</td>";
                             if (result.isAdmin) {
@@ -166,12 +160,8 @@
 
         // 클릭했을 경우의 함수
         function replycontent(trNo, page, cateCd) {
-            var linkUrl = "/"; // 기본 URL 설정, 필요에 따라 수정
-            if (cateCd === 't') {
-                linkUrl += 'trendPost?trNo=' + trNo;
-            } else {
-                linkUrl += 'commPost?trNo=' + trNo;
-            }
+            var linkUrl = "/";
+            linkUrl += 'post?trNo=' + trNo;
 
             $.ajax({
                 type: "GET",

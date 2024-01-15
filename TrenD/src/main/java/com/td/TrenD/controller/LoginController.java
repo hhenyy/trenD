@@ -64,7 +64,20 @@ public class LoginController {
     }
 
     @RequestMapping("/updateUser")
-    public String updateUser(@ModelAttribute UserVO user ,Model model){
+    public String updateUser(@ModelAttribute UserVO user, @RequestParam("ageCd") String ageCd, @RequestParam("locCd") String locCd, @RequestParam("genCd") String genCd ,Model model){
+
+        AgeVO age = new AgeVO();
+        age.setAgeCd(ageCd);
+        user.setAgeVO(age);
+
+        LocationVO loc = new LocationVO();
+        loc.setLocCd(locCd);
+        user.setLocationVO(loc);
+
+        GenderVO gen = new GenderVO();
+        gen.setGenCd(genCd);
+        user.setGenderVO(gen);
+        System.out.println(user.getAgeVO());
         System.out.println("수정");
         System.out.println("userVO" + user);
         System.out.println(user.getUserDate());
@@ -253,7 +266,23 @@ public class LoginController {
     }
 
     @RequestMapping("/insertUser")
-    public String insertUser(@ModelAttribute UserVO user , Model model){
+    public String insertUser(@ModelAttribute UserVO user
+                                            ,String ageCd
+                                            ,String locCd
+                                            ,String genCd
+                                            ,Model model){
+
+        AgeVO age = new AgeVO();
+        age.setAgeCd(ageCd);
+        user.setAgeVO(age);
+
+        GenderVO gender = new GenderVO();
+        gender.setGenCd(genCd);
+        user.setGenderVO(gender);
+
+        LocationVO loc = new LocationVO();
+        loc.setLocCd(locCd);
+        user.setLocationVO(loc);
 
         user.setUserDate(new Date());
         user.setUserUpdate(new Date());
@@ -263,6 +292,7 @@ public class LoginController {
         System.out.println("result:" + result);
 
         return "redirect:/loginform";
+
     }
 
     // 로그인 체크
