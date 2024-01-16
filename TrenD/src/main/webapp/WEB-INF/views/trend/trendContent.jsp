@@ -20,7 +20,7 @@
 
 <head>
 
-	<title>TrenD Community Content</title>
+	<title>TrenD</title>
 
 	<jsp:include page="../include/metalink.jsp"/>
 
@@ -50,6 +50,7 @@
 	<script>
 		window.onload = () => {
 			findAllComment();
+			drawchart();
 		}
 
 		// 댓글 길이 카운팅
@@ -283,6 +284,7 @@
 		
 		//그래프 새로고침
 		function reload(trNo){
+			if(${count >=5}){
 			$.ajax({
 				type : "post",	//post 방식 요청. @postmapping으로 받게 됨
 				url : "${pageContext.request.contextPath}/reload/"+trNo,
@@ -321,9 +323,6 @@
 		                // create empty area in pie chart
 		                .innerRadius('30%');
 		            
-		            agechart.width('50%');
-		            genderchart.width('50%');
-
 		            // set container id for the chart
 		            agechart.container('agecontainer');
 		            genderchart.container('gendercontainer');
@@ -334,7 +333,8 @@
 			 	   
 			 	    // initiate chart drawing
 				}	
-			});	
+			})
+			}
 		}
 
 		//----------------------------------------- 마지막 페이지 계산 -----------------------------------------
@@ -378,7 +378,7 @@
     <!-- anychart 그리기 -->       
     <script>
 
-        anychart.onDocumentReady(function () {
+        function drawchart() {
         console.log(${age})
 
             // create pie chart with passed data
@@ -411,8 +411,8 @@
                 // create empty area in pie chart
                 .innerRadius('30%');
             
-            agechart.width('50%');
-            genderchart.width('50%');
+            agechart.width('100%');
+            genderchart.width('100%');
 
             // set container id for the chart
             agechart.container('agecontainer');
@@ -421,8 +421,19 @@
             // initiate chart drawing
             agechart.draw();
             genderchart.draw();
-        });
+        };
         </script>    
+<style>
+.container {
+  display: flex;
+}
+
+#agecontainer, #gendercontainer {
+  flex: 1;
+  margin: 10px;
+}
+
+</style>
 	
 </head>
 <body>
@@ -433,7 +444,7 @@
 <c:if test="${Character.toString(post.trDelYn) eq 'y'}">
 	<script>
 		alert('해당 글은 삭제되었습니다.');
-		window.location.href = '../../..';
+		window.history.back();
 	</script>
 </c:if>
 
@@ -487,9 +498,11 @@
 			${post.trContent}
 			</div>
 		</div>
-		<c:if test="${count > 0}">
-		<div id="agecontainer" style="margin:10px 10px 10px 200px"></div>
-		<div id="gendercontainer" style="margin:10px 10px 10px 200px"></div>
+		<c:if test="${count>=5 }">
+		<div class="container">
+		<div id="agecontainer"></div>
+		<div id="gendercontainer"></div>
+		</div>
 		</c:if>
 		<!--end 본문-->
 		<section style="padding: 0">

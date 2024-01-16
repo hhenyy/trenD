@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>비번 찾기</title>
+    <title>TrenD</title>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script>
         function check() {
@@ -34,7 +34,7 @@
         <form method="post" action="findPwCheck" onsubmit="return check()">
             <br>
             <h1 class="h4 mb-3" align="center">
-                <br><b>트렌D</b>&nbsp;비밀번호 찾기</h1>
+                <br><b>TrenD</b>&nbsp;비밀번호 찾기</h1>
             <br>
             <div class="form-floating">
                 <input type="text" class="form-control" id="userId" name="userId"

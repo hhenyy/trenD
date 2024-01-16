@@ -5,7 +5,7 @@
 <head>
 
 
-    <title>커뮤니티 글 수정</title>
+    <title>TrenD</title>
 
     <jsp:include page="../include/metalink.jsp"/>
 </head>

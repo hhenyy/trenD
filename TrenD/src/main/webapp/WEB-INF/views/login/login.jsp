@@ -11,7 +11,7 @@
 <html>
 <head>
 
-    <title>로그인</title>
+    <title>TrenD</title>
 
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <!-- 네이버 로그인 -->
@@ -49,7 +49,7 @@
         </div>--%>
         <br>
         <h1 class="h4 mb-3" align="center">
-            <b>트렌D</b>에 오신 것을 환영합니다.
+            <b>TrenD</b>에 오신 것을 환영합니다.
         </h1>
         <br>
         <div class="form-floating">

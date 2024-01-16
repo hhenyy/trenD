@@ -4,6 +4,7 @@
 <html>
 
 <head>
+	<title>TrenD</title>
     <%@ include file="../include/metalink.jsp" %>
     <script>
         //구글 트렌드 목록

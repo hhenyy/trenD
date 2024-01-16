@@ -1,12 +1,11 @@
 package com.td.TrenD.dao;
 
-import java.util.List;
-
+import com.td.TrenD.model.GenderVO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.td.TrenD.model.GenderVO;
+import java.util.List;
 
 public interface GenderDao extends JpaRepository<GenderVO, Integer> {
 

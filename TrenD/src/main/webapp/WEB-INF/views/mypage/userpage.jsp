@@ -18,7 +18,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>마이페이지</title>
+    <title>TrenD</title>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script>
         $(document).ready(function () {
@@ -126,7 +126,7 @@
                         $.each(result.replylist, function (index, item) {
                             var linkUrl = ""; // 동적 URL을 저장할 변수
                             if (item.categoryVO && item.categoryVO.cateCd) {
-                                // 트랜드 게시판
+                                // 트렌드 게시판
                                 if (item.categoryVO.cateCd === 't') {
                                     linkUrl = '/trendPost?trNo=' + item.trNo;
                                 } else {
@@ -270,9 +270,9 @@
         <button type="button" class="btn btn-success" id="reply" value="댓글" onclick="replylist(1);">댓글</button>
     </div>
     <table align="center" width="800px" class="table table-hover">
-        <%-- 트랜드 글목록 --%>
+        <%-- 트렌드 글목록 --%>
         <tbody id="boardbody"></tbody>
-        <%-- 트랜드 댓글목록 --%>
+        <%-- 트렌드 댓글목록 --%>
         <tbody id="replybody"></tbody>
     </table>
     <!-- 페이지네이션 -->

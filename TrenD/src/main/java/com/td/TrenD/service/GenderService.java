@@ -1,6 +1,7 @@
 package com.td.TrenD.service;
 
 import com.td.TrenD.dao.GenderDao;
+import com.td.TrenD.dao.StatisticsDao;
 import com.td.TrenD.model.GenderVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,9 @@ public class GenderService {
 	
 	@Autowired
 	GenderDao dao;
+	
+	@Autowired
+	StatisticsDao statisticsdao;
 	
 	public List<String> getList() {
 
@@ -30,8 +34,12 @@ public class GenderService {
 
 
 	public List<String> countGender(String cateNm) {
-
 		return dao.countGender(cateNm);
+	}
+
+	public List<String> getGender(int trNo) {
+
+		return statisticsdao.getGender(trNo);
 	}
 
 }

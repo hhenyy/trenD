@@ -87,7 +87,6 @@ public class StatisticsController {
 		int index = 0;
 		for (CategoryVO c : category) {
 			// c는 CategoryVO. 같은 행의 cateCd값을 알아냄
-			if (!c.getCateNm().equals("트렌드")) {
 				String categoryOpt = c.getCateCd(); // cateCd값
 				// 3.cateCd 값들의 갯수를 count(*)함수를 이용해 파악. 이때 statistics s left join trend_tbl t 조인
 				// 테이블에서 갯수를 알아내야 함
@@ -109,7 +108,6 @@ public class StatisticsController {
 				jo = new JSONObject(); // JSONObject 객체를 초기화.
 										// 초기화를 따로 하지 않으면 map 객체 내부의 값까지 변경되어 모든 원소가 가장 마지막에 입력되는 값으로 결정됨
 				index++;
-			}
 		}
 
 		System.out.println(list);

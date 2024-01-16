@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>통합검색</title>
+    <title>TrenD</title>
 
     <jsp:include page="../include/metalink.jsp"/>
 </head>
@@ -31,7 +31,7 @@
         <!-- 통합검색(트렌드 출력 공간) -->
         <div id="trendResult">
 
-            <h4 style="font-family: 'Nunito', sans-serif; color: #253d1e;">트랜드 검색 결과</h4>
+            <h4 style="font-family: 'Nunito', sans-serif; color: #253d1e;">트렌드 검색 결과</h4>
 
 
             <table class="table">

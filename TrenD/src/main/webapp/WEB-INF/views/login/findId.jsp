@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>아이디 찾기</title>
+    <title>TrenD</title>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script>
         function check() {
@@ -35,7 +35,7 @@
 
             <br>
             <h1 class="h4 mb-3" align="center">
-                <br> <b>트렌D</b>&nbsp;아이디 찾기
+                <br> <b>TrenD</b>&nbsp;아이디 찾기
             </h1>
             <br>
             <div class="form-floating">

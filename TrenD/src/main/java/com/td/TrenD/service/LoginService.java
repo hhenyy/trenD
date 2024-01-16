@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
@@ -72,13 +71,13 @@ public class LoginService {
 
         // 초기화 메일 바롱
         mailHandler sendMail = new mailHandler(mailSender);
-        sendMail.setSubject("[트렌D 임시 비밀번호 안내 메일입니다.]");
+        sendMail.setSubject("[TrenD 임시 비밀번호 안내 메일입니다.]");
         sendMail.setText(
-                "<h1>트렌D 임시 비밀번호 안내</ht>" +
+                "<h1>TrenD 임시 비밀번호 안내</ht>" +
                 "<br> [임시 비밀번호] 로 로그인하신 후 비밀번호를 변경해주세요." +
                 "<br> 임시 비밀번호 : "+tempPw
         );
-        sendMail.setFrom("trendsendmail@naver.com", "트렌D");
+        sendMail.setFrom("trendsendmail@naver.com", "TrenD");
         sendMail.setTo(user.getUserEmail());
         sendMail.send();
         

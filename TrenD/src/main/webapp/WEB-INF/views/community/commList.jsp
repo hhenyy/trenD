@@ -4,7 +4,7 @@
 <html>
 
 <head>
-    <title>자유게시판</title>
+    <title>TrenD</title>
     <jsp:include page="../include/metalink.jsp"/>
 
 
@@ -94,28 +94,6 @@
                     '</tr>';
                 $('#commTableBody').append(row);
             });
-
-            // // Add Previous Button
-            // if (data.page > 1) {
-            //     var prevPage = data.page - 10;
-            //     var prevButton = '<a class="page-item" href="javascript:searchComm(' + prevPage + ')" data-page="' + prevPage + '">이전</a>';
-            //     $('#pagingUl').html(prevButton);
-            // }
-            //
-            // // Add Page Numbers
-            // // Array.from메소드를 사용하여 전달받은 pageCount만큼의 배열을 생성
-            // // index에 1을 더하고 data-page속성을 사용하여 페이지 번호를 나타낸다.
-            // $.each(Array.from({ length: data.pageCount }, (_, i) => i + 1), function(index, pageNumber) {
-            //     var li = '<a class="page-item" href="javascript:searchComm(' + pageNumber + ')" data-page="' + pageNumber + '">' + pageNumber + '</a>';
-            //     $('#pagingUl').html(li);
-            // });
-            //
-            // // Add Next Button
-            // if (data.page < data.pageCount) {
-            //     var nextPage = data.page + 10;
-            //     var nextButton = '<a class="page-item" href="javascript:searchComm(' + nextPage + ')" data-page="' + nextPage + '">다음</a>';
-            //     $('#pagingUl').html(nextButton);
-            // }
 
             // 여기에 cateList를 사용하여 추가적인 처리를 하도록 작성
             var dropdown = $('#cateCd');
