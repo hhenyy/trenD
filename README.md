@@ -42,7 +42,6 @@ Google Trends 데이터를 이용해 실시간 정보를 불러오며 사용자�
 2. openAI Api를 이용한 대화형 챗봇 구현 (기여도 100%) - 답변 내용을 반응형 stream 구현: webflux (반응형 및 비동기적인 웹 애플리케이션 개발을 지원하는 모듈)과, 
  reactor 라이브러리를 이용하여 reactive(반응형) 기능 구현
 ![스크린샷 2024-02-18 131002](https://github.com/hhenyy/trenD/assets/141230104/a531c9ef-73fd-438a-821e-cc6a34aa92ae)
-
 <br><br>
 
 ### 목표 달성 여부 및 느낀점 
