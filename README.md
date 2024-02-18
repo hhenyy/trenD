@@ -39,8 +39,7 @@ Google Trends 데이터를 이용해 실시간 정보를 불러오며 사용자�
 -Serp api (Google Trends 페이지 크롤링 하는 API)로 Google Trend에서 실시간 데이터를 가져 와서 최신 기사를 출력하는 기능 구현<br>
 ![스크린샷 2024-02-18 130942](https://github.com/hhenyy/trenD/assets/141230104/8873b16e-d1c6-4065-9277-496c96ef0d8c)
 <br>
-![스크린샷 2024-02-18 131845](https://github.com/hhenyy/trenD/assets/141230104/c1bba50e-1f79-46c0-9ad6-1ff3a0ead374)
-<br>
+
 3. openAI Api를 이용한 대화형 챗봇 구현 (기여도 100%)<br>
  - 답변 내용을 반응형 stream 구현: webflux (반응형 및 비동기적인 웹 애플리케이션 개발을 지원하는 모듈)과, <br>
  reactor 라이브러리를 이용하여 reactive(반응형) 기능 구현<br>
