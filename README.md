@@ -31,17 +31,19 @@ Google Trends 데이터를 이용해 실시간 정보를 불러오며 사용자�
 | 게시글 CRUD 및 통합 검색 | 김선홍 | Google Trends 리스트 조회 시 글 자동 등록</br>REST API 적용하여 검색결과를 한 페이지 내에서 트렌드/커뮤니티 개별 페이징 구현 |
 | 통계 페이지 | 빈상욱 | 각 게시판(키워드) 별 접속 횟수 및 관심도를 워드클라우드를 통해 시각적으로 구현<br>각 게시판을 방문한 유저의 성별/지역/연령대 정보를 담은 그래프 출력 및 REST API 적용
 | 댓글 CRUD | 서준혁 | REST API 형태로 댓글 CRUD 구현</br>댓글 목록 페이징 구현|
+<br><br>
 
 ### 담당작업
 1. 메인페이지 구글 트렌드 실시간 데이터 처리 (기여도 100%)
 -Rest API 방식으로 구현
 -Serp api (Google Trends 페이지 크롤링 하는 API)로 Google Trend에서 실시간 데이터를 가져 와서 최신 기사를 출력하는 기능 구현
 ![스크린샷 2024-02-18 130942](https://github.com/hhenyy/trenD/assets/141230104/8873b16e-d1c6-4065-9277-496c96ef0d8c)
-
+<br>
 2. openAI Api를 이용한 대화형 챗봇 구현 (기여도 100%) - 답변 내용을 반응형 stream 구현: webflux (반응형 및 비동기적인 웹 애플리케이션 개발을 지원하는 모듈)과, 
  reactor 라이브러리를 이용하여 reactive(반응형) 기능 구현
 ![스크린샷 2024-02-18 131002](https://github.com/hhenyy/trenD/assets/141230104/a531c9ef-73fd-438a-821e-cc6a34aa92ae)
 
+<br><br>
 
 ### 목표 달성 여부 및 느낀점 
 Spring boot 환경설정과 intelliJ를 사용하여 REST API방식, JPA로 이번 프로젝트를 진
