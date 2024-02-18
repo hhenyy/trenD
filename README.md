@@ -1,4 +1,4 @@
-![스크린샷 2024-02-18 131002](https://github.com/hhenyy/trenD/assets/141230104/1d4868f2-a72c-47ba-a331-b65789e55594)# TrenD
+# TrenD
 중앙정보기술인재개발원 2차 프로젝트
 <br><br>
 
